@@ -17,7 +17,7 @@
       },
       "shell": {
         "all": false,
-        "open": true
+        "open": false
       }
     },
     "windows": [
