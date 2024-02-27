@@ -3,11 +3,11 @@
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
-fn log(text: &str) {println!("{}", text);}
+fn printf(text: &str) {println!("{}", text);}
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![log])
+        .invoke_handler(tauri::generate_handler![printf])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

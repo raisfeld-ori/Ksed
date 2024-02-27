@@ -8,7 +8,7 @@ function App() {
 
   async function incrementCount() {
     setCount(prevcount => prevcount + 1);
-    await invoke("log", {"text": "test"});
+    await invoke("printf", {"text": "hello world"});
   };
 
   return (
