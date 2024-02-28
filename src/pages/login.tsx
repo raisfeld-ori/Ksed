@@ -1,10 +1,18 @@
 import '../global.css';
 
+function stylesheet(){
+    return <style>
+        
+    </style>
+}
+
 function login(){
 
+    return <div>
+        {stylesheet()}
+        <div id='background'>
 
-    return <div style={{backgroundColor: "blue"}}>
-        test
+        </div>
     </div>
 }
 

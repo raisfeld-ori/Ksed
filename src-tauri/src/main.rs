@@ -3,6 +3,7 @@
 
 use tauri::Runtime;
 
+
 #[allow(unused)]
 #[tauri::command]
 async fn first_init<R: Runtime>(app: tauri::AppHandle<R>, window: tauri::Window<R>) -> Result<(), String> {
