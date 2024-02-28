@@ -10,6 +10,7 @@ function login(){
         <div className='triangle down'></div>
         <div className='triangle left'></div>
         <div id='menu'>
+            <br />
             <button>login</button>
             <button>sign up</button>
 

@@ -13,7 +13,7 @@ tauri = { version = "1", features = [ "window-close", "window-set-fullscreen"] }
 serde = { version = "1", features = ["derive"] }
 rust-crypto ="*"
 serde_json = "1"
-argparse = "*"
+dirs = "*"
 
 [features]
 # This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!

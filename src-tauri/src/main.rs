@@ -2,8 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use tauri::Runtime;
-mod encryption;
-use crate::encryption::encrypt;
+mod FS;
 
 #[allow(unused)]
 #[tauri::command]

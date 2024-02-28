@@ -3,11 +3,9 @@ use tauri::Runtime;
 use crypto::{aes, blockmodes};
 
 
-#[tauri::command]
-pub async fn encrypt<R: Runtime>(app: tauri::AppHandle<R>, window: tauri::Window<R>, name: &str, password: &str, data: Vec<u8>) 
--> Result<(), String> {
-
-  return Ok(());
+pub async fn encrypt(name: &str, password: &str, data: Vec<u8>) 
+-> Vec<u8> {
+  todo!("command does not exist yet");
 }
 
 #[test]
