@@ -5,12 +5,31 @@
     bottom: 0;
     right: 0;
     background: #192A84;
+    text-align: center;
 }
 
 .triangle{
     width: 0;
 	height: 0;
-	border-top: 25svh solid transparent;
-	border-right: 50svh solid #555;
-	border-bottom: 25svh solid transparent;
+    position: absolute;
+    z-index: -1;
+}
+
+.left{
+    right: 0;
+    top: 10svh;
+    border-top: 40svh solid transparent;
+	border-right: 100svh solid #4359CD;
+	border-bottom: 40svh solid transparent;
+}
+
+.down{
+    left: -5svw;
+    border-left: 40svh solid transparent;
+	border-right: 40svh solid transparent;
+	border-top: 110svh solid #4359CD;
+}
+
+#menu{
+
 }

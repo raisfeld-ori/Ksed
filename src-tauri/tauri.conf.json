@@ -13,7 +13,8 @@
     "allowlist": {
       "all": false,
       "window": {
-        "setFullscreen": true
+        "setFullscreen": true,
+        "close": true
       },
       "shell": {
         "all": false,
