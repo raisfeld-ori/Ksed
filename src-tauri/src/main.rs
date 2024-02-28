@@ -6,16 +6,13 @@ use tauri::Runtime;
 #[allow(unused)]
 #[tauri::command]
 async fn first_init<R: Runtime>(app: tauri::AppHandle<R>, window: tauri::Window<R>) -> Result<(), String> {
-    // setting up CONFIG is unsafe, but it doesn't break anything
+    window.set_fullscreen(true);
     Ok(())
 }
 
-#[tauri::command]
-fn printf(text: &str) {println!("{}", text);}
-
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![printf])
+        .invoke_handler(tauri::generate_handler![first_init])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
