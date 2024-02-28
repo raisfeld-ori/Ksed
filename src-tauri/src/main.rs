@@ -1,7 +1,15 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+use tauri::Runtime;
+
+#[allow(unused)]
+#[tauri::command]
+async fn first_init<R: Runtime>(app: tauri::AppHandle<R>, window: tauri::Window<R>) -> Result<(), String> {
+    // setting up CONFIG is unsafe, but it doesn't break anything
+    Ok(())
+}
+
 #[tauri::command]
 fn printf(text: &str) {println!("{}", text);}
 

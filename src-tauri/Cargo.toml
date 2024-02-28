@@ -5,8 +5,6 @@ description = "A Tauri App"
 authors = ["you"]
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [build-dependencies]
 tauri-build = { version = "1", features = [] }
 
@@ -14,6 +12,7 @@ tauri-build = { version = "1", features = [] }
 tauri = { version = "1", features = [ "window-set-fullscreen"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+argparse = "*"
 
 [features]
 # This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!
