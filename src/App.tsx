@@ -1,6 +1,6 @@
 import { invoke } from "@tauri-apps/api/tauri";
 import {useEffect} from "react";
-import login from './pages/login';
+import login from './pages/login/login';
 
 function App() {
   const init = () => useEffect(() => {
