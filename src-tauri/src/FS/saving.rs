@@ -1,12 +1,14 @@
-
-
+use tauri::Runtime;
+use crate::fs::loading::load_dir;
 
 #[tauri::command]
-async fn save_data<R: Runtime>(app: tauri::AppHandle<R>, window: tauri::Window<R>) -> Result<(), String> {
+pub async fn save_data() -> Result<(), String> {
+  
+  
   Ok(())
 }
 
 #[test]
-fn test_loading(){
+fn test_saving(){
 
 }
