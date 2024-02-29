@@ -1,19 +1,46 @@
+use crypto::blockmodes::PaddingProcessor;
 use tauri;
 use tauri::Runtime;
 use crypto::{aes, blockmodes};
+use crypto::buffer::{BufferResult, ReadBuffer, RefReadBuffer, RefWriteBuffer, WriteBuffer};
 
 
-pub async fn encrypt(name: &str, password: &str, data: Vec<u8>) 
+
+pub fn encrypt(name: &str, password: &str, data: Vec<u8>) 
 -> Vec<u8> {
-  todo!("command does not exist yet");
+  let key = password.as_bytes();
+  let iv = name.as_bytes();
+
+  let mut cipher = aes::cbc_encryptor(aes::KeySize::KeySize128, key, iv, blockmodes::PkcsPadding);
+
+  let mut read_buffer = RefReadBuffer::new(&data);
+  let mut buffer = [0; 4096];
+  let mut write_buffer = RefWriteBuffer::new(&mut buffer);
+
+  let mut final_result = Vec::<u8>::new();
+
+  loop {
+    let encryption_result = cipher.encrypt(&mut read_buffer, &mut write_buffer, true);
+    
+    match encryption_result {
+        Ok(BufferResult::BufferUnderflow) => break,
+        Ok(BufferResult::BufferOverflow) => {
+          final_result.extend(write_buffer.take_read_buffer().take_remaining());
+        }
+        Err(e) => panic!("{:?}", e),
+    }
+  }
+  final_result.extend(write_buffer.take_read_buffer().take_remaining());
+  return  final_result;
+  
+  
 }
 
 #[test]
 fn test_encryption(){
-  let key = b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0A\x0B\x0C\x0D\x0E\x0F";
-  let iv = *b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0A\x0B\x0C\x0D\x0E\x0F\
-  \x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F";
+  let data = "secret";
 
-  aes::cbc_encryptor(aes::KeySize::KeySize128, key, &iv, blockmodes::PkcsPadding);
-
+  let result = encrypt("aviv", "digmas", data.as_bytes().to_vec());
+  assert_ne!(data.as_bytes().to_vec(), result);
+  
 }
