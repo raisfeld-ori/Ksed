@@ -492,6 +492,7 @@ name = "d_vault"
 version = "0.0.0"
 dependencies = [
  "dirs",
+ "once_cell",
  "rust-crypto",
  "serde",
  "serde_json",
