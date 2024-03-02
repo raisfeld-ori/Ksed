@@ -2,16 +2,21 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 mod fs;
 mod data;
+use std::path::PathBuf;
+
 use tauri::Runtime;
 use crate::data::json::{init_user_data, user_get};
+use dirs::data_dir;
+use std::fs::create_dir;
 
-
+pub fn dir() -> PathBuf {data_dir().expect("failed to enter data directory")}
 
 #[allow(unused)]
 #[tauri::command]
 async fn first_init<R: Runtime>(app: tauri::AppHandle<R>, window: tauri::Window<R>) -> Result<(), String> {
     window.set_fullscreen(true);
     init_user_data();
+    if !dir().exists(){create_dir(dir().as_path()).expect("failed to create a data directory");}
     Ok(())
 }
 
