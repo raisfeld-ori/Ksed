@@ -18,7 +18,7 @@ pub fn init_user_data() -> Result<(), String> {
 // this is a bad function that takes a lot of ram, since
 // there is no way to return the user without cloning it.
 // i should fix it, but i am working a short time frame and this would take a while to fix
-pub fn user_clone() -> Map<String, Value>{
+fn user_clone() -> Map<String, Value>{
     let usr = unsafe {USER_DATA.get("user").expect("USER_DATA WAS NOT INITIALIZED")};
     match usr{
         Value::Object(obj) => {obj.clone()}
