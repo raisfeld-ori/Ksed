@@ -19,17 +19,64 @@
     right: 0;
     top: 10svh;
     border-top: 40svh solid transparent;
-	border-right: 100svh solid #4359CD;
+	border-right: 110svh solid #4359CD;
 	border-bottom: 40svh solid transparent;
 }
 
 .down{
-    left: -5svw;
+    left: -10svw;
     border-left: 40svh solid transparent;
 	border-right: 40svh solid transparent;
 	border-top: 110svh solid #4359CD;
 }
 
-#menu{
+#form{
+    display: block;
+    font-family: 'Ubuntu Mono';
+    margin-top: 10svh;
+}
+#form > input{
+    background-color: #27292A;
+    margin-bottom: 20px;
+    color: #5C94F0;
+    border-color: #404A82;
+    font-family: 'Ubuntu Mono';
+}
+#form > button{
+    background-color: #0026CA;
+    border: 0;
+    border-radius: 10px;
+    color: #FFFFFF;
+}
 
+#error{
+    color: #FF0000;
+}
+.upperbutton{
+    padding-left: 2svw;
+    padding-right: 2svw;
+    padding-top: 1svh;
+    padding-bottom: 1svh;
+    border: 0;
+    margin: 10px;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Ubuntu Mono';
+}
+
+.upperbutton[aria-current=true]{
+    background-color: #393C4B;
+}
+
+.upperbutton[aria-current=false]{
+    background-color: #0E57CA;
+}
+
+.upperbutton[aria-current=true]:hover{
+    background-color: #262831;
+}
+
+.upperbutton[aria-current=false]:hover{
+    background-color: #0c46a3;
 }
