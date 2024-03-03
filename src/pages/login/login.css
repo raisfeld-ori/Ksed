@@ -1,3 +1,6 @@
+
+/* --------------------- MAIN OPEN APP ---------------------*/
+
 #background{
     position: fixed;
     top: 0;
@@ -13,6 +16,7 @@
 	height: 0;
     position: absolute;
     z-index: -1;
+    
 }
 
 .left{
@@ -21,13 +25,32 @@
     border-top: 40svh solid transparent;
 	border-right: 110svh solid #4359CD;
 	border-bottom: 40svh solid transparent;
+    position: absolute;
+    z-index: -2;
 }
 
 .down{
+    position: absolute;
     left: -10svw;
     border-left: 40svh solid transparent;
 	border-right: 40svh solid transparent;
 	border-top: 110svh solid #4359CD;
+    z-index: -2;
+}
+
+
+/* --------------------- LOGIN ---------------------*/
+
+
+
+/* --------------------- BUTTONS / INPUT  LOGIN ---------------------*/
+
+.writenamelogin {
+    font-size: 2svh;
+}
+
+.writepasswordlogin{
+    font-size: 2svh;
 }
 
 #form{
@@ -43,40 +66,120 @@
     font-family: 'Ubuntu Mono';
 }
 #form > button{
-    background-color: #0026CA;
+    background-color: #0c46a3;
     border: 0;
     border-radius: 10px;
     color: #FFFFFF;
 }
+.square {
+    height: 6050px;
+    position: absolute;
+    width: 9000px;
+    margin-left: 1250px;
+    background-color: #2222225d;
+    z-index: -1;  
 
-#error{
-    color: #FF0000;
-}
+  }
 .upperbutton{
-    padding-left: 2svw;
-    padding-right: 2svw;
-    padding-top: 1svh;
-    padding-bottom: 1svh;
+    /* Login / Signup buttons*/ 
+    padding-left: 2.5svw;
+    padding-right: 2.5svw;
+    padding-top: 2svh;
+    padding-bottom: 2svh;
     border: 0;
-    margin: 10px;
+    font-size: 2svh;
+    margin: 20px;
+    margin-top: 80px;
     color: white;
     border-radius: 10px;
     cursor: pointer;
     font-family: 'Ubuntu Mono';
 }
 
-.upperbutton[aria-current=true]{
+.upperbutton[aria-current=false]{
     background-color: #393C4B;
 }
 
-.upperbutton[aria-current=false]{
+.upperbutton[aria-current=true]{
     background-color: #0E57CA;
-}
-
-.upperbutton[aria-current=true]:hover{
-    background-color: #262831;
+    font-weight: bold;
 }
 
 .upperbutton[aria-current=false]:hover{
-    background-color: #0c46a3;
+    background-color: #262831;
 }
+
+.upperbutton[aria-current=true]:hover{
+    background-color: #0c46a3;
+    font-weight: bold;
+}
+
+.signup_login_button_main_menu{
+    padding-left: 2svw;
+    font-weight: bold;
+    padding-right: 2svw;
+    padding-top: 1svh;
+    padding-bottom: 1svh;
+    border: 0;
+    font-size: 2svh;
+    margin: 10px;
+    color: white;
+    
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Ubuntu Mono';
+
+}
+
+/* --------------------- TEXT CLASSES / IDS ONLY LOGIN---------------------*/
+
+#welcome_login{
+
+    font-size: 6svh;
+
+}
+
+#plslogin{
+    font-size: 2.5svh;
+
+}
+
+#error{
+    color: #FF0000;
+    font-size: 2svh;
+}
+
+/* --------------------- SIGNUP ---------------------*/
+
+.input {
+    max-width: 190px;
+    height: 44px;
+    background-color: #05060f37;
+    border-radius: .5rem;
+    padding: 0 1rem;
+    border: 2px solid transparent;
+    font-size: 1rem;
+    transition: border-color .3s cubic-bezier(.25,.01,.25,1) 0s, color .3s cubic-bezier(.25,.01,.25,1) 0s,background .2s cubic-bezier(.25,.01,.25,1) 0s;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: .3rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #000000c9;
+    transition: color .3s cubic-bezier(.25,.01,.25,1) 0s;
+  }
+  
+  .input:hover, .input:focus, .input-group:hover .input {
+    outline: none;
+    border-color: #05060f;
+  }
+  
+  .input-group:hover .label, .input:focus {
+    color: #05060fc2;
+  }
+
+  ::placeholder {
+    color: #05060f;
+  }
