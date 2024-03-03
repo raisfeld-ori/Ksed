@@ -1,23 +1,31 @@
-name: Tauri
+name: Tauri Development
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-env:
-  CARGO_TERM_COLOR: always
+ push:
+    branches:
+      - main
 
 jobs:
-  build:
-
+ build:
     runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [windows-latest]
 
     steps:
-    - name: setup
-    - uses: actions/checkout@v3
-    - uses: dtolnay/rust-toolchain@stable
-    - run: npm install
-    - name: run
-    - run: npm run tauri dev
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '14'
+
+    - name: Install Rust stable
+      uses: dtolnay/rust-toolchain@stable
+
+    - name: Install frontend dependencies
+      run: npm ci
+
+    - name: Run Tauri Dev
+      run: npm run tauri dev
