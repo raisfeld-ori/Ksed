@@ -3,7 +3,6 @@
 mod fs;
 mod data;
 use std::path::PathBuf;
-
 use tauri::Runtime;
 use crate::data::json::{init_user_data, user_get};
 use dirs::data_dir;
