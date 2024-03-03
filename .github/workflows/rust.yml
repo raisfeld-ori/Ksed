@@ -25,7 +25,7 @@ jobs:
       uses: dtolnay/rust-toolchain@stable
 
     - name: Install frontend dependencies
-      run: npm ci
+      run: npm i
 
     - name: Run Tauri Dev
       run: npm run tauri dev
