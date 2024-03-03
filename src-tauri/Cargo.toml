@@ -15,6 +15,7 @@ rust-crypto ="*"
 serde_json = "1"
 dirs = "*"
 once_cell = "*"
+base64 = "*"
 
 [features]
 # This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!

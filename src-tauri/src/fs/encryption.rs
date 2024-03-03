@@ -3,7 +3,6 @@ use crypto::buffer::{BufferResult, ReadBuffer, RefReadBuffer, RefWriteBuffer, Wr
 use crypto::aes::cbc_decryptor;
 
 pub fn aes_encrypt(username: &str, password: &str, data: Vec<u8>) -> Vec<u8> {
-  // The key and the iv have to be 16 bytes!!!
   let key = password.as_bytes();
   let iv = padding(username, password);
 
@@ -33,7 +32,6 @@ pub fn aes_encrypt(username: &str, password: &str, data: Vec<u8>) -> Vec<u8> {
 }
 
 pub fn aes_decrypt(username: &str, password: &str, data: Vec<u8>) -> Vec<u8> {
-    // The key and the iv have to be 16 bytes!!!
     let key = password.as_bytes();
     let iv = padding(username, password);
 
@@ -100,12 +98,20 @@ fn padding(username: &str, password: &str) -> Vec<u8> {
 
 
 #[test]
-fn test_encryption(){
+fn test_xor_encryption(){
   let key = b"scrt";
-  let data = b"hello, world!".to_vec();
-  let encrypted = xor_encrypt(data, key);
-  let decrypted = xor_dencrypt(encrypted, key);
-  println!("{:?}", String::from_utf8(decrypted));
+  let data = b"hello, world!";
+  let encrypted = xor_encrypt(data.to_vec(), key);
+  let decrypted: &[u8] = &xor_dencrypt(encrypted, key);
+  assert_eq!(data, decrypted);
+}
 
-  
+#[test]
+fn test_aes_encryption(){
+  let username = "name";
+  let password = "passwordpassword";
+  let data = b"hello, world!";
+  let encrypted = aes_encrypt(username, password, data.to_vec());
+  let decrypted = aes_decrypt(username, password, encrypted);
+  assert_eq!(data.to_vec(), decrypted);
 }

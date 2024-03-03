@@ -8,5 +8,8 @@ pub struct File{
 }
 
 pub struct Directory{
+    pub name: String,
+    pub directories: Box<Vec<Directory>>,
+    pub files: Vec<File>,
 
 }

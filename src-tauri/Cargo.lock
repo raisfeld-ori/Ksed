@@ -491,6 +491,7 @@ dependencies = [
 name = "d_vault"
 version = "0.0.0"
 dependencies = [
+ "base64 0.13.1",
  "dirs",
  "once_cell",
  "rust-crypto",
