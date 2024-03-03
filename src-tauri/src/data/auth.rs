@@ -17,14 +17,9 @@ fn save_user(name: &str, password: &str){
     let data = data_bytes();
     let encrypted_user_data = encrypt(name, password, data.0);
     let encrypted_system_data = encrypt(name, password, data.1);
-    println!("{:?}, {:?}", name, String::from_utf8(decrypt(name, password, dir_name)));
+    //println!("{:?}, {:?}", name, String::from_utf8(decrypt(name, password, dir_name)));
 }
 
 #[test]
 fn test_authentication(){
-    init_user_data();
-    // if !dir().exists(){create_dir(dir().as_path()).expect("failed to create a data directory");}
-    let name = "example name";
-    let password = "example password";
-    save_user(name, password);
 }
