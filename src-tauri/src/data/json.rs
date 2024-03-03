@@ -1,5 +1,5 @@
 use serde::Serialize;
-use serde_json::{Map, Value, to_vec};
+use serde_json::{Map, Number, Value};
 use once_cell::sync::Lazy;
 
 
@@ -17,6 +17,8 @@ pub fn init_user_data() {
 
 fn user<'a>() -> &'a Map<String, Value>{unsafe {USER_DATA.get("user").expect("USER_DATA WAS NOT INITIALIZED")}.as_object().expect("user was not an object")}
 fn system<'a>() -> &'a Map<String, Value>{unsafe {USER_DATA.get("system").expect("USER_DATA WAS NOT INITIALIZED")}.as_object().expect("user was not an object")}
+fn user_mut<'a>() -> &'a mut Map<String, Value> {unsafe {USER_DATA.get_mut("user").expect("USER_DATA WAS NOT INITIALIZED")}.as_object_mut().expect("user was not an object")}
+fn system_mut<'a>() -> &'a mut Map<String, Value>{unsafe {USER_DATA.get_mut("system").expect("USER_DATA WAS NOT INITIALIZED")}.as_object_mut().expect("user was not an object")}
 
 
 #[tauri::command]
@@ -28,6 +30,24 @@ pub fn user_get<'a>(key: String) -> &'a Value {
         .get(key)
         .unwrap_or(&Value::Null)
     };
+}
+
+#[tauri::command]
+pub fn create_value(val_type: String, val: String) -> Value {
+    let result = match val_type.to_ascii_lowercase().as_str(){
+        "string" => {Value::String(val)},
+        "int" => {Value::Number(val.parse().unwrap_or(Number::from(0)))},
+        "null" => {Value::Null},
+        _ => {Value::Null}
+    };
+
+    return result;
+}
+
+#[tauri::command]
+pub fn user_make(key: String, data: Value) {
+    let result = user_mut();
+    result.insert(key, data);
 }
 
 #[derive(Serialize)]
@@ -46,5 +66,8 @@ pub fn data_bytes() -> (Vec<u8>, Vec<u8>){
 #[test]
 fn test_user_data(){
     init_user_data();
-    assert_eq!(user_get(String::from("test")), &Value::String(String::from("test")));
+    let data = "example data";
+    let data = create_value(String::from("string"), String::from(data));
+    user_make(String::from("test"), data.clone());
+    assert_eq!(&data, user_get(String::from("test")));
 }

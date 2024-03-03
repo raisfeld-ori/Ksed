@@ -16,8 +16,8 @@ function login(){
         <div className='triangle down'></div>
         <div className='triangle left'></div>
         <div id='menu'>
-        <button className='upperbutton' aria-current={false} onClick={() => navigate("/")}>login</button>
-            <button className='upperbutton' aria-current={true} onClick={() => navigate("/signup")}>sign up</button>
+        <button className='upperbutton' aria-current={false} onClick={() => navigate("/")}>Login</button>
+            <button className='upperbutton' aria-current={true} onClick={() => navigate("/signup")}>Sign Up</button>
 
             <div id='form'>
                 <h1>Welcome!</h1>
@@ -26,7 +26,7 @@ function login(){
                 <br />
                 <input onChange={e => setpassword(e.currentTarget.value)}></input>
                 <br />
-                <button onClick={authenticate} id='login'>sign up</button>
+                <button className='signup_login_button_main_menu' onClick={authenticate}>Sign Up</button>
             </div>
         </div>
     </div>
