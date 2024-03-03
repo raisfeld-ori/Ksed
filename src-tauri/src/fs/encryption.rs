@@ -4,7 +4,7 @@ use crypto::aes::cbc_decryptor;
 
 pub fn aes_encrypt(username: &str, password: &str, data: Vec<u8>) -> Vec<u8> {
   let key = password.as_bytes();
-  let iv = padding(username, password);
+  let iv = padding(username, password, 16);
 
   let mut cipher = aes::cbc_encryptor(aes::KeySize::KeySize128, key, &iv, blockmodes::PkcsPadding);
 
@@ -33,7 +33,7 @@ pub fn aes_encrypt(username: &str, password: &str, data: Vec<u8>) -> Vec<u8> {
 
 pub fn aes_decrypt(username: &str, password: &str, data: Vec<u8>) -> Vec<u8> {
     let key = password.as_bytes();
-    let iv = padding(username, password);
+    let iv = padding(username, password, 16);
 
     let mut cipher = cbc_decryptor(aes::KeySize::KeySize128, key, &iv, blockmodes::PkcsPadding);
 
@@ -79,11 +79,11 @@ fn xor_dencrypt(encrypted_data: Vec<u8>, key: &[u8]) -> Vec<u8>{
 }
 
 
-fn padding(username: &str, password: &str) -> Vec<u8> {
+fn padding(username: &str, password: &str, size: usize) -> Vec<u8> {
   let mut padded_username = username.chars().collect::<Vec<char>>();
   let password_chars = password.chars().rev().collect::<Vec<char>>();
 
-  while padded_username.len() < 16 {
+  while padded_username.len() < size {
       if password_chars.len() > 0 {
           padded_username.push(password_chars[padded_username.len() % password_chars.len()]);
       } else {
@@ -110,7 +110,7 @@ fn test_xor_encryption(){
 fn test_aes_encryption(){
   let username = "name";
   let password = "passwordpassword";
-  let data = b"hello, world!";
+  let data = b"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
   let encrypted = aes_encrypt(username, password, data.to_vec());
   let decrypted = aes_decrypt(username, password, encrypted);
   assert_eq!(data.to_vec(), decrypted);
