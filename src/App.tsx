@@ -12,7 +12,7 @@ function App() {
   }, []);
   init();
 
-  function right_click(e: MouseEvent){
+  function right_click(_e: MouseEvent){
     // nothing in here currently
   }
 
