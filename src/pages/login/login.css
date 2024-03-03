@@ -72,12 +72,14 @@
     color: #FFFFFF;
 }
 .square {
-    height: 6050px;
+    height: 700px;
     position: absolute;
-    width: 9000px;
-    margin-left: 1250px;
-    background-color: #2222225d;
+    width: 500px;
+    margin-left: 705px;
+    margin-top: 200px;
+    background-color: #22222248;
     z-index: -1;  
+    border-radius: 80px;
 
   }
 .upperbutton{
