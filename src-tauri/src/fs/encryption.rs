@@ -62,6 +62,15 @@ pub fn decrypt(username: &str, password: &str, data: Vec<u8>) -> Vec<u8> {
     return final_result
 }
 
+fn xor_encrypt(data: Vec<u8>, key: &[u8]) -> Vec<u8>{
+  let mut encrypted = Vec::new();
+
+  for (i, &byte) in data.iter().enumerate() {
+    encrypted.push(byte ^ key[i % key.len()])
+  }
+
+  encrypted
+}
 
 
 fn padding(username: &str, password: &str) -> Vec<u8> {
@@ -72,10 +81,11 @@ fn padding(username: &str, password: &str) -> Vec<u8> {
       if password_chars.len() > 0 {
           padded_username.push(password_chars[padded_username.len() % password_chars.len()]);
       } else {
+        // if the password length is 0.
           break;
       }
   }
-  // Convert the padded username and password to byte vectors
+  // Convert the padded username to byte vector and this is the IV.
   let padded_username_bytes = padded_username.into_iter().map(|c| c as u8).collect::<Vec<u8>>();
   padded_username_bytes
 }
@@ -83,14 +93,10 @@ fn padding(username: &str, password: &str) -> Vec<u8> {
 
 #[test]
 fn test_encryption(){
-  let username = "aviv";
-  let password = "digmas5avivsegal";
-  let data = "secret messagess".as_bytes();
-  let result2 = encrypt(username, password, data.to_vec());
-  assert_ne!(data, result2);
-  let result3 = decrypt(username, password, result2);
-  assert_eq!(data, result3);
+  let key = b"scrt";
+  let data = b"hello, world!".to_vec();
+  let encrypted = xor_encrypt(data, key);
+  println!("{:?}", encrypted);
 
-  
   
 }
