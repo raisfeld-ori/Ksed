@@ -28,7 +28,6 @@ jobs:
       run: npm i
 
     - name: Run frontend
-    - run: npm run test
-
-    - name: Run backend
-    - run: cargo test
+      run: npm run test
+    - name: Run Backend
+      run: cargo test
