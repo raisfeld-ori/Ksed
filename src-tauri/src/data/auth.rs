@@ -7,7 +7,7 @@ use crate::data::json::init_user_data;
 
 #[tauri::command]
 fn authenticate(name: &str, password: &str) -> bool {
-    // for now, authentication is not possible since decryption is not possible
+    // for now, authentication is not possible since decryption is not ready
     return true;
 }
 
