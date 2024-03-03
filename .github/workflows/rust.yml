@@ -24,8 +24,11 @@ jobs:
     - name: Install Rust stable
       uses: dtolnay/rust-toolchain@stable
 
-    - name: Install frontend dependencies
+    - name: Install dependencies
       run: npm i
 
-    - name: Run Tauri Dev
-      run: npm run tauri dev
+    - name: Run frontend
+    - run: npm run test
+
+    - name: Run backend
+    - run: cargo test
