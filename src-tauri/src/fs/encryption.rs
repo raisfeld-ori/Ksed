@@ -2,7 +2,7 @@ use crypto::{aes, blockmodes};
 use crypto::buffer::{BufferResult, ReadBuffer, RefReadBuffer, RefWriteBuffer, WriteBuffer};
 use crypto::aes::cbc_decryptor;
 
-pub fn encrypt(username: &str, password: &str, data: Vec<u8>) -> Vec<u8> {
+pub fn aes_encrypt(username: &str, password: &str, data: Vec<u8>) -> Vec<u8> {
   // The key and the iv have to be 16 bytes!!!
   let key = password.as_bytes();
   let iv = padding(username, password);
@@ -32,7 +32,7 @@ pub fn encrypt(username: &str, password: &str, data: Vec<u8>) -> Vec<u8> {
   
 }
 
-pub fn decrypt(username: &str, password: &str, data: Vec<u8>) -> Vec<u8> {
+pub fn aes_decrypt(username: &str, password: &str, data: Vec<u8>) -> Vec<u8> {
     // The key and the iv have to be 16 bytes!!!
     let key = password.as_bytes();
     let iv = padding(username, password);
@@ -71,6 +71,14 @@ fn xor_encrypt(data: Vec<u8>, key: &[u8]) -> Vec<u8>{
 
   encrypted
 }
+fn xor_dencrypt(encrypted_data: Vec<u8>, key: &[u8]) -> Vec<u8>{
+  let mut decrypted = Vec::new();
+
+  for(i, &byte) in encrypted_data.iter().enumerate() {
+    decrypted.push(byte ^ key[i % key.len()])
+  }
+  decrypted
+}
 
 
 fn padding(username: &str, password: &str) -> Vec<u8> {
@@ -96,7 +104,8 @@ fn test_encryption(){
   let key = b"scrt";
   let data = b"hello, world!".to_vec();
   let encrypted = xor_encrypt(data, key);
-  println!("{:?}", encrypted);
+  let decrypted = xor_dencrypt(encrypted, key);
+  println!("{:?}", String::from_utf8(decrypted));
 
   
 }
