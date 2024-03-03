@@ -1,0 +1,31 @@
+name: Tauri Development
+
+on:
+ push:
+    branches:
+      - main
+
+jobs:
+ build:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [windows-latest]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '21'
+
+    - name: Install Rust stable
+      uses: dtolnay/rust-toolchain@stable
+
+    - name: Install frontend dependencies
+      run: npm i
+
+    - name: Run Tauri Dev
+      run: npm run tauri dev
