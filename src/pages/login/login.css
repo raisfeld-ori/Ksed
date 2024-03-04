@@ -7,7 +7,7 @@
     left: 0;
     bottom: 0;
     right: 0;
-    background: #192A84;
+    background: #192b84;
     text-align: center;
 }
 
@@ -38,6 +38,20 @@
     z-index: -2;
 }
 
+.dot {
+    height: 170px;
+    width: 170px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    display: inline-block;
+    overflow: hidden; 
+}
+
+.dot img {
+    width: 100%;
+    height: auto;
+}
+
 
 /* --------------------- LOGIN ---------------------*/
 
@@ -56,30 +70,18 @@
 #form{
     display: block;
     font-family: 'Ubuntu Mono';
-    margin-top: 10svh;
+    margin-top: 15svh;
 }
-#form > input{
-    background-color: #27292A;
-    margin-bottom: 20px;
-    color: #5C94F0;
-    border-color: #404A82;
-    font-family: 'Ubuntu Mono';
-}
+
+
 #form > button{
-    background-color: #0c46a3;
+    background-color: #22222255;
     border: 0;
-    border-radius: 10px;
+    border-radius: 20px;
     color: #FFFFFF;
 }
-.square {
-    height: 6050px;
-    position: absolute;
-    width: 9000px;
-    margin-left: 1250px;
-    background-color: #2222225d;
-    z-index: -1;  
 
-  }
+
 .upperbutton{
     /* Login / Signup buttons*/ 
     padding-left: 2.5svw;
@@ -136,11 +138,13 @@
 #welcome_login{
 
     font-size: 6svh;
+    color: #e7e7e9;
 
 }
 
 #plslogin{
     font-size: 2.5svh;
+    color: #e7e7e9;
 
 }
 
@@ -156,6 +160,7 @@
     height: 44px;
     background-color: #05060f37;
     border-radius: .5rem;
+    color: #ffffff;
     padding: 0 1rem;
     border: 2px solid transparent;
     font-size: 1rem;
@@ -167,8 +172,9 @@
     margin-bottom: .3rem;
     font-size: 1.2rem;
     font-weight: bold;
-    color: #000000c9;
+    color: #ffffffc9;
     transition: color .3s cubic-bezier(.25,.01,.25,1) 0s;
+    margin-top: 20px;
   }
   
   .input:hover, .input:focus, .input-group:hover .input {
@@ -177,9 +183,100 @@
   }
   
   .input-group:hover .label, .input:focus {
-    color: #05060fc2;
+    color: #ffffffc2;
   }
 
   ::placeholder {
-    color: #05060f;
+   
+    color: #e7e7e9;
   }
+
+
+  button {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    vertical-align: middle;
+    margin-top: 20px;
+    text-decoration: none;
+    background: rgba(245, 245, 220, 0);
+    padding: 0;
+    font-size: inherit;
+    font-family: inherit;
+   }
+   
+   button.learn-more {
+    width: 12rem;
+    height: auto;
+   }
+   
+   button.learn-more .circle {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: relative;
+    display: block;
+    margin: 0;
+    width: 3rem;
+    height: 3rem;
+    background: #282936;
+    border-radius: 1.625rem;
+   }
+   
+   button.learn-more .circle .icon {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background: #fff;
+   }
+   
+   button.learn-more .circle .icon.arrow {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    left: 0.625rem;
+    width: 1.125rem;
+    height: 0.125rem;
+    background: none;
+   }
+   
+   button.learn-more .circle .icon.arrow::before {
+    position: absolute;
+    content: "";
+    top: -0.29rem;
+    right: 0.0625rem;
+    width: 0.625rem;
+    height: 0.625rem;
+    border-top: 0.125rem solid #fff;
+    border-right: 0.125rem solid #fff;
+    transform: rotate(45deg);
+   }
+   
+   button.learn-more .button-text {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0.75rem 0;
+    margin: 0 0 0 1.85rem;
+    color: #ffffff;
+    font-weight: 700;
+    line-height: 1.6;
+    text-align: center;
+   }
+   
+   button:hover .circle {
+    width: 100%;
+   }
+   
+   button:hover .circle .icon.arrow {
+    background: #fff;
+    transform: translate(1rem, 0);
+   }
+   
+   button:hover .button-text {
+    color: #fff;
+   }
+
