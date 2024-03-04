@@ -1,3 +1,4 @@
+
 use serde::{Serialize, Deserialize};
 
 pub static mut FS: Home = Home::new();
@@ -23,13 +24,23 @@ impl Directory {
 impl DirTrait for Directory{
     fn mkdir(&mut self, dir: String) {self.directories.push(Directory::new(dir))}
 
-    fn cd(&mut self, dir: String) -> Option<&Directory> {
+    fn rmdir(&mut self, dir: String) -> Result<(), Option<String>> {
+        let index = self.directories.iter().position(|d| d.name == dir);
+        match index {
+            Some(idx) => {
+                self.directories.remove(idx);
+                Ok(())
+            },
+            None => Err(Some(format!("Directory '{}' not found", dir)))
+        }
+    }
+    fn cd(&mut self, dir: String) -> Result<&Directory, String> {
         for directory in &mut self.directories.iter() {
             if directory.name == dir {
-                return Some(directory);
+                return Ok(directory);
             }
         }
-        None
+        Err(format!("Directory '{}' not found", dir))
     }
 }
 
@@ -48,33 +59,54 @@ impl Home{
 // impl the directory trait for Home because Home needs these commands.
 impl DirTrait for Home {
     fn mkdir(&mut self, dir: String) {self.directories.push(Directory::new(dir))}
-    fn cd(&mut self, dir: String) -> Option<&Directory> {
+
+    fn rmdir(&mut self, dir: String) -> Result<(), Option<String>> {
+        let index = self.directories.iter().position(|d| d.name == dir);
+        match index{
+            Some(idx) => {
+                self.directories.remove(idx);
+                if self.path.ends_with(&dir) {
+                    self.path.truncate(self.path.len() - dir.len());
+                }
+                Ok(())
+            },
+            None => Err(Some(format!("Directory '{}' not found", dir)))
+        }
+
+    }
+    fn cd(&mut self, dir: String) -> Result<&Directory, String> {
         for directory in &mut self.directories.iter() {
             if directory.name == dir{
                 Some(directory);
                 self.path += "/";
                 self.path += directory.name.as_str();
+                return Ok(directory);
             }
         }
-        None
+        Err(format!("Directory '{}' not found", dir))
     }
 }
 // Trait with commands for all directory structs.
 trait DirTrait {
     fn mkdir(&mut self, dir: String);
-    fn cd(&mut self, dir: String) -> Option<&Directory>;
+    fn rmdir(&mut self, dir: String) -> Result<(), Option<String>>;
+    fn cd(&mut self, dir: String) -> Result<&Directory, String>;
         
 }
 
 // Testing the directory.
 #[test]
 fn test_directory(){
-    let name = String::from("ori's_secret_directory");
-    let mut dir = Home::new();
-    dir.mkdir(name.clone());
-    dir.cd(name);
-    println!("{}", dir.pwd());
-
-    
+    let mut home = Home::new();
+    let dir_name = String::from("ori's_secret_directory");
+    // Unit testing for directory commands.
+    home.mkdir(dir_name.clone());
+    assert!(home.rmdir(dir_name.clone()).is_ok());
+    assert!(home.rmdir(dir_name.clone()).is_err());
+    match home.cd(dir_name) {
+        Ok(dir) => println!("Successfully changed to directory: {}", dir.name),
+        Err(e) => println!("Error {}", e)
+    }
+    println!("{}", home.pwd());
     
 }
