@@ -11,16 +11,7 @@ function App() {
     initialize();
   }, []);
   init();
-
-  function right_click(_e: MouseEvent){
-    // nothing in here currently
-  }
-
-  document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-    right_click(e);
-  });  
-
+  document.addEventListener('contextmenu', function(e) {e.preventDefault();});
   return <Routes>
       <Route path="/" element={login()}></Route>
       <Route path="/signup" element={signup()}></Route>

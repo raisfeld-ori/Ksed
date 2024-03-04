@@ -6,7 +6,7 @@ use std::path::PathBuf;
 use tauri::Runtime;
 use crate::data::json::{init_user_data, user_get};
 use dirs::data_dir;
-use crate::data::auth::{init_dir, save_user, authenticate};
+use crate::data::auth::{init_dir, save_user, authenticate_user, update};
 
 pub fn dir() -> PathBuf {data_dir().expect("failed to enter data directory").join("d_vault_data")}
 
@@ -33,11 +33,12 @@ list_commands - prints this text out
 printf - print something out to the terminal
 first_init - initializes the app
 user_get - returns a saved object
-
+authenticate_user - makes sure the user's password and name are right
+update - calls the "rust_event" event (document.addEventListener('rust_event', () => {/*your code here*/}))
 "#)
 }
 fn main() {
    tauri::Builder::default().invoke_handler(tauri::generate_handler![
-    first_init, list_commands, printf, user_get
+    first_init, list_commands, printf, user_get, authenticate_user, update
 ]).run(tauri::generate_context!()).expect("failed to run the code");
    }
