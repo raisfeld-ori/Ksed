@@ -13,7 +13,8 @@ function login(){
     const navigate = useNavigate();
 
     async function authenticate(){
-        let response = await invoke("authenticate_user", {name, password}).catch(() => {});
+        let response = await invoke("authenticate_user", {name, password}).catch(e => {console.log(e)});
+        
         if (response){
             navigate("/loading", {state: {name, password}});
         }
