@@ -9,7 +9,7 @@ function loading(){
     const [value, setvalue] = useState(0);
     const location = useLocation();
     if (!location.state){return <h1>DONT ACCESS THIS PAGE WITHOUT LOGGING IN</h1>}
-
+    setvalue(1);
     document.addEventListener('rust_event', () => {console.log("test, ", value)});
     invoke("update", {});
     invoke("update", {});
