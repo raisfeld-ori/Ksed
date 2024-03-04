@@ -2,12 +2,11 @@ use crypto::{aes, blockmodes};
 use crypto::buffer::{BufferResult, ReadBuffer, RefReadBuffer, RefWriteBuffer, WriteBuffer};
 use crypto::aes::cbc_decryptor;
 
-pub fn aes_encrypt(username: &str, password: &str, data: Vec<u8>) -> Vec<u8> {
-  let key = password.as_bytes();
+pub fn aes_encrypt(username: &str, password: &str, data: &[u8]) -> Vec<u8> {
+  let key: &[u8] = password.as_bytes();
   let iv = padding(username, password, 16);
-
+  let data = pad(data);
   let mut cipher = aes::cbc_encryptor(aes::KeySize::KeySize128, key, &iv, blockmodes::PkcsPadding);
-
   let mut read_buffer = RefReadBuffer::new(&data);
   let mut buffer = [0; 4096];
   let mut write_buffer = RefWriteBuffer::new(&mut buffer);
@@ -31,7 +30,7 @@ pub fn aes_encrypt(username: &str, password: &str, data: Vec<u8>) -> Vec<u8> {
   
 }
 
-pub fn aes_decrypt(username: &str, password: &str, data: Vec<u8>) -> Vec<u8> {
+pub fn aes_decrypt(username: &str, password: &str, data: &[u8]) -> Vec<u8> {
     let key = password.as_bytes();
     let iv = padding(username, password, 16);
 
@@ -57,7 +56,19 @@ pub fn aes_decrypt(username: &str, password: &str, data: Vec<u8>) -> Vec<u8> {
 
     final_result.extend(write_buffer.take_read_buffer().take_remaining());
 
-    return final_result
+    return unpad(&final_result)
+}
+
+fn pad(data: &[u8]) -> Vec<u8> {
+  let padding_size = 16 - (data.len() % 16);
+  let mut padded_data = data.to_vec();
+  padded_data.extend(vec![padding_size as u8; padding_size]);
+  padded_data
+}
+
+fn unpad(data: &[u8]) -> Vec<u8> {
+  let padding_size = data.last().unwrap();
+  data[..data.len() - *padding_size as usize].to_vec()
 }
 
 fn xor_encrypt(data: Vec<u8>, key: &[u8]) -> Vec<u8>{
@@ -110,8 +121,8 @@ fn test_xor_encryption(){
 fn test_aes_encryption(){
   let username = "name";
   let password = "passwordpassword";
-  let data = b"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-  let encrypted = aes_encrypt(username, password, data.to_vec());
+  let data = b"aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+  let encrypted: &[u8] = &aes_encrypt(username, password, data);
   let decrypted = aes_decrypt(username, password, encrypted);
   assert_eq!(data.to_vec(), decrypted);
 }
