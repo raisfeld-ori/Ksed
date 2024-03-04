@@ -40,13 +40,13 @@ function login(){
 
                     <div className="input-group">
                     <label className="label">Username</label>
-                     <input onChange={e => setname(e.currentTarget.value)} autoComplete="off" name="info" id="info" className="input" placeholder='Enter your username' type="info" />
+                     <input maxLength={16} onChange={e => setname(e.currentTarget.value)} autoComplete="off" name="info" id="info" className="input" placeholder='Enter your username' type="info" />
                     <div ></div>
                      </div>
 
                      <div className="input-group">
                     <label className="label">Password</label>
-                     <input onChange={e => setpassword(e.currentTarget.value)} autoComplete="off" name="info" id="info" className="input" placeholder='Enter your password' type="info" />
+                     <input maxLength={16} onChange={e => setpassword(e.currentTarget.value)} autoComplete="off" name="info" id="info" className="input" placeholder='Enter your password' type="info" />
                     <div ></div>
                      </div>
                     <button className='signup_login_button_main_menu' onClick={authenticate}>Log In</button>
