@@ -3,7 +3,7 @@ use crypto::buffer::{BufferResult, ReadBuffer, RefReadBuffer, RefWriteBuffer, Wr
 use crypto::aes::cbc_decryptor;
 
 pub fn aes_encrypt(username: &str, password: &str, data: &[u8]) -> Vec<u8> {
-  let key: &[u8] = password.as_bytes();
+  let key: &[u8] = &pad(password.as_bytes());
   let iv = padding(username, password, 16);
   let data = pad(data);
   let mut cipher = aes::cbc_encryptor(aes::KeySize::KeySize128, key, &iv, blockmodes::PkcsPadding);
@@ -31,7 +31,7 @@ pub fn aes_encrypt(username: &str, password: &str, data: &[u8]) -> Vec<u8> {
 }
 
 pub fn aes_decrypt(username: &str, password: &str, data: &[u8]) -> Vec<u8> {
-    let key = password.as_bytes();
+    let key: &[u8] = &pad(password.as_bytes());
     let iv = padding(username, password, 16);
 
     let mut cipher = cbc_decryptor(aes::KeySize::KeySize128, key, &iv, blockmodes::PkcsPadding);
@@ -120,7 +120,7 @@ fn test_xor_encryption(){
 #[test]
 fn test_aes_encryption(){
   let username = "name";
-  let password = "passwordpassword";
+  let password = "passwordpasswor";
   let data = b"aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
   let encrypted: &[u8] = &aes_encrypt(username, password, data);
   let decrypted = aes_decrypt(username, password, encrypted);
