@@ -37,11 +37,12 @@ function login(){
             <div id='menu'>
 
                 <div id='form'>
+
+                    <p id='plslogin'>Welcome back! <td></td> Please log to your account.</p>
+
                 <div className="dot">
             <img src={miku} alt="Descriptive text" />
                 </div>
-
-
 
                     <div className="input-group">
                     <label className="label">Username</label>
