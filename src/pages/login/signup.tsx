@@ -13,6 +13,7 @@ function login(){
     }
 
     return <div id='background'>
+                <div className='square'></div> 
         <div className='triangle down'></div>
         <div className='triangle left'></div>
         <div id='menu'>
@@ -20,12 +21,21 @@ function login(){
             <button className='upperbutton' aria-current={true} onClick={() => navigate("/signup")}>Sign Up</button>
 
             <div id='form'>
-                <h1>Welcome!</h1>
-                <p>Create an account</p>
-                <input onChange={e => setname(e.currentTarget.value)}></input>
-                <br />
-                <input onChange={e => setpassword(e.currentTarget.value)}></input>
-                <br />
+            <h1 id='welcome_login'>Login</h1>
+            <p id='plslogin'>Welcome back! <td></td> please log to your account</p>
+
+                <div className="input-group">
+                    <label className="label">Username</label>
+                     <input onChange={e => setname(e.currentTarget.value)} autoComplete="off" name="info" id="info" className="input" placeholder='Enter your username' type="info" />
+                    <div ></div>
+                     </div>
+
+                <div className="input-group">
+                    <label className="label">Password</label>
+                     <input onChange={e => setpassword(e.currentTarget.value)} autoComplete="off" name="info" id="info" className="input" placeholder='Enter your password' type="info" />
+                    <div ></div>
+                     </div>
+
                 <button className='signup_login_button_main_menu' onClick={authenticate}>Sign Up</button>
             </div>
         </div>
