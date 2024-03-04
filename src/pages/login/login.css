@@ -72,30 +72,16 @@
     font-family: 'Ubuntu Mono';
     margin-top: 20svh;
 }
-#form > input{
-    background-color: #27292A;
-    margin-bottom: 20px;
-    color: #5C94F0;
-    border-color: #404A82;
-    font-family: 'Ubuntu Mono';
-}
+
+
 #form > button{
     background-color: #22222255;
     border: 0;
     border-radius: 20px;
     color: #FFFFFF;
 }
-.square {
-    height: 700px;
-    position: absolute;
-    width: 500px;
-    margin-left: 705px;
-    margin-top: 200px;
-    background-color: #22222255;
-    z-index: -1;  
-    border-radius: 80px;
 
-  }
+
 .upperbutton{
     /* Login / Signup buttons*/ 
     padding-left: 2.5svw;
@@ -172,6 +158,7 @@
     height: 44px;
     background-color: #05060f37;
     border-radius: .5rem;
+    color: #ffffff;
     padding: 0 1rem;
     border: 2px solid transparent;
     font-size: 1rem;
@@ -194,7 +181,7 @@
   }
   
   .input-group:hover .label, .input:focus {
-    color: #05060fc2;
+    color: #ffffffc2;
   }
 
   ::placeholder {
