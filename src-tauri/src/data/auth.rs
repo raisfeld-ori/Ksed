@@ -5,11 +5,15 @@ use crate::data::json::init_user_data;
 use std::fs::{create_dir, read_dir, write};
 use std::path::Path;
 use base64::{encode, decode};
+use serde_json::Value;
+use tauri::{Manager, Runtime};
 
 pub fn init_dir() -> Result<(), std::io::Error>{if dir().exists() {Ok(())}else{create_dir(dir())}}
+#[tauri::command]
+pub fn update<R: Runtime>(app: tauri::AppHandle<R>) {app.trigger_global("rust_event", None)}
 
 #[tauri::command]
-pub fn authenticate(name: &str, password: &str) -> bool {
+pub fn authenticate_user(name: &str, password: &str) -> bool {
     // for now, authentication is not possible since decryption is not ready
     return true;
 }

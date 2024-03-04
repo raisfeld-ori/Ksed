@@ -2,6 +2,7 @@ import './login.css';
 import { useState } from 'react';
 import { invoke } from '@tauri-apps/api';
 import { useNavigate } from 'react-router-dom';
+import miku from '../../assets/Default_pfp.svg.png';
 
 
 
@@ -13,7 +14,8 @@ function login(){
     const navigate = useNavigate();
 
     async function authenticate(){
-        let response = await invoke("authenticate_user", {name, password}).catch(() => {});
+        let response = await invoke("authenticate_user", {name, password}).catch(e => {console.log(e)});
+        
         if (response){
             navigate("/loading", {state: {name, password}});
         }
@@ -26,17 +28,22 @@ function login(){
 
         return <div id='background'>
             
-        <div className='square'></div> 
+
+
+                        <div className='triangle down'></div>
+        <div className='triangle left'></div>
         <button className='upperbutton' aria-current={true} onClick={() => navigate("/")}>Login</button>
                 <button className='upperbutton' aria-current={false} onClick={() => navigate("/signup")}>Sign Up</button>
-            <div className='triangle down'></div>   
-            <div className='triangle left'></div>
+
             <div id='menu'>
 
                 <div id='form'>
 
-                    <h1 id='welcome_login'>Login</h1>
-                    <p id='plslogin'>Welcome back! <td></td> please log to your account</p>
+                    <p id='plslogin'>Welcome back! <td></td> Please log to your account.</p>
+
+                <div className="dot">
+            <img src={miku} alt="Descriptive text" />
+                </div>
 
                     <div className="input-group">
                     <label className="label">Username</label>
@@ -49,7 +56,14 @@ function login(){
                      <input maxLength={16} onChange={e => setpassword(e.currentTarget.value)} autoComplete="off" name="info" id="info" className="input" placeholder='Enter your password' type="info" />
                     <div ></div>
                      </div>
-                    <button className='signup_login_button_main_menu' onClick={authenticate}>Log In</button>
+
+                     <button className="learn-more" onClick={authenticate}>
+                        <span className="circle" aria-hidden="true">
+                         <span className="icon arrow"></span>
+                        </span>
+                        <span className="button-text">Login</span>
+                        </button>
+
                     <br />
                     <p id='error'>{error}</p>
                     
