@@ -41,15 +41,6 @@ function Login() {
                         <div></div>
                     </div>
 
-                    <div className="radio-buttons-container">
-                     <div className="radio-button">
-                      <input name="radio-group" id="radio2" className="radio-button__input" type="radio" />
-                       <label htmlFor="radio2" className="radio-button__label">
-                         <span className="radio-button__custom"></span>
-                         I agree to something
-                                   </label>
-                           </div>
-                             </div>
 
                     <button className="learn-more" onClick={authenticate}>
                         <span className="circle" aria-hidden="true">
