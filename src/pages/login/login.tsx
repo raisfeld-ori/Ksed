@@ -2,6 +2,7 @@ import './login.css';
 import { useState } from 'react';
 import { invoke } from '@tauri-apps/api';
 import { useNavigate } from 'react-router-dom';
+import miku from '../../assets/Default_pfp.svg.png';
 
 
 
@@ -26,8 +27,9 @@ function login(){
 
         return <div id='background'>
             
-        <div className='square'></div> 
-        <div className='triangle down'></div>
+
+
+                        <div className='triangle down'></div>
         <div className='triangle left'></div>
         <button className='upperbutton' aria-current={true} onClick={() => navigate("/")}>Login</button>
                 <button className='upperbutton' aria-current={false} onClick={() => navigate("/signup")}>Sign Up</button>
@@ -35,9 +37,11 @@ function login(){
             <div id='menu'>
 
                 <div id='form'>
+                <div className="dot">
+            <img src={miku} alt="Descriptive text" />
+                </div>
 
-                    <h1 id='welcome_login'>Login</h1>
-                    <p id='plslogin'>Welcome back! <td></td> please log to your account</p>
+
 
                     <div className="input-group">
                     <label className="label">Username</label>
@@ -50,7 +54,14 @@ function login(){
                      <input onChange={e => setpassword(e.currentTarget.value)} autoComplete="off" name="info" id="info" className="input" placeholder='Enter your password' type="info" />
                     <div ></div>
                      </div>
-                    <button className='signup_login_button_main_menu' onClick={authenticate}>Log In</button>
+
+                     <button className="learn-more" onClick={authenticate}>
+                        <span className="circle" aria-hidden="true">
+                         <span className="icon arrow"></span>
+                        </span>
+                        <span className="button-text">Login</span>
+                        </button>
+
                     <br />
                     <p id='error'>{error}</p>
                     
