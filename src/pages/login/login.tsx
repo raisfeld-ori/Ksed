@@ -27,10 +27,11 @@ function login(){
         return <div id='background'>
             
         <div className='square'></div> 
+        <div className='triangle down'></div>
+        <div className='triangle left'></div>
         <button className='upperbutton' aria-current={true} onClick={() => navigate("/")}>Login</button>
                 <button className='upperbutton' aria-current={false} onClick={() => navigate("/signup")}>Sign Up</button>
-            <div className='triangle down'></div>   
-            <div className='triangle left'></div>
+
             <div id='menu'>
 
                 <div id='form'>
