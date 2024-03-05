@@ -1,4 +1,4 @@
-use crate::{dir, request_permissions};
+use crate::dir;
 use crate::fs::encryption::{aes_encrypt, aes_decrypt, aes_try_decrypt};
 use crate::data::json::data_bytes;
 use crate::data::json::init_user_data;
@@ -6,7 +6,7 @@ use std::fs::{create_dir, read_dir, File};
 use std::io::Write;
 use std::path::{Path, PathBuf};
 use serde_json::Value;
-use tauri::{Manager, Runtime};
+use tauri::{App, AppHandle, Manager, Runtime};
 
 pub fn init_dir() -> Result<(), std::io::Error>{if dir().exists() {Ok(())}else{create_dir(dir())}}
 #[tauri::command]
@@ -22,9 +22,13 @@ pub fn authenticate_user(name: &str, password: &str) -> bool {
 }
 
 #[tauri::command]
-async fn load_user<R: Runtime>(app: tauri::AppHandle<R>, window: tauri::Window<R>) -> Result<(), String> {
-    
-    Ok(())
+pub fn load_user<R: Runtime>(app: tauri::AppHandle<R>, window: tauri::Window<R>, name: &str, password: &str) -> bool {
+    println!("{}, {}", name, password);
+    let location: &[u8] = &aes_encrypt(name, password, name.as_bytes());
+    let location = dir().join(format!("{:?}", location));
+    window.emit("rust_event", 0);
+
+    return true;
 }
 
 #[tauri::command]
@@ -71,6 +75,6 @@ fn test_authentication(){
     init_dir().expect("failed to create the main directory");
     let name = "test";
     let password = "test";
-    save_user(name, password);
-    authenticate_user(name, password);
+    // save_user(name, password);
+    // authenticate_user(name, password);
 }
