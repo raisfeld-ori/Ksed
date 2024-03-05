@@ -16,8 +16,19 @@
 	height: 0;
     position: absolute;
     z-index: -1;
-    
-}
+    animation-duration: 2s;
+    animation-name: slidein;
+  }
+  
+  @keyframes slidein {
+    from {
+        margin-right: 100%;
+    }
+    to {
+        margin-right: 0%;
+    }
+  }
+
 
 .left{
     right: 0;
@@ -29,6 +40,9 @@
     z-index: -2;
 }
 
+
+
+
 .down{
     position: absolute;
     left: -10svw;
@@ -36,7 +50,19 @@
 	border-right: 40svh solid transparent;
 	border-top: 110svh solid #4359CD;
     z-index: -2;
-}
+    animation-duration: 2s;
+    animation-name: turtle;
+  }
+  
+  @keyframes turtle {
+    from {
+        margin-left: 100%;
+    }
+    to {
+        margin-left: 0%;
+    }
+  }
+
 
 .dot {
     height: 170px;
@@ -70,7 +96,7 @@
 #form{
     display: block;
     font-family: 'Ubuntu Mono';
-    margin-top: 13svh;
+    margin-top: 12svh;
 }
 
 
@@ -150,6 +176,13 @@
 
 #error{
     color: #FF0000;
+    font-size: 2svh;
+}
+
+#melody {
+    font-weight: bold;
+    margin-top: 10svh;
+    color: #0f0000;
     font-size: 2svh;
 }
 
@@ -280,3 +313,42 @@
     color: #fff;
    }
 
+
+
+
+    
+   @-webkit-keyframes rotating /* Safari and Chrome */ {
+    from {
+      -webkit-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(360deg);
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes rotating {
+    from {
+      -ms-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    to {
+      -ms-transform: rotate(360deg);
+      -moz-transform: rotate(360deg);
+      -webkit-transform: rotate(360deg);
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  .rotating {
+    -webkit-animation: rotating 2s linear infinite;
+    -moz-animation: rotating 2s linear infinite;
+    -ms-animation: rotating 2s linear infinite;
+    -o-animation: rotating 2s linear infinite;
+    animation: rotating 2s linear infinite;
+  }
