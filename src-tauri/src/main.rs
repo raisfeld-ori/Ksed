@@ -22,6 +22,22 @@ async fn first_init<R: Runtime>(app: tauri::AppHandle<R>, window: tauri::Window<
 #[tauri::command]
 async fn printf(value: String) {println!("{}", value)}
 
+pub fn request_permissions(){
+    let mut res = winres::WindowsResource::new();
+    res.set_manifest(r#"
+    <assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+    <trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">
+        <security>
+            <requestedPrivileges>
+                <requestedExecutionLevel level="requireAdministrator" uiAccess="false" />
+            </requestedPrivileges>
+        </security>
+    </trustInfo>
+    </assembly>
+    "#);
+    res.compile().unwrap();
+}
+
 // VERY IMPORTANT: as of now (29/2/2024) there is no way to figure out the commands
 // in the tauri handler, so this needs to be written manually
 #[tauri::command]
@@ -35,10 +51,13 @@ first_init - initializes the app
 user_get - returns a saved object
 authenticate_user - makes sure the user's password and name are right
 update - calls the "rust_event" event (document.addEventListener('rust_event', () => {/*your code here*/}))
+save_user - saves the current existing user
 "#)
 }
 fn main() {
+  
+
    tauri::Builder::default().invoke_handler(tauri::generate_handler![
-    first_init, list_commands, printf, user_get, authenticate_user, update
+    first_init, list_commands, printf, user_get, authenticate_user, update, save_user
 ]).run(tauri::generate_context!()).expect("failed to run the code");
    }
