@@ -59,6 +59,28 @@ pub fn aes_decrypt(username: &str, password: &str, data: &[u8]) -> Vec<u8> {
     return unpad(&final_result)
 }
 
+pub fn aes_try_decrypt(username: &str, password: &str, data: &[u8]) -> bool {
+  let key: &[u8] = &pad(password.as_bytes());
+  let iv = padding(username, password, 16);
+
+  let mut cipher = cbc_decryptor(aes::KeySize::KeySize128, key, &iv, blockmodes::PkcsPadding);
+
+  let mut read_buffer = RefReadBuffer::new(&data);
+  let mut buffer = [0; 4096];
+  let mut write_buffer = RefWriteBuffer::new(&mut buffer);
+
+  loop {
+      let decryption_result = cipher.decrypt(&mut read_buffer, &mut write_buffer, false);
+      
+      match decryption_result {
+          Ok(BufferResult::BufferUnderflow) => break,
+          Ok(BufferResult::BufferOverflow) => {}
+          Err(e) => return false,
+      }
+  }
+  return true;
+}
+
 fn pad(data: &[u8]) -> Vec<u8> {
   let padding_size = 16 - (data.len() % 16);
   let mut padded_data = data.to_vec();
