@@ -16,8 +16,19 @@
 	height: 0;
     position: absolute;
     z-index: -1;
-    
-}
+    animation-duration: 2s;
+    animation-name: slidein;
+  }
+  
+  @keyframes slidein {
+    from {
+        margin-right: 100%;
+    }
+    to {
+        margin-right: 0%;
+    }
+  }
+
 
 .left{
     right: 0;
@@ -29,6 +40,9 @@
     z-index: -2;
 }
 
+
+
+
 .down{
     position: absolute;
     left: -10svw;
@@ -36,7 +50,19 @@
 	border-right: 40svh solid transparent;
 	border-top: 110svh solid #4359CD;
     z-index: -2;
-}
+    animation-duration: 2s;
+    animation-name: turtle;
+  }
+  
+  @keyframes turtle {
+    from {
+        margin-left: 100%;
+    }
+    to {
+        margin-left: 0%;
+    }
+  }
+
 
 .dot {
     height: 170px;
@@ -70,7 +96,7 @@
 #form{
     display: block;
     font-family: 'Ubuntu Mono';
-    margin-top: 13svh;
+    margin-top: 12svh;
 }
 
 
