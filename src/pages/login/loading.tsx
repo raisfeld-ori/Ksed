@@ -13,7 +13,12 @@ function loading(){
     if (!location.state){return <h1>DONT ACCESS THIS PAGE WITHOUT LOGGING IN</h1>}
     document.addEventListener('rust_event', () => {});
     invoke("user_", location.state);
+
+
     return <div id='background'>
+
+<div className='triangle down'></div>
+        <div className='triangle left'></div>
         <div id='user'>
             <p>{value}</p>
             <h1>welcome {location.state.name}!</h1>
