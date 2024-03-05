@@ -21,15 +21,12 @@ pub fn authenticate_user(name: &str, password: &str) -> bool {
 #[tauri::command]
 pub fn save_user(name: &str, password: &str){
     let location: &[u8] = &aes_encrypt(name, password, name.as_bytes());
-    println!("{:?}", location);
-    let location = aes_decrypt(name, password, location);
-    //let location = dir().join(location);
+    let location = dir().join(format!("{:?}", location));
     let data = data_bytes();
     let data_0: &[u8] = &data.0;
     let data_1: &[u8] = &data.1;
     let encrypted_user_data = aes_encrypt(name, password, data_0);
     let encrypted_system_data = aes_encrypt(name, password, data_1);
-    //let d = aes_decrypt(name, password, decode(location.file_stem().unwrap().as_encoded_bytes()).unwrap());
     println!("{:?}", location);
     //create_dir(location).expect("could not create a directory");
 }
