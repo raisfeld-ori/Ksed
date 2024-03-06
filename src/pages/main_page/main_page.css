@@ -5,6 +5,54 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
+.navbar {
+  background-color: #3333338b;
+  overflow: hidden;
+  display: flex;
+  flex-flow:  row wrap;
+  justify-content: flex-start;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.homeimg {
+    width: 6svh;
+  height: 6svh;
+
+}
+
+.searchimg {
+  width: 5svh;
+height: 5svh;
+
+}
+
+.time {
+  flex-flow:  row wrap;
+  justify-content: flex-start;
+  padding-right: 1svh;
+  
+
+}
+
+.timediv{
+  margin-top: 2svh;
+}
+
+=======
+#desktop{
+}
 
 .navbarmain {
     position: fixed;
