@@ -1,4 +1,6 @@
 import './main_page.css';
+import miku2 from '../../assets/25694.png'
+import miku3 from '../../assets/search-icon.svg'
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDrag } from 'react-dnd';
@@ -14,6 +16,9 @@ interface DraggableItemProps {
  id: string;
 }
 
+
+
+        </nav>
 let item_type = 'ITEM_TYPE_HERE';
 
 const DraggableItem: React.FC<DraggableItemProps> = ({ id }) => {
@@ -75,6 +80,15 @@ function App() {
     <DndProvider backend={HTML5Backend}>
       <Grid />
     </DndProvider>
+        <nav className='navbar'>
+        <button>
+            <img className='homeimg' src={miku2} alt="" />
+        </button>
+            <button>
+                <img className='searchimg' src={miku3} alt="" />
+            </button>
+         <p className='time'>12:09 AM</p>
+         <p className='time'>12/10/2027</p>
     </div>
  );
 }
