@@ -71,6 +71,7 @@
     border-radius: 50%;
     display: inline-block;
     overflow: hidden; 
+    margin-top: 10svh;
 }
 
 .dot img {
@@ -180,9 +181,8 @@
 }
 
 #melody {
-    font-weight: bold;
-    margin-top: 10svh;
-    color: #0f0000;
+    margin-top: 2svh;
+    color: #ffffff;
     font-size: 2svh;
 }
 
@@ -314,9 +314,9 @@
    }
 
 
+/* ---------------------- loading screen ------------------------------ */
 
-
-.ring
+.load
 {
   position:absolute;
   top:50%;
@@ -337,7 +337,7 @@
   text-shadow:0 0 10px #006aff;
   box-shadow:0 0 20px rgba(50, 50, 50, 0.5);
 }
-.ring:before
+.load:before
 {
   content:'';
   position:absolute;
@@ -351,7 +351,7 @@
   border-radius:50%;
   animation:animateC 2s linear infinite;
 }
-span
+.loadspan
 {
   display:block;
   position:absolute;
@@ -363,7 +363,7 @@ span
   transform-origin:left;
   animation:animate 2s linear infinite;
 }
-span:before
+.loadspan:before
 {
   content:'';
   position:absolute;

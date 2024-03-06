@@ -1,11 +1,8 @@
 import './login.css';
 import { invoke } from '@tauri-apps/api';
 import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import miku from '../../assets/alpha.png';
-import pullup from '../../assets/Okiupp.mp3';
-import okpullup from '../../assets/OK-I-PULL-UP.ogg';
+import miku from '../../assets/Default_pfp.svg.png';
 
 
 // loading the page requires a username and a password
@@ -24,8 +21,14 @@ function loading(){
 <div className='triangle down'></div>
         <div className='triangle left'></div>
 
-                <div className="ring">Loading
-                <span></span>
+        <div className="dot">
+            <img src={miku} alt="Descriptive text" />
+                </div>
+
+                <p id='melody'>Welcome {location.state.name}!</p>
+
+                <div className="load">Loading
+                <span className='loadspan'></span>
                 </div>
         </div>
 
