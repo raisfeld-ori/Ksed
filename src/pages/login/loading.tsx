@@ -23,24 +23,12 @@ function loading(){
 
 <div className='triangle down'></div>
         <div className='triangle left'></div>
-        <div id='user'>
-            <p>{value}</p>
-            <h1>welcome {location.state.name}!</h1>
 
-            <div className="dot">
-            <img src={miku} alt="Descriptive text" />
+                <div className="ring">Loading
+                <span></span>
                 </div>
-                <h1>kys</h1>
-            <progress className='rotating' max={10} value={1}></progress>
-                <p id='melody'>enjoy this melody while ori is fixing the progress bar</p>
-            <audio controls autoPlay>
-             <source src={okpullup} type="audio/ogg" />
-             <source src={pullup} type="audio/mpeg" />
-             Your browser does not support the audio element.
-            </audio>
-
         </div>
-    </div>
+
 }
 
 export default loading;
