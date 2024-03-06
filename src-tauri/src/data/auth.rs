@@ -22,13 +22,11 @@ pub fn authenticate_user(name: &str, password: &str) -> bool {
 }
 
 #[tauri::command]
-pub fn load_user<R: Runtime>(app: tauri::AppHandle<R>, window: tauri::Window<R>, name: &str, password: &str) -> bool {
+pub fn load_user<R: Runtime>(app: tauri::AppHandle<R>, window: tauri::Window<R>, name: &str, password: &str) {
     println!("{}, {}", name, password);
     let location: &[u8] = &aes_encrypt(name, password, name.as_bytes());
     let location = dir().join(format!("{:?}", location));
-    window.emit("rust_event", 0);
-
-    return true;
+    
 }
 
 #[tauri::command]
@@ -75,6 +73,6 @@ fn test_authentication(){
     init_dir().expect("failed to create the main directory");
     let name = "test";
     let password = "test";
-    // save_user(name, password);
-    // authenticate_user(name, password);
+    save_user(name, password);
+    authenticate_user(name, password);
 }
