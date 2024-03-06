@@ -62,6 +62,8 @@ function login(){
 
                     <br />
                     <p id='error'>{error}</p>
+
+                    <button onClick={() => navigate("/main_page")} >skip all [dev]</button>
                     
                 </div>
             </div>
