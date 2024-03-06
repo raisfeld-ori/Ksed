@@ -1,15 +1,15 @@
 import './main_page.css';
-import miku2 from '../../assets/25694.png'
-import miku3 from '../../assets/search-icon.svg'
+/*
+this is for the grid, FUCK THE GRID! IT FUCKING SUCKS
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDrag } from 'react-dnd';
 import ReactGridLayout from 'react-grid-layout';
 import { useDrop } from 'react-dnd';
-
+*/
 import './main_page.css';
-import miku2 from '../../assets/25694.png'
-import miku3 from '../../assets/search-icon.svg'
+import miku2 from '../../assets/25694.png';
+import miku3 from '../../assets/search-icon.svg';
 
 
 export default function main_page(){
