@@ -2,8 +2,8 @@ import { invoke } from "@tauri-apps/api/tauri";
 import {useEffect} from "react";
 import login from './pages/login/login';
 import signup from './pages/login/signup';
-import loading from './pages/login/loading';
 import { Route, Routes } from "react-router-dom";
+import Loading from "./pages/login/loading";
 
 function App() {
   const init = () => useEffect(() => {
@@ -15,7 +15,7 @@ function App() {
   return <Routes>
       <Route path="/" element={login()}></Route>
       <Route path="/signup" element={signup()}></Route>
-      <Route path="/loading" element={loading()}></Route>
+      <Route path="/loading" element={<Loading />}></Route>
   </Routes>
 }
 

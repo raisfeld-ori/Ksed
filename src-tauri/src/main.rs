@@ -40,8 +40,6 @@ load_user - load an existing user
 "#)
 }
 fn main() {
-  
-
    tauri::Builder::default().invoke_handler(tauri::generate_handler![
     first_init, list_commands, printf, user_get, authenticate_user, update, save_user, load_user
 ]).run(tauri::generate_context!()).expect("failed to run the code");
