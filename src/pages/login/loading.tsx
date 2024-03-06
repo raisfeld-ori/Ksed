@@ -1,7 +1,6 @@
 import './login.css';
 import { invoke } from '@tauri-apps/api';
 import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import {useEffect} from "react";
 
