@@ -71,6 +71,7 @@
     border-radius: 50%;
     display: inline-block;
     overflow: hidden; 
+    margin-top: 10svh;
 }
 
 .dot img {
@@ -180,9 +181,8 @@
 }
 
 #melody {
-    font-weight: bold;
-    margin-top: 10svh;
-    color: #0f0000;
+    margin-top: 2svh;
+    color: #ffffff;
     font-size: 2svh;
 }
 
@@ -314,41 +314,88 @@
    }
 
 
+/* ---------------------- loading screen ------------------------------ */
+
+.load
+{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:150px;
+  height:150px;
+  background:transparent;
+  border:3px solid #323232;
+  border-radius:50%;
+  text-align:center;
+  line-height:150px;
+  font-family:sans-serif;
+  font-size:20px;
+  color:#00aaff;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  text-shadow:0 0 10px #006aff;
+  box-shadow:0 0 20px rgba(50, 50, 50, 0.5);
+}
+.load:before
+{
+  content:'';
+  position:absolute;
+  top:-3px;
+  left:-3px;
+  width:100%;
+  height:100%;
+  border:3px solid transparent;
+  border-top:3px solid #0084ff;
+  border-right:3px solid #0084ff;
+  border-radius:50%;
+  animation:animateC 2s linear infinite;
+}
+.loadspan
+{
+  display:block;
+  position:absolute;
+  top:calc(50% - 2px);
+  left:50%;
+  width:50%;
+  height:4px;
+  background:transparent;
+  transform-origin:left;
+  animation:animate 2s linear infinite;
+}
+.loadspan:before
+{
+  content:'';
+  position:absolute;
+  width:10px;
+  height:10 px;
+  border-radius:50%;
+  background:#00b3ff;
+  top:-6px;
+  right:-8px;
+  box-shadow:0 0 20px #00bfff;
+}
+@keyframes animateC
+{
+  0%
+  {
+    transform:rotate(0deg);
+  }
+  100%
+  {
+    transform:rotate(360deg);
+  }
+}
+@keyframes animate
+{
+  0%
+  {
+    transform:rotate(45deg);
+  }
+  100%
+  {
+    transform:rotate(405deg);
+  }
+}
 
 
-    
-   @-webkit-keyframes rotating /* Safari and Chrome */ {
-    from {
-      -webkit-transform: rotate(0deg);
-      -o-transform: rotate(0deg);
-      transform: rotate(0deg);
-    }
-    to {
-      -webkit-transform: rotate(360deg);
-      -o-transform: rotate(360deg);
-      transform: rotate(360deg);
-    }
-  }
-  @keyframes rotating {
-    from {
-      -ms-transform: rotate(0deg);
-      -moz-transform: rotate(0deg);
-      -webkit-transform: rotate(0deg);
-      -o-transform: rotate(0deg);
-      transform: rotate(0deg);
-    }
-    to {
-      -ms-transform: rotate(360deg);
-      -moz-transform: rotate(360deg);
-      -webkit-transform: rotate(360deg);
-      -o-transform: rotate(360deg);
-      transform: rotate(360deg);
-    }
-  }
-  .rotating {
-    -webkit-animation: rotating 2s linear infinite;
-    -moz-animation: rotating 2s linear infinite;
-    -ms-animation: rotating 2s linear infinite;
-    -o-animation: rotating 2s linear infinite;
-    animation: rotating 2s linear infinite;
-  }

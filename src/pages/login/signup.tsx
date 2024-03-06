@@ -1,7 +1,6 @@
 import './login.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import miku from '../../assets/Default_pfp.svg.png';
 
 
 function Login() {
@@ -22,9 +21,7 @@ function Login() {
             <div id='menu'>
                 <div id='form'>
                     <p id='plslogin'>Welcome!<td></td>Enter your credentials to Sign Up</p>
-                    <div className="dot">
-                        <img src={miku} alt="Descriptive text" />
-                    </div>
+
                     <div className="input-group">
                         <label className="label">Username</label>
                         <input onChange={e => setName(e.currentTarget.value)} autoComplete="off" name="info" id="info" className="input" placeholder='Enter your username' type="info" />
