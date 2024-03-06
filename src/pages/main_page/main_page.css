@@ -5,7 +5,6 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
-
 .navbar {
   background-color: #3333338b;
   overflow: hidden;
@@ -51,3 +50,14 @@ height: 5svh;
   margin-top: 2svh;
 }
 
+=======
+#desktop{
+}
+
+.navbarmain {
+    position: fixed;
+    z-index: 99;
+    width: 100%;
+    
+    background: #24252687;
+}
