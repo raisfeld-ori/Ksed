@@ -2,7 +2,6 @@ import './login.css';
 import { useState } from 'react';
 import { invoke } from '@tauri-apps/api';
 import { useNavigate } from 'react-router-dom';
-import miku from '../../assets/Default_pfp.svg.png';
 
 
 
@@ -41,9 +40,6 @@ function login(){
 
                     <p id='plslogin'>Welcome back! <td></td> Please log to your account.</p>
 
-                <div className="dot">
-            <img src={miku} alt="Descriptive text" />
-                </div>
 
                     <div className="input-group">
                     <label className="label">Username</label>
