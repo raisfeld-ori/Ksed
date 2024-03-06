@@ -1,4 +1,6 @@
 import './main_page.css';
+import miku2 from '../../assets/25694.png'
+import miku3 from '../../assets/search-icon.svg'
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDrag } from 'react-dnd';
