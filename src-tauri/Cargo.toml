@@ -10,6 +10,7 @@ build = "build.rs"
 [build-dependencies]
 tauri-build = { version = "1", features = [] }
 tauri-winres = "0.1"
+embed-resource = "*"
 
 
 [dependencies]
