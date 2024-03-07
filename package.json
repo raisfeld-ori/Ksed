@@ -16,7 +16,6 @@
     "install": "^0.13.0",
     "npm": "^10.5.0",
     "react": "^18.2.0",
-    "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.2"
@@ -24,9 +23,9 @@
   "devDependencies": {
     "@tauri-apps/cli": "^1",
     "@types/react": "^18.2.15",
+    "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.2.1",
-    "react-grid-layout": "^1.4.4",
     "typescript": "^5.0.2",
     "vite": "^5.0.0"
   }
