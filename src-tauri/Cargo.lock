@@ -491,13 +491,16 @@ dependencies = [
 name = "d_vault"
 version = "0.0.0"
 dependencies = [
+ "base64 0.13.1",
  "dirs",
+ "embed-resource",
  "once_cell",
  "rust-crypto",
  "serde",
  "serde_json",
  "tauri",
  "tauri-build",
+ "tauri-winres",
 ]
 
 [[package]]
