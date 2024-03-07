@@ -2,7 +2,7 @@ use crate::dir;
 use crate::fs::encryption::{aes_encrypt, aes_decrypt, aes_try_decrypt};
 use crate::data::json::data_bytes;
 use crate::data::json::init_user_data;
-use std::fs::{create_dir, read_dir, File};
+use std::fs::{create_dir, read_dir, File, OpenOptions};
 use std::io::Write;
 use std::path::{Path, PathBuf};
 use serde_json::Value;
@@ -39,32 +39,43 @@ pub fn save_user(name: &str, password: &str){
     let encrypted_user_data = aes_encrypt(name, password, data_0);
     let encrypted_user_name = format!("{:?}", aes_encrypt(name, password, b"user data"));
     let encrypted_system_data = aes_encrypt(name, password, data_1);
+    let encrypted_user_data_base64 = base64::encode(&encrypted_user_data);
+    let encrypted_system_data_base64 = base64::encode(&encrypted_system_data);
     let encrypted_system_name = format!("{:?}", aes_encrypt(name, password, b"system data"));
     if !location.exists(){create_dir(&location).expect("could not create a directory");}
     if location.join(&encrypted_user_name).exists(){
-        File::open(location.join(encrypted_user_name))
+        OpenOptions::new() 
+        .write(true)
+        .append(true)
+        .open(location.join(encrypted_user_name))
         .expect("failed to open an existing file")
-        .write_all(&encrypted_user_data)
+        .write_all(&encrypted_user_data_base64.as_bytes())
         .expect("failed to write data");
     }
     else{ 
         File::create(location.join(encrypted_user_name))
         .expect("failed to create a file")
-        .write_all(&encrypted_user_data)
+        .write_all(&encrypted_user_data_base64.as_bytes())
         .expect("failed to write data into file");
+        
     }
     if location.join(&encrypted_system_name).exists(){
-        File::open(location.join(encrypted_system_name))
+        OpenOptions::new()
+        .write(true)
+        .append(true)
+        .open(location.join(encrypted_system_name))
         .expect("failed to open an existing file")
-        .write_all(&encrypted_system_data)
+        .write_all(&encrypted_system_data_base64.as_bytes())
         .expect("failed to write data");
     }
     else{ 
         File::create(location.join(encrypted_system_name))
         .expect("failed to create a file")
-        .write_all(&encrypted_system_data)
+        .write_all(&encrypted_system_data_base64.as_bytes())
         .expect("failed to write data into file");
+
     }
+
 }
 
 #[test]
