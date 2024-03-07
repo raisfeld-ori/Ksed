@@ -13,7 +13,13 @@ fn main() {
     }
     _ => {},
   }
+  let resource_file = "d_vault/src-tauri/resource.rc";
+  let macros = vec![
+        "MY_MACRO",
+        "MY_OTHER_MACRO=VALUE",
+    ];
     tauri_build::build();
+    embed_resource::compile(resource_file, macros)
     
 }
 
