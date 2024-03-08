@@ -1,35 +1,17 @@
 import './main_page.css';
 import './main_page.css';
-import { useDraggable } from './Grid';
+import { desktop_app } from './Grid';
+import Grid from './Grid';
+
 import miku2 from '../../assets/25694.png';
 import miku3 from '../../assets/search-icon.svg';
 
 export default function main_page(){
-    const [draggableRef, dx, dy] = useDraggable({
-        gridSize: 40,
-    });
-
-    const setDraggableRef = (node: HTMLDivElement | null) => {
-        if (node !== null) {
-            // idk how to fix this, but as long as it doesn't work, the unit testing wont run...
-            draggableRef(node);
-        }
-    };
+    const example_app = desktop_app("example app", miku3);
+    const not_example_app = desktop_app("not example app", miku3);
 
     return <div id='background'>
-
-            <div className="container">
-            <div
-                className="draggable"
-                ref={draggableRef}
-                style={{
-                    transform: `translate3d(${dx}px, ${dy}px, 0)`,
-                }}
-            >
-                Drag me
-            </div>
-        </div>
-
+        <Grid apps={[example_app, not_example_app]} gridSize={50} margin={100}/>
         <nav className='navbar'>
         <button>
             <img className='homeimg' src={miku2} alt="" />

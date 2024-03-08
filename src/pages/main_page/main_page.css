@@ -63,13 +63,6 @@ height: 5svh;
   background-size: 2.5rem 2.5rem;
 }
 
-.container {
-  position: relative;
-  background-size: 2.5rem 2.5rem;
-  width: 100%;
-  height: 24rem;
-}
-
 .draggable {
   background: rgb(203 213 225);
   height: 5rem;
@@ -88,4 +81,10 @@ height: 5svh;
   cursor: move;
   user-select: none;
   touch-action: none;
+}
+
+.draggable img{
+  display: inline-block;
+  pointer-events: none;
+  user-select: none;
 }
