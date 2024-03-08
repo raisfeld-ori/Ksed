@@ -1,6 +1,33 @@
 import React from "react";
 
-export const useDraggable = ({gridSize} : {gridSize : number}) => {
+function Grid(props: {apps: ((dx: number, dy: number, draggableRef: (nodeEle: any) => void) => JSX.Element)[], 
+  gridSize: number, margin: number}) {
+  let apps = [];
+  for (let i = 0, dxy = 0; i < props.apps.length; i++, dxy += props.margin) {
+    let [ref, dx, dy] = useDraggable({gridSize: props.gridSize});
+    dy += dxy;
+    let app = props.apps[i](dx, dy, ref);
+    apps.push(app);
+  }
+
+  return <div className="grid"><>{apps}</></div>
+}
+export default Grid;
+
+export function desktop_app(name: string, image: string){
+  return function MakeApp(dx: number, dy: number, ref: ((nodeEle: any) => void)){
+  return <div className="draggable"
+  ref={ref}
+  key={name}
+  style={{
+  transform: `translate3d(${dx}px, ${dy}px, 0)`,
+    }}>
+      <img src={image} alt={name} className="icon" />
+      <p className="name">{name}</p>
+  </div>}
+}
+
+const useDraggable = ({gridSize} : {gridSize : number}) => {
   const [node, setNode] = React.useState<HTMLElement | null>(null);
   const [{ dx, dy }, setOffset] = React.useState({
       dx: 0,
