@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Grid(props: {apps: ((dx: number, dy: number, draggableRef: (nodeEle: any) => void) => JSX.Element)[], 
   gridSize: number, margin: number}) {
   let apps = [];
+  const [collision, set_collision] = useState(false);
   for (let i = 0, dxy = 0; i < props.apps.length; i++, dxy += props.margin) {
-    let [ref, dx, dy] = useDraggable({gridSize: props.gridSize});
+    let [ref, dx, dy] = useDraggable({gridSize: props.gridSize, collision});
+    // there's a couple errors since dx and dy are states and numbers at the same time
+    // @ts-expect-error
     dy += dxy;
+    // @ts-expect-error
     let app = props.apps[i](dx, dy, ref);
+    
     apps.push(app);
   }
-
   return <div className="grid"><>{apps}</></div>
 }
 export default Grid;
@@ -27,7 +31,7 @@ export function desktop_app(name: string, image: string){
   </div>}
 }
 
-const useDraggable = ({gridSize} : {gridSize : number}) => {
+const useDraggable = ({gridSize, collision} : {gridSize : number, collision: boolean | null}) => {
   const [node, setNode] = React.useState<HTMLElement | null>(null);
   const [{ dx, dy }, setOffset] = React.useState({
       dx: 0,
@@ -49,7 +53,9 @@ const useDraggable = ({gridSize} : {gridSize : number}) => {
           const dy = e.clientY - startPos.y;
           const snappedX = Math.round(dx / gridSize) * gridSize;
           const snappedY = Math.round(dy / gridSize) * gridSize;
-          setOffset({ dx: snappedX, dy: snappedY });
+          if (!collision){
+            setOffset({ dx: snappedX, dy: snappedY });
+          }
           updateCursor();
       };
 
@@ -58,7 +64,6 @@ const useDraggable = ({gridSize} : {gridSize : number}) => {
           document.removeEventListener('mouseup', handleMouseUp);
           resetCursor();
       };
-
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
   }, [dx, dy]);
@@ -77,7 +82,7 @@ const useDraggable = ({gridSize} : {gridSize : number}) => {
           const dy = touch.clientY - startPos.y;
           const snappedX = Math.round(dx / gridSize) * gridSize;
           const snappedY = Math.round(dy / gridSize) * gridSize;
-          setOffset({ dx: snappedX, dy: snappedY });
+          if (!collision){setOffset({ dx: snappedX, dy: snappedY });}
           updateCursor();
       };
 
@@ -92,12 +97,10 @@ const useDraggable = ({gridSize} : {gridSize : number}) => {
   }, [dx, dy]);
 
   const updateCursor = () => {
-      document.body.style.cursor = 'crosshair';
       document.body.style.userSelect = 'none';
   };
 
   const resetCursor = () => {
-      document.body.style.removeProperty('cursor');
       document.body.style.removeProperty('user-select');
   };
 
