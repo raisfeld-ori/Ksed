@@ -3,9 +3,8 @@ import React, { useState } from "react";
 function Grid(props: {apps: ((dx: number, dy: number, draggableRef: (nodeEle: any) => void) => JSX.Element)[], 
   gridSize: number, margin: number}) {
   let apps = [];
-  const [collision, set_collision] = useState(false);
   for (let i = 0, dxy = 0; i < props.apps.length; i++, dxy += props.margin) {
-    let [ref, dx, dy] = useDraggable({gridSize: props.gridSize, collision});
+    let [ref, dx, dy] = useDraggable({gridSize: props.gridSize});
     // there's a couple errors since dx and dy are states and numbers at the same time
     // @ts-expect-error
     dy += dxy;
@@ -31,7 +30,7 @@ export function desktop_app(name: string, image: string){
   </div>}
 }
 
-const useDraggable = ({gridSize, collision} : {gridSize : number, collision: boolean | null}) => {
+const useDraggable = ({gridSize} : {gridSize : number}) => {
   const [node, setNode] = React.useState<HTMLElement | null>(null);
   const [{ dx, dy }, setOffset] = React.useState({
       dx: 0,
@@ -53,9 +52,7 @@ const useDraggable = ({gridSize, collision} : {gridSize : number, collision: boo
           const dy = e.clientY - startPos.y;
           const snappedX = Math.round(dx / gridSize) * gridSize;
           const snappedY = Math.round(dy / gridSize) * gridSize;
-          if (!collision){
-            setOffset({ dx: snappedX, dy: snappedY });
-          }
+          setOffset({ dx: snappedX, dy: snappedY });
           updateCursor();
       };
 
@@ -82,7 +79,7 @@ const useDraggable = ({gridSize, collision} : {gridSize : number, collision: boo
           const dy = touch.clientY - startPos.y;
           const snappedX = Math.round(dx / gridSize) * gridSize;
           const snappedY = Math.round(dy / gridSize) * gridSize;
-          if (!collision){setOffset({ dx: snappedX, dy: snappedY });}
+          setOffset({ dx: snappedX, dy: snappedY });
           updateCursor();
       };
 
