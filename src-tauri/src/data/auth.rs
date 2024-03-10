@@ -2,9 +2,11 @@ use crate::dir;
 use crate::fs::encryption::{aes_encrypt, aes_decrypt, aes_try_decrypt};
 use crate::data::json::data_bytes;
 use crate::data::json::init_user_data;
-use std::fs::{create_dir, read_dir, File, OpenOptions};
+use std::fs::{create_dir, read_dir, read_to_string, File, OpenOptions};
 use std::io::Write;
+use std::panic::Location;
 use std::path::{Path, PathBuf};
+use base64::decode;
 use serde_json::Value;
 use tauri::{App, AppHandle, Manager, Runtime};
 
@@ -23,10 +25,24 @@ pub fn authenticate_user(name: &str, password: &str) -> bool {
 }
 
 #[tauri::command]
-pub fn load_user<R: Runtime>(app: tauri::AppHandle<R>, window: tauri::Window<R>, name: &str, password: &str) {
+pub fn load_user(name: &str, password: &str){
     println!("{}, {}", name, password);
     let location: &[u8] = &aes_encrypt(name, password, name.as_bytes());
     let location = dir().join(format!("{:?}", location));
+    
+    let encrypted_user = aes_encrypt(name, password, b"user data");
+    let encrypted_user_data_path = location.join(format!("{:?}", encrypted_user));
+    let encrypted_user_data = match read_to_string(encrypted_user_data_path) {
+        Ok(data) => data,
+        Err(e) => {
+            println!("Failed to read user data: {}", e);
+            return;
+        }
+    };
+    let decrypted_base64_data = decode(encrypted_user_data).unwrap();
+    let decrypted_user_data = aes_decrypt(name, password, &decrypted_base64_data);
+    println!("User data: {:?}", decrypted_user_data)
+    
     
 }
 
@@ -43,6 +59,7 @@ pub fn save_user(name: &str, password: &str){
     let encrypted_user_data_base64 = base64::encode(&encrypted_user_data);
     let encrypted_system_data_base64 = base64::encode(&encrypted_system_data);
     let encrypted_system_name = format!("{:?}", aes_encrypt(name, password, b"system data"));
+    println!("{:?}", encrypted_user_data_base64);
     if !location.exists(){create_dir(&location).expect("could not create a directory");}
     if location.join(&encrypted_user_name).exists(){
         OpenOptions::new() 
@@ -83,8 +100,9 @@ pub fn save_user(name: &str, password: &str){
 fn test_authentication(){
     init_user_data();
     init_dir().expect("failed to create the main directory");
-    let name = "test";
-    let password = "test";
+    let name = "Nigger";
+    let password = "Nigger";
     save_user(name, password);
     authenticate_user(name, password);
+    load_user(name, password)
 }
