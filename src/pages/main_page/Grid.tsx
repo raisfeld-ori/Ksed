@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 
 function Grid(props: {apps: ((dx: number, dy: number, draggableRef: (nodeEle: any) => void) => JSX.Element)[], 
   gridSize: number, margin: number}) {
@@ -17,14 +17,15 @@ function Grid(props: {apps: ((dx: number, dy: number, draggableRef: (nodeEle: an
 }
 export default Grid;
 
-export function desktop_app(name: string, image: string){
+export function desktop_app(name: string, image: string, dblclick: () => void){
   return function MakeApp(dx: number, dy: number, ref: ((nodeEle: any) => void)){
   return <div className="draggable"
   ref={ref}
   key={name}
   style={{
   transform: `translate3d(${dx}px, ${dy}px, 0)`,
-    }}>
+    }}
+    onDoubleClick={dblclick}>
       <img src={image} alt={name} className="icon" />
       <p className="name">{name}</p>
   </div>}
@@ -100,7 +101,6 @@ const useDraggable = ({gridSize} : {gridSize : number}) => {
   const resetCursor = () => {
       document.body.style.removeProperty('user-select');
   };
-
   React.useEffect(() => {
       if (!node) {
           return;
