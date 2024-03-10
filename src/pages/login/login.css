@@ -337,6 +337,9 @@
   text-shadow:0 0 10px #006aff;
   box-shadow:0 0 20px rgba(50, 50, 50, 0.5);
 }
+.load .error{
+  color:#ff0000;
+}
 .load:before
 {
   content:'';

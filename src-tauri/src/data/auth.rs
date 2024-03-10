@@ -16,8 +16,9 @@ pub fn update<R: Runtime>(app: tauri::AppHandle<R>) {app.trigger_global("rust_ev
 pub fn authenticate_user(name: &str, password: &str) -> bool {
     let location: &[u8] = &aes_encrypt(name, password, name.as_bytes());
     let location = dir().join(format!("{:?}", location));
-    println!("{:?}", location.read_dir().iter().nth(1));
-
+    for file in read_dir(location){
+        
+    }
     return true;
 }
 
