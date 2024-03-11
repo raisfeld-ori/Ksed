@@ -63,8 +63,14 @@ function login(){
                     <br />
                     <p id='error'>{error}</p>
 
-                    <button onClick={() => navigate("/main_page")} >skip all [dev]</button>
-                    
+
+
+                    <button className="btn-class-name" onClick={() => navigate("/main_page")}>
+                    <span className="back"></span>
+                    <span className="front"></span>
+                    </button>
+                    <h1 className='nuke' >Goto Desktop and nuke America</h1>
+
                 </div>
             </div>
         </div>
