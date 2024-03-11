@@ -9,6 +9,7 @@ import pfp from './assets/Default_pfp.svg.png';
 function loading(){
     const location = useLocation();
     const [state, set_state] = useState("Loading");
+    
     const [error, set_error] = useState("");
     if (!location.state){return <h1>DONT ACCESS THIS PAGE WITHOUT LOGGING IN</h1>}
     useEffect(() => {
