@@ -466,3 +466,12 @@
   margin-top: 2svh;
   font-size: 2em;
 }
+
+.nuke2{
+
+  color: rgb(0, 94, 255);
+  font-weight: bold;
+  cursor: not-allowed;
+  margin-top: 2svh;
+  font-size: 0.7em;
+}
