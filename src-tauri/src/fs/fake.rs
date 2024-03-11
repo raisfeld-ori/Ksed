@@ -129,7 +129,7 @@ trait DirTrait {
 #[test]
 fn test_directory(){
     let mut home = Home::new();
-    let dir_name = String::from("ori's_secret_directory");
+    let dir_name = String::from("ori's_feetpics_directory");
     // Unit testing for directory commands.
     home.mkdir(dir_name.clone());
     assert!(home.rmdir(dir_name.clone()).is_ok());
