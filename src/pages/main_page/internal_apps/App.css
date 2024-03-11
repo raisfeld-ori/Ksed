@@ -1,6 +1,48 @@
-.frame{
+.frame {
     position: absolute;
     display: block;
-    border: 20px black;
+    border: 2px #0202022f;
     border-style: solid;
+    padding-left: 350px;
+    cursor: move;
+    font-size: 0.5em;
+    color: white    ;
+    flex-direction: column;
+    display: flex;
+    align-items: flex-start;
+    background-color: #333;
+}
+.sexy{
+    color: white;
+    font-weight: normal;
+}
+.frame-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.minimize-btn, .close-btn {
+    background-color: #00000000;
+    color: white;
+    border-radius: 10px;
+    padding: 0.1px 10px;
+    margin-top: 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.minimize-btn {
+    margin-left: 350px;
+}
+
+.palace{
+    margin-top: 30svh;
+}
+.test{
+    border: 2px ;
 }

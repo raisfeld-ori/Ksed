@@ -1,27 +1,47 @@
-import React, {useState} from "react";
-import {useDraggable} from '../Grid';
+import React, { useState, RefObject } from "react";
+import { useDraggable } from '../Grid';
 import './App.css';
 
-enum state{
+enum State {
     Normal,
     Minimized,
     FullScreen
 }
 
-function App(props: {element: React.JSX.Element, name: string}){
-    const [ref, dx, dy] = useDraggable({gridSize: 10});
-    const [app_state, set_app_state] = useState(state.Normal)
-    return <div 
-    className="frame"
-    style={{
-        transform: `translate3d(${dx}px, ${dy}px, 0)`,
-          }}
-    //@ts-expect-error
-    ref={ref}
-    key={props.name}
-    >
-        {props.element}
+interface AppProps {
+    element: React.ReactElement;
+    name: string;
+}
+
+function App({ element, name }: AppProps) {
+    let [ref, dx, dy] = useDraggable({ gridSize: 10 });
+    const [appState, setAppState] = useState(State.Normal);
+    dx = 500;
+    dy = 200;
+    return (
+        <div 
+            className="frame"
+            style={{
+                transform: `translate3d(${dx}px, ${dy}px, 0)`,
+            }}
+            //@ts-expect-error
+            ref={ref}
+            key={name}
+        >
+            <div className="frame-content">
+                <h1 className="sexy">{name}</h1>
+                <div className="frame-buttons">
+                    <button className="minimize-btn">-</button>
+                    <button className="close-btn">x</button>
+                </div>
+            </div>
+            
+            <div className="palace"></div>
+            {element}
+            <h1>e</h1>
         </div>
+        
+    );
 }
 
 export default App;
