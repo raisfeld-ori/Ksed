@@ -1,3 +1,5 @@
+            //@ts-expect-error
+
 import React, { useState, RefObject } from "react";
 import { useDraggable } from '../Grid';
 import './App.css';
@@ -15,6 +17,7 @@ interface AppProps {
 
 function App({ element, name }: AppProps) {
     let [ref, dx, dy] = useDraggable({ gridSize: 10 });
+                //@ts-expect-error
     const [appState, setAppState] = useState(State.Normal);
     dx = 500;
     dy = 200;
@@ -31,6 +34,7 @@ function App({ element, name }: AppProps) {
             <div className="frame-content">
                 <h1 className="sexy">{name}</h1>
                 <div className="frame-buttons">
+                //@ts-expect-error
                     <button className="minimize-btn">-</button>
                     <button className="close-btn">x</button>
                 </div>
