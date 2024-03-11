@@ -1,0 +1,6 @@
+.frame{
+    position: absolute;
+    display: block;
+    border: 20px black;
+    border-style: solid;
+}

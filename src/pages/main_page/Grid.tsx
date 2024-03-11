@@ -31,7 +31,7 @@ export function desktop_app(name: string, image: string, dblclick: () => void){
   </div>}
 }
 
-const useDraggable = ({gridSize} : {gridSize : number}) => {
+export const useDraggable = ({gridSize} : {gridSize : number}) => {
   const [node, setNode] = React.useState<HTMLElement | null>(null);
   const [{ dx, dy }, setOffset] = React.useState({
       dx: 0,
