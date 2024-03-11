@@ -17,16 +17,19 @@ interface AppProps {
 
 function App({ element, name }: AppProps) {
     let [ref, dx, dy] = useDraggable({ gridSize: 10 });
-                //@ts-expect-error
-    const [appState, setAppState] = useState(State.Normal);
     dx = 500;
     dy = 200;
+                //@ts-expect-error
+    const [appState, setAppState] = useState(State.Normal);
+
     return (
         <div 
             className="frame"
             style={{
                 transform: `translate3d(${dx}px, ${dy}px, 0)`,
+                
             }}
+            
             //@ts-expect-error
             ref={ref}
             key={name}
@@ -34,7 +37,6 @@ function App({ element, name }: AppProps) {
             <div className="frame-content">
                 <h1 className="sexy">{name}</h1>
                 <div className="frame-buttons">
-                //@ts-expect-error
                     <button className="minimize-btn">-</button>
                     <button className="close-btn">x</button>
                 </div>
