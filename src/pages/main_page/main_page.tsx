@@ -10,7 +10,7 @@ import { useState } from 'react';
 
 export default function main_page(){
     const [fs, set_fs] = useState(<></>);
-    const example_app = desktop_app("example app", folder, file_system(set_fs));
+    const example_app = desktop_app("Dolphin", folder, file_system(set_fs));
     const not_example_app = desktop_app("not example app", search, () => {console.log("test");});
 
     return <div id='background'>
