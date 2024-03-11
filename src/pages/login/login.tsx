@@ -69,7 +69,7 @@ function login(){
                     <span className="back"></span>
                     <span className="front"></span>
                     </button>
-                    <h1 className='nuke' >Goto Desktop and nuke America</h1>
+                    <h1 className='nuke' >NUKE AMERICA! <br /><span className='nuke2'>(and go to desktop)</span></h1>
 
                 </div>
             </div>
