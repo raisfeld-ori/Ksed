@@ -407,8 +407,8 @@
 /* --------------------- DEV ACCESS BUTTONS ---------------------*/
 
 .btn-class-name {
-  --primary: 255, 90, 120;
-  --secondary: 150, 50, 60;
+  --primarybutton: 255, 90, 120;
+  --secondarybutton: 150, 50, 60;
   width: 60px;
   height: 50px;
   margin-top: 5svh;
@@ -417,14 +417,14 @@
   cursor: pointer;
   user-select: none;
   touch-action: manipulation;
-  outline: 10px solid rgb(var(--primary), .5);
+  outline: 10px solid rgb(var(--primarybutton), .5);
   border-radius: 100%;
   position: relative;
   transition: .4s;
 }
 
 .btn-class-name .back {
-  background: rgb(var(--secondary));
+  background: rgb(var(--secondarybutton));
   border-radius: 100%;
   position: absolute;
   left: 0;
@@ -434,11 +434,11 @@
 }
 
 .btn-class-name .front {
-  background: linear-gradient(0deg, rgba(var(--primary), .6) 20%, rgba(var(--primary)) 50%);
-  box-shadow: 0 .5em 1em -0.2em rgba(var(--secondary), .5);
+  background: linear-gradient(0deg, rgba(var(--primarybutton), .6) 20%, rgba(var(--primarybutton)) 50%);
+  box-shadow: 0 .5em 1em -0.2em rgba(var(--secondarybutton), .5);
   border-radius: 100%;
   position: absolute;
-  border: 1px solid rgb(var(--secondary));
+  border: 1px solid rgb(var(--secondarybutton));
   left: 0;
   top: 0;
   width: 100%;
@@ -451,7 +451,7 @@
   font-family: inherit;
   transform: translateY(-15%);
   transition: .15s;
-  color: rgb(var(--secondary));
+  color: rgb(var(--secondarybutton));
 }
 
 .btn-class-name:active .front {
