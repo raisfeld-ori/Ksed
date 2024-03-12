@@ -47,6 +47,6 @@ pwd - shows your current path
 }
 fn main() {
    tauri::Builder::default().invoke_handler(tauri::generate_handler![
-    first_init, list_commands, printf, user_get, authenticate_user, update, save_user, load_user, mkdir, rmdir, cd, cat, pwd,
+    first_init, list_commands, printf, user_get, authenticate_user, update, save_user, load_user, mkdir, rmdir, cd, cat, pwd
 ]).run(tauri::generate_context!()).expect("failed to run the code");
    }
