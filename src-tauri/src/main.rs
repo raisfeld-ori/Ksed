@@ -7,7 +7,7 @@ use tauri::Runtime;
 use crate::data::json::{init_user_data, user_get};
 use dirs::data_dir;
 use crate::data::auth::{init_dir, save_user, authenticate_user, update, load_user};
-use crate::fs::fake::{mkdir, rmdir, cd, cat, pwd};
+use crate::fs::fake::{pwd, ls, FS};
 
 pub fn dir() -> PathBuf {data_dir().expect("failed to enter data directory").join("d_vault_data")}
 
@@ -17,6 +17,7 @@ async fn first_init<R: Runtime>(app: tauri::AppHandle<R>, window: tauri::Window<
     window.set_fullscreen(true);
     init_user_data();
     init_dir();
+    unsafe{FS.init_fs()};
     Ok(())
 }
 
@@ -47,6 +48,6 @@ pwd - shows your current path
 }
 fn main() {
    tauri::Builder::default().invoke_handler(tauri::generate_handler![
-    first_init, list_commands, console, user_get, authenticate_user, update, save_user, load_user, mkdir, rmdir, cd, cat, pwd
+    first_init, list_commands, console, user_get, authenticate_user, update, save_user, load_user, ls, pwd
 ]).run(tauri::generate_context!()).expect("failed to run the code");
    }
