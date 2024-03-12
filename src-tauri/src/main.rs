@@ -20,7 +20,7 @@ async fn first_init<R: Runtime>(app: tauri::AppHandle<R>, window: tauri::Window<
 }
 
 #[tauri::command]
-async fn printf(value: String) {println!("{}", value)}
+async fn console(value: String) {println!("{}", value)}
 
 // VERY IMPORTANT: as of now (29/2/2024) there is no way to figure out the commands
 // in the tauri handler, so this needs to be written manually
@@ -30,7 +30,7 @@ async fn list_commands() -> String {
 r#"
 commands:
 list_commands - prints this text out
-printf - print something out to the terminal
+console - print something out to the terminal
 first_init - initializes the app
 user_get - returns a saved object
 authenticate_user - makes sure the user's password and name are right
@@ -41,6 +41,6 @@ load_user - load an existing user
 }
 fn main() {
    tauri::Builder::default().invoke_handler(tauri::generate_handler![
-    first_init, list_commands, printf, user_get, authenticate_user, update, save_user, load_user
+    first_init, list_commands, console, user_get, authenticate_user, update, save_user, load_user
 ]).run(tauri::generate_context!()).expect("failed to run the code");
    }
