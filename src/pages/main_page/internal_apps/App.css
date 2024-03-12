@@ -1,4 +1,4 @@
-.frame {
+.frametest {
     position: absolute;
     display: block;
     border: 2px #0202022f;
@@ -7,10 +7,35 @@
     cursor: move;
     font-size: 0.5em;
     color: white    ;
-    flex-direction: column;
+    width: 873px;
+    max-width: 100%;
+    display: flex;
+    align-items: flex-start;
+    background-color: #2f2f2f;
+    
+}
+.frametest2 {
+    position: absolute;
+    display: block;
+    margin-top: 3.7svh;
+    border: 2px #0000001e;
+    border-style: solid;
+    cursor: move;
+    font-size: 1em;
+    color: white    ;
+    width: 873px;
+    max-width: 100%;
+
     display: flex;
     align-items: flex-start;
     background-color: #333;
+    height: 50svh;    
+}
+
+.filesystemtxt {
+    font-size: 1em;
+    text-align: left;
+
 }
 .sexy{
     color: white;
@@ -37,12 +62,9 @@
 }
 
 .minimize-btn {
-    margin-left: 350px;
+    padding-left: 330px;
 }
 
-.palace{
-    
-}
 .test{
     border: 2px ;
 }
