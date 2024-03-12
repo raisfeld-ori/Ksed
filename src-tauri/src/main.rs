@@ -7,6 +7,7 @@ use tauri::Runtime;
 use crate::data::json::{init_user_data, user_get};
 use dirs::data_dir;
 use crate::data::auth::{init_dir, save_user, authenticate_user, update, load_user};
+use crate::fs::fake::{mkdir, rmdir, cd, cat, pwd};
 
 pub fn dir() -> PathBuf {data_dir().expect("failed to enter data directory").join("d_vault_data")}
 
@@ -37,10 +38,15 @@ authenticate_user - makes sure the user's password and name are right
 update - calls the "rust_event" event (document.addEventListener('rust_event', () => {/*your code here*/}))
 save_user - saves the current existing user
 load_user - load an existing user
+cd - enters a directory
+cat - look what's inside a file if the file does not exists it creats the file
+mkdir - creats a new directory
+rmdir - removes a directory
+pwd - shows your current path
 "#)
 }
 fn main() {
    tauri::Builder::default().invoke_handler(tauri::generate_handler![
-    first_init, list_commands, console, user_get, authenticate_user, update, save_user, load_user
+    first_init, list_commands, printf, user_get, authenticate_user, update, save_user, load_user, mkdir, rmdir, cd, cat, pwd
 ]).run(tauri::generate_context!()).expect("failed to run the code");
    }
