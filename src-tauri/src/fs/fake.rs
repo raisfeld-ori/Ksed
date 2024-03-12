@@ -17,6 +17,19 @@ pub fn pwd() -> String{return unsafe {
 }}
 
 #[tauri::command]
+pub fn cd(new: String) {
+    unsafe{
+        for item in FS.current_dir.Files.iter(){
+            let dir = item.get_directory();
+            if dir.is_none(){continue}
+            // if you use an else block then dir will need to be mutable
+            let dir = dir.unwrap();
+            if dir.name == new{FS.cd(dir);}
+        }
+    }
+} 
+
+#[tauri::command]
 pub fn ls() -> Vec<String> {
   unsafe {FS.current_dir.Files.iter().map(|item| 
     match item{
@@ -35,6 +48,8 @@ pub struct Home{
 impl Home{
     pub const fn new() -> Self{return Home{path: Vec::new(), current_dir: Directory::new(String::new())}}
     pub fn init_fs(&mut self) {self.path = Vec::new();self.current_dir = Directory::new(String::from("Home"));}
+    pub fn cd_back(&mut self) {if self.path.len() > 1 {self.path.pop();self.current_dir = self.path.last().unwrap().clone();}}
+    pub fn cd(&mut self, new: Directory) {self.current_dir = new.clone();self.path.push(new);}
 }
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
@@ -49,6 +64,10 @@ impl Directory{
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum DiretoryItems{File(File),Directory(Directory)}
+
+impl DiretoryItems{
+    pub fn get_directory(&self) -> Option<Directory>{match self{Self::Directory(dir)=>{Some(dir.clone())} _=>{None}}}
+}
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct File{
