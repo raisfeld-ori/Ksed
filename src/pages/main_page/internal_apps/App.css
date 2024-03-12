@@ -13,7 +13,28 @@
     align-items: flex-start;
     background-color: #2f2f2f;
     
+    
 }
+
+.ApplicationDirectory {
+    position: absolute;
+    display: block;
+    border-left: 2px #0202022f;
+    border-right: 2px #0202022f;
+    border-bottom: 2px #0202022f;
+    border-top: #2f2f2f;
+    border-style: solid;
+    cursor: move;
+    font-size: 1em;
+    color: white    ;
+    width: 873px;
+    max-width: 100%;
+    display: flex;
+    align-items: flex-start;
+    background-color: #2f2f2f;
+    height: 3.8svh;    
+}
+
 .frametest2 {
     position: absolute;
     display: block;
@@ -35,6 +56,13 @@
 .filesystemtxt {
     font-size: 1em;
     text-align: left;
+
+}
+.filesystemtxt2 {
+    font-size: 1.5em;
+    text-align: left;
+    font-weight: lighter;
+    font-style: italic;
 
 }
 .sexy{
@@ -68,3 +96,4 @@
 .test{
     border: 2px ;
 }
+
