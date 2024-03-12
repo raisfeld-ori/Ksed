@@ -1,8 +1,35 @@
 
-use serde::{Serialize, Deserialize};
+use std::{fs, io};
+use crate::dir;
+use serde::{de, Deserialize, Serialize};
 use tauri::api::file;
 
 pub static mut FS: Home = Home::new();
+
+#[tauri::command]
+pub async fn save_user_dir(home: Home, path: String) -> Result<(), String> {
+  let location = dir().join(format!("{}", path));
+  let serialized_home = serde_json::to_string(&home).map_err(|e| e.to_string())?;
+  location.join(serialized_home);
+  Ok(())
+ 
+}
+#[tauri::command]
+pub async fn load_user_dir(path: String) -> Result<Vec<Home>, String> {
+    let file = fs::File::open(&path).map_err(|e| e.to_string())?;
+    let reader = io::BufReader::new(file);
+    let deserializer = serde_json::Deserializer::from_reader(reader);
+    let iterator = deserializer.into_iter::<Home>();
+
+    let mut homes = Vec::new();
+    for item in iterator{
+        match item{
+            Ok(home) => homes.push(home),
+            Err(e) => return Err(e.to_string()),
+        }
+    }
+    Ok(homes)
+}
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, PartialOrd)]
 pub struct File{
