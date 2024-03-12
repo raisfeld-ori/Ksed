@@ -3,7 +3,7 @@
     display: block;
     border: 2px #0202022f;
     border-style: solid;
-    padding-left: 350px;
+    padding-left: 373px;
     cursor: move;
     font-size: 0.5em;
     color: white    ;
@@ -90,7 +90,7 @@
 }
 
 .minimize-btn {
-    padding-left: 330px;
+    padding-left: 373px;
 }
 
 .test{
