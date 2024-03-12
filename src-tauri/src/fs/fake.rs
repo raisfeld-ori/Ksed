@@ -2,15 +2,20 @@
 use std::{fs, io};
 use crate::dir;
 use serde::{de, Deserialize, Serialize};
-use tauri::api::file;
+use tauri::{api::file, App};
+use base64::{self, decode, encode};
+
+use super::encryption::aes_encrypt;
 
 pub static mut FS: Home = Home::new();
 
 #[tauri::command]
-pub async fn save_user_dir(home: Home, path: String) -> Result<(), String> {
+pub async fn save_user_dir(name: &str, password: &str ,home: Home, path: String) -> Result<(), String> {
   let location = dir().join(format!("{}", path));
-  let serialized_home = serde_json::to_string(&home).map_err(|e| e.to_string())?;
-  location.join(serialized_home);
+  let serialized_home = serde_json::to_vec(&home).map_err(|e| e.to_string())?;
+  let encrypted_file_name = aes_encrypt(name, password, &serialized_home);
+  let serialized_home_base64 = encode(encrypted_file_name);
+  location.join(serialized_home_base64);
   Ok(())
  
 }
@@ -30,7 +35,52 @@ pub async fn load_user_dir(path: String) -> Result<Vec<Home>, String> {
     }
     Ok(homes)
 }
+#[tauri::command]
+pub async fn cd(dir: String) -> Option<Directory> {
+  unsafe {let cd = FS.cd(dir);
+  return cd.cloned();}
+}
+#[tauri::command]
+pub async fn cat(file_name: String, content: Option<String>) -> Option<()> {
+    unsafe {if let Some(content) = content {
+        FS.add_file(file_name, content.into_bytes().to_vec());
+        Some(())
+    } else {
+        match FS.find_file(&file_name) {
+            Some(file) => {
+                let content = String::from_utf8(file.data.clone()).unwrap();
+                println!("{}", content);
+                Some(())
+            },
+            None => None,
+        }
+    }
+}
+}
+#[tauri::command]
+pub async fn mkdir(dir: String){
+    unsafe {FS.directories.push(Directory::new(dir))}
+}
+#[tauri::command]
+pub async fn rmdir(dir: String) -> Result<(), Option<String>> {
+    unsafe {let index = FS.directories.iter().position(|d| d.name == dir);
+        match index{
+            Some(idx) => {
+                FS.directories.remove(idx);
+                if FS.path.ends_with(&dir) {
+                    FS.path.truncate(FS.path.len() - dir.len());
+                }
+                Ok(())
+            },
+            None => Err(Some(format!("Directory '{}' not found", dir)))
+        }
 
+    }
+}
+#[tauri::command]
+pub async fn pwd() -> String {
+  unsafe {"home".to_string() + FS.path.as_str()}
+}
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, PartialOrd)]
 pub struct File{
     pub name: String,
