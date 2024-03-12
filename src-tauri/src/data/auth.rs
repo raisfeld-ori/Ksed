@@ -18,31 +18,38 @@ pub fn update<R: Runtime>(app: tauri::AppHandle<R>) {app.trigger_global("rust_ev
 pub fn authenticate_user(name: &str, password: &str) -> bool {
     let location: &[u8] = &aes_encrypt(name, password, name.as_bytes());
     let location = dir().join(format!("{:?}", location));
-    for file in read_dir(location){
-        
-    }
-    return true;
+    let encrypted_user = aes_encrypt(name, password, b"user data");
+        if !location.exists() {
+            return false;
+        }
+        else {
+            let decrypted_user_data = aes_try_decrypt(name, password, &encrypted_user);
+            return decrypted_user_data;
+        }
 }
+
 
 #[tauri::command]
 pub fn load_user(name: &str, password: &str){
     println!("{}, {}", name, password);
     let location: &[u8] = &aes_encrypt(name, password, name.as_bytes());
     let location = dir().join(format!("{:?}", location));
-    
-    let encrypted_user = aes_encrypt(name, password, b"user data");
-    let encrypted_user_data_path = location.join(format!("{:?}", encrypted_user));
-    let encrypted_user_data = match read_to_string(encrypted_user_data_path) {
-        Ok(data) => data,
-        Err(e) => {
-            println!("Failed to read user data: {}", e);
-            return;
-        }
-    };
-    let decrypted_base64_data = decode(encrypted_user_data).unwrap();
-    let decrypted_user_data = aes_decrypt(name, password, &decrypted_base64_data);
-    println!("User data: {:?}", decrypted_user_data)
-    
+
+    if !location.exists() {
+        println!("User directory does not exits");
+        return;
+    }
+    for entry in read_dir(location).expect("failed to read directory"){
+        let entry = entry.expect("failed to read file");
+        let path = entry.path();
+        let file_name = path.file_name().expect("failed to get file name").to_str().expect("failed to convert file name into string");
+        let decoded_file_name = decode(file_name).unwrap();
+        let decrypted_file_name = aes_decrypt(name, password, &decoded_file_name);
+            
+        let encrypted_content = read_to_string(&path).expect("failed to read file content");
+        let decrypted_content = aes_decrypt(name, password, &decode(encrypted_content).expect("failed to decode encrypted file content"));
+
+    }
     
 }
 
@@ -59,7 +66,6 @@ pub fn save_user(name: &str, password: &str){
     let encrypted_user_data_base64 = base64::encode(&encrypted_user_data);
     let encrypted_system_data_base64 = base64::encode(&encrypted_system_data);
     let encrypted_system_name = format!("{:?}", aes_encrypt(name, password, b"system data"));
-    println!("{:?}", encrypted_user_data_base64);
     if !location.exists(){create_dir(&location).expect("could not create a directory");}
     if location.join(&encrypted_user_name).exists(){
         OpenOptions::new() 
