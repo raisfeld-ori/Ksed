@@ -7,7 +7,7 @@ use tauri::Runtime;
 use crate::data::json::{init_user_data, user_get};
 use dirs::data_dir;
 use crate::data::auth::{init_dir, save_user, authenticate_user, update, load_user};
-use crate::fs::fake::{pwd, ls, FS};
+use crate::fs::fake::{pwd, ls, FS, cd};
 
 pub fn dir() -> PathBuf {data_dir().expect("failed to enter data directory").join("d_vault_data")}
 
@@ -48,6 +48,6 @@ pwd - shows your current path
 }
 fn main() {
    tauri::Builder::default().invoke_handler(tauri::generate_handler![
-    first_init, list_commands, console, user_get, authenticate_user, update, save_user, load_user, ls, pwd
+    first_init, list_commands, console, user_get, authenticate_user, update, save_user, load_user, ls, pwd, cd
 ]).run(tauri::generate_context!()).expect("failed to run the code");
    }
