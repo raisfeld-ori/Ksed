@@ -19,6 +19,7 @@
 .ApplicationDirectory {
     position: absolute;
     display: block;
+    border-top: 2px #0202022f;
     border-left: 2px #0202022f;
     border-right: 2px #0202022f;
     border-bottom: 2px #0202022f;
