@@ -17,8 +17,7 @@ interface AppProps {
 
 function App({ element, name }: AppProps) {
     let [ref, dx, dy] = useDraggable({ gridSize: 10 });
-    dx = 500;
-    dy = 200;
+
                 //@ts-expect-error
     const [appState, setAppState] = useState(State.Normal);
 
@@ -34,17 +33,14 @@ function App({ element, name }: AppProps) {
             ref={ref}
             key={name}
         >
-            <div className="frame-content">
+            <div className="frametest">
                 <h1 className="sexy">{name}</h1>
                 <div className="frame-buttons">
                     <button className="minimize-btn">-</button>
                     <button className="close-btn">x</button>
                 </div>
             </div>
-            
-            <div className="palace"></div>
             {element}
-            <h1>e</h1>
         </div>
         
     );
