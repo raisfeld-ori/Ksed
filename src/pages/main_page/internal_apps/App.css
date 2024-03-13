@@ -3,7 +3,7 @@
     display: block;
     border: 2px #0202022f;
     border-style: solid;
-    padding-left: 350px;
+    padding-left: 373px;
     cursor: move;
     font-size: 0.5em;
     color: white    ;
@@ -19,6 +19,7 @@
 .ApplicationDirectory {
     position: absolute;
     display: block;
+    border-top: 2px #0202022f;
     border-left: 2px #0202022f;
     border-right: 2px #0202022f;
     border-bottom: 2px #0202022f;
@@ -90,7 +91,7 @@
 }
 
 .minimize-btn {
-    padding-left: 330px;
+    padding-left: 373px;
 }
 
 .test{
