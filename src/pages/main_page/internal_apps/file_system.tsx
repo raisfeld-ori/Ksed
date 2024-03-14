@@ -28,6 +28,13 @@ function file_system(set_fs_html: React.Dispatch<React.SetStateAction<JSX.Elemen
     function id(){return (internal_id + 1).toString();}
     document.addEventListener('contextmenu', right_click);
     return () => {
+        let Application = <div className='ApplicationDirectory'>
+                    <h1 className='filesystemtxt2'>/{location}/</h1>
+        </div>
+            
+    let app_html = <div className='frametest2'>
+            {Application}
+
     let app_html = <div className='frametest2'>
         <div className='ApplicationDirectory'>
             <h1 className='filesystemtxt2'>/{location}/</h1>
