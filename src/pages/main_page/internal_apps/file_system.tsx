@@ -11,12 +11,12 @@ function file_system(set_fs_html: React.Dispatch<React.SetStateAction<JSX.Elemen
     invoke("pwd", {}).then(result => set_location(result)).catch(console.log);
     console.log(files, ", ", location);
     return () => {
-        let SkipidiToilet = <div className='ApplicationDirectory'>
+        let Application = <div className='ApplicationDirectory'>
                     <h1 className='filesystemtxt2'>/{location}/</h1>
         </div>
             
     let app_html = <div className='frametest2'>
-            {SkipidiToilet}
+            {Application}
 
 
     </div>;
