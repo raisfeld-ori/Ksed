@@ -31,6 +31,7 @@
     width: 873px;
     max-width: 100%;
     display: flex;
+    z-index: 99;
     align-items: flex-start;
     background-color: #2f2f2f;
     height: 3.8svh;    
@@ -50,8 +51,20 @@
 
     display: flex;
     align-items: flex-start;
-    background-color: #333;
+    background-color: #333333df;
     height: 50svh;    
+    backdrop-filter: blur(10px);
+
+}
+
+.frametest {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.frametest2{
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 .filesystemtxt {
@@ -63,6 +76,7 @@
     font-size: 1.5em;
     text-align: left;
     font-weight: lighter;
+    color: rgb(189, 184, 184);
     font-style: italic;
 
 }
