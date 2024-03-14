@@ -1,13 +1,22 @@
-
-use std::{fs, io};
+use std::{fs::{self, read}, io::Write, path::PathBuf};
 use crate::dir;
 use serde::{Deserialize, Serialize};
-use tauri::{App};
+use serde_json::to_vec;
 use base64::{self, decode, encode};
 
-use super::encryption::aes_encrypt;
+use crate::fs::encryption::{aes_decrypt, xor_encrypt};
 
 pub static mut FS: Home = Home::new();
+
+pub fn save_fs(name: String, password: String) -> Result<(), String>{
+    let dir = dir();
+    let fs_bytes = unsafe{to_vec(&FS)};
+    if fs_bytes.is_err(){return Err(format!("{}", fs_bytes.unwrap_err()));}
+    let fs_bytes = fs_bytes.unwrap();
+    let dir = dir.join(encode(xor_encrypt(b"encrypt".to_vec(), &fs_bytes)));
+    println!("{:?}", dir.as_path());
+    Ok(())
+}
 
 #[tauri::command]
 pub fn pwd() -> String{return unsafe {
@@ -19,7 +28,7 @@ pub fn pwd() -> String{return unsafe {
 #[tauri::command]
 pub fn cd(new: String) {
     unsafe{
-        for item in FS.current_dir.Files.iter(){
+        for item in FS.current_dir.files.iter(){
             let dir = item.get_directory();
             if dir.is_none(){continue}
             // if you use an else block then dir will need to be mutable
@@ -31,7 +40,7 @@ pub fn cd(new: String) {
 
 #[tauri::command]
 pub fn ls() -> Vec<String> {
-  unsafe {FS.current_dir.Files.iter().map(|item| 
+  unsafe {FS.current_dir.files.iter().map(|item| 
     match item{
         DiretoryItems::Directory(dir) => dir.name.clone(),
         DiretoryItems::File(file) => file.name.clone()
@@ -54,12 +63,12 @@ impl Home{
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Directory{
-    Files: Vec<DiretoryItems>,
+    files: Vec<DiretoryItems>,
     name: String,
 }
 
 impl Directory{
-    pub const fn new(name: String) -> Self{return Directory{name: name, Files: Vec::new()}}
+    pub const fn new(name: String) -> Self{return Directory{name: name, files: Vec::new()}}
 }
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
@@ -72,4 +81,19 @@ impl DiretoryItems{
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct File{
     name: String,
+    location: PathBuf,
+}
+impl File{
+    pub fn open(&self) -> Option<Vec<u8>> {
+        let data = read(self.location.as_path());
+        if data.is_err(){return None;}
+        // i'l keep on working on it later
+        None
+    }
+}
+
+#[test]
+fn test_fs(){
+    let err = save_fs(String::from("test"), String::from("test"));
+    println!("{}", err);
 }

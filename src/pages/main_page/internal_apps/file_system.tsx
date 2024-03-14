@@ -24,8 +24,6 @@ function file_system(set_fs_html: React.Dispatch<React.SetStateAction<JSX.Elemen
         //set_menu(true);
 
     }
-    let internal_id = 0;
-    function id(){return (internal_id + 1).toString();}
     document.addEventListener('contextmenu', right_click);
     return () => {
     let app_html = <div className='frametest2'>
@@ -35,7 +33,7 @@ function file_system(set_fs_html: React.Dispatch<React.SetStateAction<JSX.Elemen
 
         {menu_open && <ContextMenu />}
     </div>;
-    let app = <App element={app_html} id={id()}  name='feet pics'/>;
+    let app = <App element={app_html} name='feet pics'/>;
     set_fs_html(app);
 };
 }
