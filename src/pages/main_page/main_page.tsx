@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import './main_page.css';
-
+import { State } from './internal_apps/App';
 import Grid from './Grid';
 import folder from './assets/folder.png';
 import menu_icon from './assets/computer-laptop-color-icon.webp';
@@ -13,15 +13,14 @@ import { desktop_app } from './Grid';
 
 
 export default function MainPage() {
-    const [fs, set_fs] = useState(<></>);
-    const example_app = desktop_app("Dolphin", folder, file_system(set_fs));
+    const [app, fs_display] = file_system();
+    const example_app = desktop_app("Dolphin", folder, () => {fs_display('inherit')});
     const not_example_app = desktop_app("Search", search, () => { console.log("test"); });
     const terminal = desktop_app("Terminal", terminald, () => {});
 
     return (
         <div id='background'>
-
-            {fs}
+            {app}
             <Grid apps={[example_app, not_example_app, terminal]} gridSize={50} margin={120} />
             <nav className='navbar'>
                 <img className='homeimg' src={menu_icon} alt="" />

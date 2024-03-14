@@ -3,6 +3,7 @@
     display: block;
     border: 2px #0202022f;
     border-style: solid;
+    z-index: 99;
     padding-left: 373px;
     cursor: move;
     font-size: 0.5em;
@@ -14,6 +15,11 @@
     background-color: #2f2f2f;
     
     
+}
+
+.frame{
+    z-index: 9;
+    position:sticky;
 }
 
 .ApplicationDirectory {
@@ -31,7 +37,6 @@
     width: 873px;
     max-width: 100%;
     display: flex;
-    z-index: 99;
     align-items: flex-start;
     background-color: #2f2f2f;
     height: 3.8svh;    
@@ -45,10 +50,10 @@
     border-style: solid;
     cursor: move;
     font-size: 1em;
-    color: white    ;
+    color: white;
     width: 873px;
     max-width: 100%;
-
+    z-index: 99;
     display: flex;
     align-items: flex-start;
     background-color: #333333df;
