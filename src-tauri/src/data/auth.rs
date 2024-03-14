@@ -6,7 +6,7 @@ use std::fs::{create_dir, read_dir, read_to_string, File, OpenOptions};
 use std::io::Write;
 use std::panic::Location;
 use std::path::{Path, PathBuf};
-use base64::decode;
+use base64::{decode, encode};
 use serde_json::Value;
 use tauri::{App, AppHandle, Manager, Runtime};
 
@@ -15,17 +15,17 @@ pub fn init_dir() -> Result<(), std::io::Error>{if dir().exists() {Ok(())}else{c
 pub fn update<R: Runtime>(app: tauri::AppHandle<R>) {app.trigger_global("rust_event", None)}
 
 #[tauri::command]
-pub fn authenticate_user(name: &str, password: &str) -> bool {
-    let location: &[u8] = &aes_encrypt(name, password, name.as_bytes());
-    let location = dir().join(format!("{:?}", location));
-    let encrypted_user = aes_encrypt(name, password, b"user data");
-        if !location.exists() {
-            return false;
-        }
-        else {
-            let decrypted_user_data = aes_try_decrypt(name, password, &encrypted_user);
-            return decrypted_user_data;
-        }
+pub fn authenticate_user(name: &str, password: &str) -> bool{
+    let location = encode(aes_encrypt(name, password, name.as_bytes()));
+    let location = dir().join(location);
+    if !location.exists(){return false;}
+    for entry in read_dir(location).unwrap(){
+        if entry.is_err(){continue;}
+        let entry = entry.unwrap();
+        let entry = entry.file_name().as_os_str();
+        
+    }
+    return true;
 }
 
 
