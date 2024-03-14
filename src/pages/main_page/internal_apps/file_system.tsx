@@ -2,13 +2,6 @@ import App from './App';
 import { invoke } from '@tauri-apps/api';
 import { useState } from 'react';
 
-function ContextMenu(){
-    
-    return <div>
-        text here
-    </div>
-}
-
 function file_system(set_fs_html: React.Dispatch<React.SetStateAction<JSX.Element>>){
     const [location, set_location] = useState("Home");
     const [files, set_files] = useState([]);
@@ -26,12 +19,14 @@ function file_system(set_fs_html: React.Dispatch<React.SetStateAction<JSX.Elemen
     }
     document.addEventListener('contextmenu', right_click);
     return () => {
-    let app_html = <div className='frametest2'>
-        <div className='ApplicationDirectory'>
-            <h1 className='filesystemtxt2'>/{location}/</h1>
+        let Application = <div className='ApplicationDirectory'>
+                    <h1 className='filesystemtxt2'>/{location}/</h1>
         </div>
+            
+    let app_html = <div className='frametest2'>
+            {Application}
 
-        {menu_open && <ContextMenu />}
+
     </div>;
     let app = <App element={app_html} name='feet pics'/>;
     set_fs_html(app);
