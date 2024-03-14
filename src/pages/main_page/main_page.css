@@ -58,7 +58,6 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 10svw;
 }
 
 .selected{
@@ -83,3 +82,4 @@
   user-select: none;
   height: 5svh;
 }
+
