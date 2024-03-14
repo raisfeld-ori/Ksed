@@ -4,7 +4,6 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
-  
 
 }
 .name{
@@ -20,6 +19,7 @@
   bottom: 0;
   height: 5svh;
   backdrop-filter: blur(10px);
+
   width: 100%;
  }
 
@@ -104,7 +104,7 @@ color: white;
   margin-top: 1svh;
   margin-bottom: 1svh;
   margin-right: 1svh;
-}
+
 
 #background{
   
@@ -121,3 +121,4 @@ color: white;
   object-fit: cover;
  }
  
+
