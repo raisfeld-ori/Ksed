@@ -5,7 +5,7 @@ import './main_page.css';
 import Grid from './Grid';
 import folder from './assets/folder.png';
 import menu_icon from './assets/computer-laptop-color-icon.webp';
-
+import search from './assets/search-icon.svg';
 import terminald from './assets/Terminal-icon.png';
 import file_system from './internal_apps/file_system';
 import ibetonhakari from './assets/TOCA2.mp4';;
@@ -29,7 +29,7 @@ export default function MainPage() {
                 <img className='terminalimg' src={terminald} alt="" />
                 <p className='time'>12:09 AM <br /> 12/10/2027</p>
             </nav>
-            <video className='hakari' src={ibetonhakari} width="100%" height="100%" autoPlay muted>
+            <video className='hakari' src={ibetonhakari} width="100%" height="100%" autoPlay muted loop>
     Your browser does not support the video tag.
 </video>
         </div>
