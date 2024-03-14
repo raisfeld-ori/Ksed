@@ -93,7 +93,7 @@ fn unpad(data: &[u8]) -> Vec<u8> {
   data[..data.len() - *padding_size as usize].to_vec()
 }
 
-fn xor_encrypt(data: Vec<u8>, key: &[u8]) -> Vec<u8>{
+pub fn xor_encrypt(data: Vec<u8>, key: &[u8]) -> Vec<u8>{
   let mut encrypted = Vec::new();
 
   for (i, &byte) in data.iter().enumerate() {
@@ -101,14 +101,6 @@ fn xor_encrypt(data: Vec<u8>, key: &[u8]) -> Vec<u8>{
   }
 
   encrypted
-}
-fn xor_dencrypt(encrypted_data: Vec<u8>, key: &[u8]) -> Vec<u8>{
-  let mut decrypted = Vec::new();
-
-  for(i, &byte) in encrypted_data.iter().enumerate() {
-    decrypted.push(byte ^ key[i % key.len()])
-  }
-  decrypted
 }
 
 
@@ -135,7 +127,7 @@ fn test_xor_encryption(){
   let key = b"scrt";
   let data = b"hello, world!";
   let encrypted = xor_encrypt(data.to_vec(), key);
-  let decrypted: &[u8] = &xor_dencrypt(encrypted, key);
+  let decrypted: &[u8] = &xor_encrypt(encrypted, key);
   assert_eq!(data, decrypted);
 }
 

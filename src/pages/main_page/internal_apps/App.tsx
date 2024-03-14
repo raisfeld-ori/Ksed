@@ -7,22 +7,21 @@ import './App.css';
 enum State {
     Normal,
     Minimized,
-    FullScreen
+    FullScreen,
+    Closed,
 }
 
 interface AppProps {
     element: React.ReactElement;
     name: string;
-    id: string;
 }
 
-function App({ element, name, id }: AppProps) {
+function App({ element, name }: AppProps) {
     let [ref, dx, dy] = useDraggable({ gridSize: 10 });
-    const [visibility, set_visibility] = useState('inherit');
 
     //@ts-expect-error
-    const [appState, setAppState] = useState(State.Normal);
-
+    const [appState, set_state] = useState(State.Normal);
+    const [visibility, set_visibility] = useState('inherit');
     return (
         <div 
             className="frame"
@@ -30,7 +29,6 @@ function App({ element, name, id }: AppProps) {
                 transform: `translate3d(${dx}px, ${dy}px, 0)`,
                 display: `${visibility}`,
             }}
-            id={id}
             //@ts-expect-error
             ref={ref}
             key={name}
@@ -39,7 +37,7 @@ function App({ element, name, id }: AppProps) {
                 <h1 className="sexy">{name}</h1>
                 <div className="frame-buttons">
                     <button className="minimize-btn">-</button>
-                    <button className="close-btn" onClick={()=>document.getElementById(id)?.remove()}>x</button>
+                    <button className="close-btn" onClick={()=>{set_visibility('none');set_state(State.Closed);}}>x</button>
                 </div>
             </div>
             {element}
