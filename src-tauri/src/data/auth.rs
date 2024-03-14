@@ -106,8 +106,8 @@ pub fn save_user(name: &str, password: &str){
 fn test_authentication(){
     init_user_data();
     init_dir().expect("failed to create the main directory");
-    let name = "Nigger";
-    let password = "Nigger";
+    let name = "non existed user";
+    let password = "non existed user";
     save_user(name, password);
     authenticate_user(name, password);
     load_user(name, password)
