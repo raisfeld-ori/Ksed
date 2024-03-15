@@ -19,7 +19,7 @@ function loading(){
         });
     }, []);
 
-    return <div id='background'>
+    return <div id='background' onContextMenu={e => e.preventDefault()}>
 
 <div className='triangle down'></div>
         <div className='triangle left'></div>

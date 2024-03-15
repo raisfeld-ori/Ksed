@@ -1,5 +1,3 @@
-            //@ts-expect-error
-
 import React, { useState, RefObject } from "react";
 import { useDraggable } from '../Grid';
 import './App.css';

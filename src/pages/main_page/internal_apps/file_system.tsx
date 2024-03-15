@@ -12,8 +12,14 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
 
     const [{dx, dy}, set_positions] = useState({dx: 0, dy: 0});
     const [ctx_display, set_ctx_display] = useState('none');
-    const right_click = (ev: MouseEvent) => {
+    useEffect(() => {
+        document.addEventListener("click", () => set_ctx_display('none'));
+        return () => document.removeEventListener("click", () => set_ctx_display('none'));
+    }, [])
+
+    const right_click = (ev: React.MouseEvent) => {
         //set_context({x: ev.clientX, y: ev.clientY});
+        ev.preventDefault();
         console.log("right clicked");
         //set_menu(true);
         set_ctx_display('inherit');
@@ -22,25 +28,18 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
     const left_click = () =>{
         if (ctx_display) {set_ctx_display('none');}
     }
-    useEffect(() => {
-        document.addEventListener('contextmenu', right_click);
-        document.addEventListener('click', left_click);
-        return () => {
-            document.removeEventListener('contextmenu', right_click);
-            document.removeEventListener('click', left_click);
-        };
-    }, []); 
     let Application = <div className='ApplicationDirectory'>
             <h1 className='filesystemtxt2'>/{location}/</h1>
 
             <div className='ContextMenu'
             style={{
-                transform: `translate3d(${dx}px, ${dy}px, 0)`,
+                top: `${dy}px`,
+                left: `${dx}px`,
                 display: `${ctx_display}`,
             }}
-            ><h1>test</h1></div>
+            ><h1>test</h1><h1>test 2</h1></div>
         </div>   
-    let app_html = <div className='frametest2'>
+    let app_html = <div className='frametest2' onContextMenu={right_click}>
     {Application}
     </div>;
     const [display, set_display] = useState('none');

@@ -122,5 +122,7 @@
 }
 
 .ContextMenu{
+    height: 10svh;
+    position: fixed;
     background-color: aliceblue;
 }

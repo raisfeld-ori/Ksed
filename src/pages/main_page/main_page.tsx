@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './main_page.css';
 import Grid from './Grid';
 import folder from './assets/folder.png';
@@ -17,10 +17,10 @@ export default function MainPage() {
     const terminal = desktop_app("Terminal", terminald, () => {});
     const [menu, set_menu] = useState(false);
     return (
-        <div id='background'>
+        <div id='background' onContextMenu={e => {e.preventDefault();}}>
             {app}
-            <Grid apps={[example_app, not_example_app, terminal]} gridSize={50} margin={120} />
-            <nav className='navbar'>
+            <Grid  apps={[example_app, not_example_app, terminal]} gridSize={50} margin={120} />
+            <nav className='navbar' onContextMenu={e => e.preventDefault()}>
                 <img className='homeimg' onClick={() => set_menu(!menu)} src={menu_icon} alt="" />
                 <img className='searchimg' src={search} alt="" />
                 <img className='terminalimg' src={terminald} alt="" />

@@ -25,7 +25,7 @@ function login(){
 
 
 
-        return <div id='background'>
+        return <div id='background' onContextMenu={e => e.preventDefault()}>
             
 
 
