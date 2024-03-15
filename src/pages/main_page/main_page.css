@@ -41,6 +41,7 @@
   width: 4.7svh;
   height: 4.7svh;
   margin-left: 2svh;
+  cursor:pointer;
 }
 
 .time {
@@ -122,3 +123,15 @@ color: white;
  }
  
 
+.menu{
+  position: absolute;
+  bottom: -50svh;
+  width: 30svw;
+  height: 50svh;
+  background-color: #3333338b;
+  transition: all 0.1s ease-in-out;
+}
+
+.show{
+  bottom: 5svh;
+}
