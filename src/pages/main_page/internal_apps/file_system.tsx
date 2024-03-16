@@ -28,7 +28,7 @@ function file_system(set_fs_html: React.Dispatch<React.SetStateAction<JSX.Elemen
 
 
     </div>;
-    let app = <App element={app_html} name='feet pics'/>;
+    let app = <App element={app_html} name='File System'/>;
     set_fs_html(app);
 };
 }

@@ -21,6 +21,8 @@
     display: block;
     border-top: 2px #0202022f;
     border-left: 2px #0202022f;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
     border-right: 2px #0202022f;
     border-bottom: 2px #0202022f;
     border-top: #2f2f2f;
@@ -58,13 +60,11 @@
 }
 
 .frametest {
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-radius: 20px;
 }
 
 .frametest2{
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+border-radius: 20px;
 }
 
 .filesystemtxt {
@@ -105,7 +105,7 @@
 }
 
 .minimize-btn {
-    padding-left: 373px;
+    padding-left: 350px;
 }
 
 .test{
