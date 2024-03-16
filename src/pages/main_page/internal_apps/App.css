@@ -3,6 +3,7 @@
     display: block;
     border: 2px #0202022f;
     border-style: solid;
+    z-index: 99;
     padding-left: 373px;
     cursor: move;
     font-size: 0.5em;
@@ -14,6 +15,11 @@
     background-color: #2f2f2f;
     
     
+}
+
+.frame{
+    z-index: 9;
+    position:sticky;
 }
 
 .ApplicationDirectory {
@@ -33,7 +39,6 @@
     width: 873px;
     max-width: 100%;
     display: flex;
-    z-index: 99;
     align-items: flex-start;
     background-color: #2f2f2f;
     height: 3.8svh;    
@@ -47,9 +52,13 @@
     border-style: solid;
     cursor: move;
     font-size: 1em;
-    color: white    ;
+    color: white;
     width: 873px;
     max-width: 100%;
+<<<<<<< HEAD
+=======
+    z-index: 99;
+>>>>>>> c1541b44c7395eafd8f1fdc951aeb5c6ab2dbdeb
     display: flex;
     align-items: flex-start;
     background-color: #333333df;
@@ -63,7 +72,14 @@
 }
 
 .frametest2{
+<<<<<<< HEAD
 border-radius: 20px;
+=======
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: #333;
+    height: 50svh;    
+>>>>>>> c1541b44c7395eafd8f1fdc951aeb5c6ab2dbdeb
 }
 
 .filesystemtxt {
@@ -75,7 +91,9 @@ border-radius: 20px;
     font-size: 1.5em;
     text-align: left;
     font-weight: lighter;
+
     color: rgb(189, 184, 184);
+
     font-style: italic;
 
 }
@@ -111,3 +129,8 @@ border-radius: 20px;
     border: 2px ;
 }
 
+.ContextMenu{
+    height: 10svh;
+    position: fixed;
+    background-color: aliceblue;
+}

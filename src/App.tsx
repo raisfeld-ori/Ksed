@@ -12,7 +12,6 @@ function App() {
     initialize();
   }, []);
   init();
-  document.addEventListener('contextmenu', function(e) {e.preventDefault();});
   return <Routes>
       <Route path="/" element={login()}></Route>
       <Route path="/signup" element={signup()}></Route>

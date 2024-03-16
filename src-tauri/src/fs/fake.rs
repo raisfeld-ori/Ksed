@@ -1,4 +1,5 @@
 use std::{fs::{self, read}, io::Write, path::PathBuf};
+use std::error::Error;
 use crate::dir;
 use serde::{Deserialize, Serialize};
 use serde_json::to_vec;
@@ -8,12 +9,18 @@ use crate::fs::encryption::{aes_decrypt, xor_encrypt};
 
 pub static mut FS: Home = Home::new();
 
-pub fn save_fs(name: String, password: String) -> Result<(), String>{
+pub fn save_fs(name: String, password: String) -> Result<(), Box<dyn Error>>{
     let dir = dir();
-    let fs_bytes = unsafe{to_vec(&FS)};
-    if fs_bytes.is_err(){return Err(format!("{}", fs_bytes.unwrap_err()));}
-    let fs_bytes = fs_bytes.unwrap();
+    let fs_bytes = unsafe{to_vec(&FS)?};
     let dir = dir.join(encode(xor_encrypt(b"encrypt".to_vec(), &fs_bytes)));
+    if dir.exists(){
+        let mut writer = fs::File::open(dir.as_path()).unwrap();
+        writer.write_all(&fs_bytes)?;
+    }
+    else {
+        let mut writer = fs::File::create(dir.as_path()).unwrap();
+        writer.write_all(&fs_bytes)?;
+    }
     println!("{:?}", dir.as_path());
     Ok(())
 }
@@ -95,5 +102,5 @@ impl File{
 #[test]
 fn test_fs(){
     let err = save_fs(String::from("test"), String::from("test"));
-    println!("{}", err);
+    println!("{:?}", err);
 }
