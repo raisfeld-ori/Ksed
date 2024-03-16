@@ -1,8 +1,9 @@
-use std::{fs::{self, read}, io::Write, path::PathBuf};
+use std::{fmt::format, fs::{self, read}, io::{Read, Write}, path::PathBuf};
 use crate::dir;
 use serde::{Deserialize, Serialize};
 use serde_json::to_vec;
 use base64::{self, decode, encode};
+use tauri::api::file;
 
 use crate::fs::encryption::{aes_decrypt, xor_encrypt};
 
@@ -15,6 +16,24 @@ pub fn save_fs(name: String, password: String) -> Result<(), String>{
     let fs_bytes = fs_bytes.unwrap();
     let dir = dir.join(encode(xor_encrypt(b"encrypt".to_vec(), &fs_bytes)));
     println!("{:?}", dir.as_path());
+    Ok(())
+}
+pub fn load_fs(name: String, password: String) -> Result<(), String>{
+    let dir = dir();
+    let fs_bytes = unsafe{to_vec(&FS)};
+    if fs_bytes.is_err(){return Err(format!("{}", fs_bytes.unwrap_err()));}
+    let fs_bytes = fs_bytes.unwrap();
+    let file_path = dir.join(encode(xor_encrypt(b"encrypt".to_vec(), &fs_bytes)));
+    let mut file = fs::File::open(&file_path).map_err(|e| format!("failed to open file: {}", e))?;
+    let mut content = Vec::new();
+    file.read_to_end(&mut content).map_err(|e|format!("failed to read file: {}", e))?;
+
+    let decoded = decode(&content).map_err(|e| format!("failed to decode: {}", e))?;
+    let decrypted = xor_encrypt(decoded, &password.as_bytes());
+
+    let home: Home = serde_json::from_slice(&decrypted).map_err(|e| format!("failed to deserialize data: {}", e))?;
+    unsafe{FS = home;}
+    println!("Loaded file system state from: {:?}", dir.as_path());
     Ok(())
 }
 
@@ -94,6 +113,8 @@ impl File{
 
 #[test]
 fn test_fs(){
-    let err = save_fs(String::from("test"), String::from("test"));
-    println!("{}", err);
+    let err = save_fs(String::from("nigger"), String::from("nigger"));
+    println!("{:?}", err);
+    let nigger = load_fs(String::from("nigger"), String::from("nigger"));
+    println!("{:?}", nigger);
 }
