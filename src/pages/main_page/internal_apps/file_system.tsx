@@ -42,9 +42,15 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
     let app_html = <div className='frametest2' onContextMenu={right_click}>
     {Application}
     </div>;
+<<<<<<< HEAD
+    let app = <App element={app_html} name='File System'/>;
+    set_fs_html(app);
+};
+=======
     const [display, set_display] = useState('none');
     let app = <App element={app_html} display={display} set_display={set_display} name='feet pics'/>;
     return [app, set_display];
+>>>>>>> c1541b44c7395eafd8f1fdc951aeb5c6ab2dbdeb
 }
 
 export default file_system;

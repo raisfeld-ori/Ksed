@@ -68,7 +68,17 @@
   position: absolute;
   top: 0;
   left: 0;
-}
+  text-align: center;
+  margin-left: 1svh;
+  margin-top: 1svh;
+  margin-bottom: 1svh;
+  margin-right: 1svh;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center;
+ }
+ 
 
 .selected{
   background-color: #3333338b;
@@ -80,8 +90,10 @@
 
 .draggable .name{
   font-family: 'Ubuntu Mono';
-  font-size: calc(1svh + 1svw);
+  margin-top: 7px;
+  font-size: calc(1.3svh + 0.3svw);
   width: fit-content;
+  font-weight: 900;
   block-size: fit-content;
   user-select: none;
 }
@@ -90,7 +102,9 @@
   display: inline-block;
   pointer-events: none;
   user-select: none;
-  height: 5svh;
+  height: 6.5svh;
+  width: 6.5svh;
+
 }
 .homeimg {
   margin-right: auto; 
@@ -100,12 +114,6 @@
 color: white;
 }
 
-.draggable {
-  margin-left: 1svh;
-  margin-top: 1svh;
-  margin-bottom: 1svh;
-  margin-right: 1svh;
-}
 
 #background{
   
