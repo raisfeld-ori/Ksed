@@ -27,6 +27,8 @@
     display: block;
     border-top: 2px #0202022f;
     border-left: 2px #0202022f;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
     border-right: 2px #0202022f;
     border-bottom: 2px #0202022f;
     border-top: #2f2f2f;
@@ -45,7 +47,7 @@
 .frametest2 {
     position: absolute;
     display: block;
-    margin-top: 3.7svh;
+    margin-top: 4svh;
     border: 2px #0000001e;
     border-style: solid;
     cursor: move;
@@ -53,7 +55,10 @@
     color: white;
     width: 873px;
     max-width: 100%;
+<<<<<<< HEAD
+=======
     z-index: 99;
+>>>>>>> c1541b44c7395eafd8f1fdc951aeb5c6ab2dbdeb
     display: flex;
     align-items: flex-start;
     background-color: #333333df;
@@ -63,15 +68,18 @@
 }
 
 .frametest {
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-radius: 20px;
 }
 
 .frametest2{
+<<<<<<< HEAD
+border-radius: 20px;
+=======
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     background-color: #333;
     height: 50svh;    
+>>>>>>> c1541b44c7395eafd8f1fdc951aeb5c6ab2dbdeb
 }
 
 .filesystemtxt {
@@ -114,7 +122,7 @@
 }
 
 .minimize-btn {
-    padding-left: 373px;
+    padding-left: 350px;
 }
 
 .test{
