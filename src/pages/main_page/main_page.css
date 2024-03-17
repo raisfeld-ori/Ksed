@@ -148,16 +148,159 @@ color: white;
   border-style: outset;
   border-top-right-radius: 20px;
   border-top-left-radius: 20px;
+  text-align: left;
 
 }
 
 .menutext {
-  margin-right: 500px;
   padding-left: 10px;
   color: rgb(255, 255, 255);
   font-weight: normal;
+  border-left: 2px rgba(255, 255, 255, 0);
+  border-top: 2px rgba(255, 255, 255, 0);
+  border-right: 2px rgba(255, 255, 255, 0);
+  border-bottom: 2px rgba(249, 249, 249, 0.496);
+  border-style: solid;
 }
 
 .show{
   bottom: 5svh;
+}
+
+.leave {
+  float: right;
+  z-index: 1;
+  margin-top: 39svh;
+  margin-right: .5svh;
+  transition: transform 250ms;
+
+}
+
+.leave img {
+  display: inline-block;
+  pointer-events: none;
+  user-select: none;
+  height: 5svh;
+  width: 5svh;
+}
+
+.hiddentxt {
+  position: absolute; 
+  right: 0; 
+  margin-top: 36.5svh;
+  color: white;
+  font-weight: 500;
+  display: none;
+  z-index: 5;
+  margin-right: 0.5svh;
+
+ }
+
+ .leave:hover + .hiddentxt {
+  display: block;
+
+
+}
+
+.leave:hover{
+  transform: translateY(-5px);
+}
+
+
+
+.exit {
+  float: right;
+  z-index: 1;
+  margin-top: 39.4svh;
+  margin-right: .5svh;
+  transition: transform 250ms;
+
+}
+
+.exit img {
+  display: inline-block;
+  pointer-events: none;
+  user-select: none;
+  height: 4.2svh;
+  width: 4.2svh;
+}
+
+.hiddenclose {
+  position: absolute; 
+  right: 0; 
+  margin-top: 36.5svh;
+  z-index: 4;
+  display: none;
+  margin-right: 5.5svh;
+
+ }
+
+.exit:hover + .hiddenclose {
+  display: block;
+  color: white;
+  font-weight: 500;
+
+}
+
+.exit:hover{
+  transform: translateY(-5px);
+}
+
+.arrow {
+  border: solid rgb(255, 255, 255);
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 5px;
+  margin-top: 2.5svh;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+
+.folderappmenu {
+  display: flex;
+  align-items: center; 
+  flex-direction: row; 
+  margin-left: 1svh;
+  cursor: pointer;
+
+ }
+ 
+ .folderappmenu img {
+  position: relative;
+  display: inline-block;
+  user-select: none;
+  z-index: 5;
+  height: 4.2svh;
+  width: 4.5svh;
+  margin-right: 0.5svh;
+ }
+ 
+ .filestxt {
+  position: absolute;
+  color: white;
+  margin-top: 2svh;
+  margin-left: 9svh;
+
+ }
+ .test5{
+  display: flex;
+  align-items: center;
+ }
+ 
+.test5:hover{
+  cursor: pointer;
+}
+
+.test5:hover > .filestxt {
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+
+.test5:hover + .arrow {
+  display: block;
 }
