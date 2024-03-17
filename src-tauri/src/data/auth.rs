@@ -14,7 +14,7 @@ use std::ffi::OsStr;
 pub fn init_dir() -> Result<(), std::io::Error>{if dir().exists() {Ok(())}else{create_dir(dir())}}
 #[tauri::command]
 pub fn update<R: Runtime>(app: tauri::AppHandle<R>) {app.trigger_global("rust_event", None)}
-trait Encodable{fn to_bytes(&self) -> Vec<u8>;}
+pub trait Encodable{fn to_bytes(&self) -> Vec<u8>;}
 impl Encodable for OsStr{
     fn to_bytes(&self) -> Vec<u8> {
         let mut bytes = Vec::new();
@@ -86,9 +86,10 @@ pub fn user_exists(name: &str, password: &str) -> bool {
 }
 
 #[tauri::command]
-pub fn save_user(name: &str, password: &str) -> Result<(), String>{
-    let location = encode(aes_encrypt(name, password, name.as_bytes()));
+pub fn save_user(name: &str, password: &str) {
+    let location = encode(aes_encrypt(name, password, name.as_bytes())).replace('/', "_");
     let location = dir().join(location);
+    println!("{:?}", location.file_name());
     let data = data_bytes();
     let data_0: &[u8] = &data.0;
     let data_1: &[u8] = &data.1;
@@ -98,6 +99,7 @@ pub fn save_user(name: &str, password: &str) -> Result<(), String>{
     let encrypted_user_data_base64 = base64::encode(&encrypted_user_data);
     let encrypted_system_data_base64 = base64::encode(&encrypted_system_data);
     let encrypted_system_name = format!("{:?}", aes_encrypt(name, password, b"system data"));
+    println!("{:?}", location);
     if !location.exists(){create_dir(&location).expect("could not create a directory");}
     if location.join(&encrypted_user_name).exists(){
         OpenOptions::new() 
@@ -131,8 +133,6 @@ pub fn save_user(name: &str, password: &str) -> Result<(), String>{
         .expect("failed to write data into file");
 
     }
-
-    return Ok(());
 
 }
 
