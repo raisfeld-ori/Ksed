@@ -3,6 +3,8 @@ use crypto::buffer::{BufferResult, ReadBuffer, RefReadBuffer, RefWriteBuffer, Wr
 use crypto::aes::cbc_decryptor;
 
 pub fn aes_encrypt(username: &str, password: &str, data: &[u8]) -> Vec<u8> {
+  let mut password = password;
+  if password.len() > 11{password = &password[..11];}
   let key: &[u8] = &pad(password.as_bytes());
   let iv = padding(username, password, 16);
   let data = pad(data);
@@ -31,6 +33,8 @@ pub fn aes_encrypt(username: &str, password: &str, data: &[u8]) -> Vec<u8> {
 }
 
 pub fn aes_decrypt(username: &str, password: &str, data: &[u8]) -> Vec<u8> {
+    let mut password = password;
+    if password.len() > 11{password = &password[..11];}
     let key: &[u8] = &pad(password.as_bytes());
     let iv = padding(username, password, 16);
 
@@ -106,15 +110,16 @@ pub fn xor_encrypt(data: Vec<u8>, key: &[u8]) -> Vec<u8>{
 
 fn padding(username: &str, password: &str, size: usize) -> Vec<u8> {
   let mut padded_username = username.chars().collect::<Vec<char>>();
+  if padded_username.len() > size {padded_username.truncate(size);}
   let password_chars = password.chars().rev().collect::<Vec<char>>();
-
   while padded_username.len() < size {
       if password_chars.len() > 0 {
           padded_username.push(password_chars[padded_username.len() % password_chars.len()]);
-      } else {
+      }
+      else {
         // if the password length is 0.
           break;
-      }
+    }
   }
   // Convert the padded username to byte vector and this is the IV.
   let padded_username_bytes = padded_username.into_iter().map(|c| c as u8).collect::<Vec<u8>>();
@@ -134,7 +139,7 @@ fn test_xor_encryption(){
 #[test]
 fn test_aes_encryption(){
   let username = "name";
-  let password = "passwordpasswor";
+  let password = "passwordpasswora";
   let data = b"aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
   let encrypted: &[u8] = &aes_encrypt(username, password, data);
   let decrypted = aes_decrypt(username, password, encrypted);

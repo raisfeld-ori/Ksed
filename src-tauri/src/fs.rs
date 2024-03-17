@@ -1,2 +1,2 @@
 pub mod encryption;
-pub mod fake;
+pub mod commands;
