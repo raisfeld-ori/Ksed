@@ -7,7 +7,7 @@ use tauri::Runtime;
 use crate::data::json::{init_user_data, user_get};
 use dirs::data_dir;
 use crate::data::auth::{init_dir, save_user, authenticate_user, update, load_user};
-use crate::fs::fake::{pwd, ls, FS, cd};
+use crate::fs::commands::{pwd, ls, FS, cd};
 
 pub fn dir() -> PathBuf {data_dir().expect("failed to enter data directory").join("d_vault_data")}
 
