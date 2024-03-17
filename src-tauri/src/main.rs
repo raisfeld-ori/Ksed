@@ -2,15 +2,37 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 mod fs;
 mod data;
+use std::fs::{read_dir, File};
 use std::path::PathBuf;
+use fs::encryption::aes_decrypt;
 use tauri::Runtime;
 use crate::data::json::{init_user_data, user_get};
 use dirs::data_dir;
+use base64::{decode, encode};
+use crate::fs::encryption::aes_encrypt;
 use crate::data::auth::{init_dir, save_user, authenticate_user, update, load_user, user_exists};
+use crate::data::auth::Encodable;
 use crate::fs::commands::{pwd, ls, FS, cd};
 
 pub fn dir() -> PathBuf {data_dir().expect("failed to enter data directory").join("d_vault_data")}
-
+pub fn get_user(name: &str, password: &str) -> PathBuf{
+  dir().join(encode(&aes_encrypt(name, password, name.as_bytes())).replace('/', "_"))
+}
+pub fn open_file(name: &str, password: &str, target: String) -> Option<PathBuf>{
+  let location = get_user(name, password);
+  if location.exists(){
+    for file in read_dir(location).unwrap(){
+      if file.is_err(){continue;}
+      let file = file.unwrap();
+      let file_name = decode(file.file_name().to_bytes());
+      if file_name.is_err() {continue;}
+      if String::from_utf8(aes_decrypt(name, password, &file_name.unwrap())).unwrap() == target{
+        return Some(file.path());
+      }
+    }
+  }
+  return None;
+}
 #[allow(unused)]
 #[tauri::command]
 async fn first_init<R: Runtime>(app: tauri::AppHandle<R>, window: tauri::Window<R>) -> Result<(), String> {
