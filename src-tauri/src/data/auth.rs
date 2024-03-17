@@ -33,7 +33,6 @@ impl Encodable for OsStr{
 pub fn authenticate_user(name: &str, password: &str) -> bool{
     let location = encode(aes_encrypt(name, password, name.as_bytes()));
     let location = dir().join(location);
-    println!("{:?}", location);
     if !location.exists(){return false;}
     for entry in read_dir(location).unwrap(){
         if entry.is_err(){continue;}
