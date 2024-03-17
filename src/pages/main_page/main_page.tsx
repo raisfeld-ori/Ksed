@@ -8,9 +8,17 @@ import terminald from './assets/terminal.png';
 import file_system from './internal_apps/file_system';
 import ibetonhakari from './assets/TOCA2.mp4';
 import { desktop_app } from './Grid';
+import leaveicon from './assets/leave.png';
+import { useNavigate } from 'react-router-dom';
+import exit from './assets/exit.png';
+
+
+
+
 
 
 export default function MainPage() {
+    const navigate = useNavigate();
     const [app, fs_display] = file_system();
     const example_app = desktop_app("Files", folder, () => {fs_display('inherit')});
     const not_example_app = desktop_app("Search", search, () => { console.log("test"); });
@@ -28,6 +36,22 @@ export default function MainPage() {
             </nav>
             <div className={`menu ${menu ? 'show' : 'hide'}`}>
                 <h1 className='menutext' >Applications</h1>
+                <button className='leave'onClick={() => navigate("/")} >
+                    <img src={leaveicon} alt="leaveicon" />
+                </button>
+                <p className='hiddentxt'>Logout​</p>
+                <button className='exit' >
+                    <img src={exit} alt="exiticon" />
+                </button>
+                <p className='hiddenclose'>Exit 😭​</p>
+                
+                <div className='test5'>
+                <p><i className="arrow right"></i></p>
+                <button className='folderappmenu'>
+                    <img className='folderappmenu' src={folder} alt="filesystem" />
+                </button>
+                <p className='filestxt'>Files</p>
+                </div>
             </div>
             <video className='hakari' src={ibetonhakari} width="100%" height="100%" autoPlay muted loop>
     Your browser does not support the video tag.
