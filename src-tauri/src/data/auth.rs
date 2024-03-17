@@ -1,31 +1,60 @@
 use crate::dir;
 use crate::fs::encryption::{aes_encrypt, aes_decrypt, aes_try_decrypt};
 use crate::data::json::data_bytes;
-use crate::data::json::init_user_data;
 use std::fs::{create_dir, read_dir, read_to_string, File, OpenOptions};
-use std::io::Write;
-use std::panic::Location;
+use std::io::{Read, Write};
+use std::os::windows::ffi::OsStrExt;
 use std::path::{Path, PathBuf};
-use base64::decode;
+use crate::init_user_data;
+use base64::{decode, encode};
 use serde_json::Value;
-use tauri::{App, AppHandle, Manager, Runtime};
+use tauri::{Manager, Pixel, Runtime};
+use std::ffi::OsStr;
 
 pub fn init_dir() -> Result<(), std::io::Error>{if dir().exists() {Ok(())}else{create_dir(dir())}}
 #[tauri::command]
 pub fn update<R: Runtime>(app: tauri::AppHandle<R>) {app.trigger_global("rust_event", None)}
+trait Encodable{fn to_bytes(&self) -> Vec<u8>;}
+impl Encodable for OsStr{
+    fn to_bytes(&self) -> Vec<u8> {
+        let mut bytes = Vec::new();
+        for w_byte in self.encode_wide() {
+            if let Some(c) = char::from_u32(w_byte as u32) {
+                let mut buf = [0; 4]; // Buffer to hold the UTF-8 encoded character
+                let encoded = c.encode_utf8(&mut buf);
+                bytes.extend_from_slice(encoded.as_bytes());
+            }
+        }
+        bytes
+    }
+}
 
 #[tauri::command]
-pub fn authenticate_user(name: &str, password: &str) -> bool {
-    let location: &[u8] = &aes_encrypt(name, password, name.as_bytes());
-    let location = dir().join(format!("{:?}", location));
-    let encrypted_user = aes_encrypt(name, password, b"user data");
-        if !location.exists() {
-            return false;
+pub fn authenticate_user(name: &str, password: &str) -> bool{
+    let location = encode(aes_encrypt(name, password, name.as_bytes()));
+    let location = dir().join(location);
+    if !location.exists(){return false;}
+    for entry in read_dir(location).unwrap(){
+        if entry.is_err(){continue;}
+        let entry = entry.unwrap();
+        let entry_path = entry.path();
+        let entry = decode(entry.file_name().to_bytes());
+        if entry.is_err() {continue;}
+        let entry = aes_decrypt(name, password, &entry.unwrap());
+        let entry = String::from_utf8(entry);
+        if entry.is_err() {continue;}
+        match entry.unwrap().as_str(){
+            "auth" => {
+                let mut auth_data = File::open(entry_path).unwrap();
+                let mut buffer: Vec<u8> = Vec::new();
+                let result = auth_data.read_to_end(&mut buffer);
+                if result.is_err() {return false;}
+                return aes_try_decrypt(name, password, &buffer);
+            }
+            _ => {continue;}
         }
-        else {
-            let decrypted_user_data = aes_try_decrypt(name, password, &encrypted_user);
-            return decrypted_user_data;
-        }
+    }
+    return false;
 }
 
 
@@ -110,5 +139,4 @@ fn test_authentication(){
     let password = "non existed user";
     save_user(name, password);
     authenticate_user(name, password);
-    load_user(name, password)
 }

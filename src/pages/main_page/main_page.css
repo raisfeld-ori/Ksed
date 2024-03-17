@@ -4,6 +4,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
+
 }
 .name{
   color: white;
@@ -17,6 +18,8 @@
   position: fixed;
   bottom: 0;
   height: 5svh;
+  backdrop-filter: blur(10px);
+
   width: 100%;
  }
 
@@ -38,6 +41,7 @@
   width: 4.7svh;
   height: 4.7svh;
   margin-left: 2svh;
+  cursor:pointer;
 }
 
 .time {
@@ -101,4 +105,33 @@ color: white;
   margin-top: 1svh;
   margin-bottom: 1svh;
   margin-right: 1svh;
+}
+
+#background{
+  
+  background-size: cover;
+}
+
+.hakari {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1;
+  object-fit: cover;
+ }
+ 
+
+.menu{
+  position: absolute;
+  bottom: -50svh;
+  width: 30svw;
+  height: 50svh;
+  background-color: #3333338b;
+  transition: all 0.1s ease-in-out;
+}
+
+.show{
+  bottom: 5svh;
 }

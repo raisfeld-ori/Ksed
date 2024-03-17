@@ -13,7 +13,7 @@ function Login() {
     }
 
     return (
-        <div id='background'>
+        <div id='background' onContextMenu={e => e.preventDefault()}>
             <div className='triangle down'></div>
             <div className='triangle left'></div>
             <button className='upperbutton' aria-current={false} onClick={() => navigate("/")}>Login</button>
