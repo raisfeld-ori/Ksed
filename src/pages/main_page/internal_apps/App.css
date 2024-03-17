@@ -55,12 +55,9 @@
     color: white;
     width: 873px;
     max-width: 100%;
-<<<<<<< HEAD
-=======
-    z-index: 99;
->>>>>>> c1541b44c7395eafd8f1fdc951aeb5c6ab2dbdeb
     display: flex;
     align-items: flex-start;
+    z-index: 1;
     background-color: #333333df;
     height: 50svh;    
     backdrop-filter: blur(10px);
@@ -72,14 +69,13 @@
 }
 
 .frametest2{
-<<<<<<< HEAD
 border-radius: 20px;
-=======
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-    background-color: #333;
+    backdrop-filter: blur(30px);
+
+    background-color: #333333d3;
     height: 50svh;    
->>>>>>> c1541b44c7395eafd8f1fdc951aeb5c6ab2dbdeb
 }
 
 .filesystemtxt {

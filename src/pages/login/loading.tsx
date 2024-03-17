@@ -3,10 +3,12 @@ import { invoke } from '@tauri-apps/api';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import pfp from './assets/Default_pfp.svg.png';
+import { useNavigate } from 'react-router-dom';
 
 
 // loading the page requires a username and a password
 function loading(){
+    const navigate = useNavigate();
     const location = useLocation();
     const [state, set_state] = useState("Loading");
     
@@ -14,8 +16,8 @@ function loading(){
     if (!location.state){return <h1>DONT ACCESS THIS PAGE WITHOUT LOGGING IN</h1>}
     useEffect(() => {
         invoke("load_user", location.state).then(result => {
-            console.log("result: ", result);
-            if (!result) {set_state("ERROR");set_error("failed to load the user data");return;}
+            if (result) {set_state("ERROR");set_error("failed to load the user data");return;}
+            navigate('/main_page');
         });
     }, []);
 
@@ -31,7 +33,7 @@ function loading(){
                 <p id='melody'>Welcome {location.state.name}!</p>
 
                 <div className="load">{state}
-                <p className='error'></p>
+                <p className='error'>{error}</p>
                 <span></span>
                 </div>
         </div>

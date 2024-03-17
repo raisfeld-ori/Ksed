@@ -1,15 +1,19 @@
 import './login.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { invoke } from '@tauri-apps/api';
 
 function Login() {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    function authenticate() {
-        console.log(name, ", ", password);
+    async function authenticate() {
+        let user_exists = await invoke("user_exists", {name, password});
+        if (!user_exists) {
+            await invoke("save_user", {name, password});
+            navigate("/loading", {state: {name, password}});
+        }
     }
 
     return (
@@ -32,13 +36,6 @@ function Login() {
                         <input onChange={e => setPassword(e.currentTarget.value)} autoComplete="off" name="info" id="info" className="input" placeholder='Enter your password' type="info" />
                         <div></div>
                     </div>
-                    <div className="input-group">
-                        <label className="label">Email</label>
-                        <input autoComplete="off" name="info" id="info" className="input" placeholder='Enter your Email' type="email" />
-                        <div></div>
-                    </div>
-
-
                     <button className="learn-more" onClick={authenticate}>
                         <span className="circle" aria-hidden="true">
                             <span className="icon arrow"></span>

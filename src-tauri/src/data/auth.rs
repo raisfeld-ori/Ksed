@@ -15,10 +15,9 @@ use tauri::{Manager, Pixel, Runtime};
 use std::ffi::OsStr;
 
 pub fn init_dir() -> Result<(), std::io::Error>{if dir().exists() {Ok(())}else{create_dir(dir())}}
-#[tauri::command]
-pub fn update<R: Runtime>(app: tauri::AppHandle<R>) {app.trigger_global("rust_event", None)}
 trait Encodable{fn to_bytes(&self) -> Vec<u8>;}
 #[cfg(target_os = "windows")]
+pub trait Encodable{fn to_bytes(&self) -> Vec<u8>;}
 impl Encodable for OsStr{
     fn to_bytes(&self) -> Vec<u8> {
         let mut bytes = Vec::new();
@@ -44,16 +43,19 @@ impl Encodable for OsStr {
 pub fn authenticate_user(name: &str, password: &str) -> bool{
     let location = encode(aes_encrypt(name, password, name.as_bytes()));
     let location = dir().join(location);
+    println!("{:?}", location);
     if !location.exists(){return false;}
     for entry in read_dir(location).unwrap(){
         if entry.is_err(){continue;}
         let entry = entry.unwrap();
         let entry_path = entry.path();
+        println!("test here 2");
         let entry = decode(entry.file_name().to_bytes());
         if entry.is_err() {continue;}
         let entry = aes_decrypt(name, password, &entry.unwrap());
         let entry = String::from_utf8(entry);
         if entry.is_err() {continue;}
+        println!("test here 3");
         match entry.unwrap().as_str(){
             "auth" => {
                 let mut auth_data = File::open(entry_path).unwrap();
@@ -71,8 +73,8 @@ pub fn authenticate_user(name: &str, password: &str) -> bool{
 
 #[tauri::command]
 pub fn load_user(name: &str, password: &str){
-    println!("{}, {}", name, password);
     let location = encode(aes_encrypt(name, password, name.as_bytes()));
+    let location: &[u8] = &aes_encrypt(name, password, name.as_bytes());
     let location = dir().join(format!("{:?}", location));
 
     if !location.exists() {
@@ -105,15 +107,15 @@ pub fn load_user(name: &str, password: &str){
 
         let encrypted_content = read_to_string(&path).expect("failed to read file content");
         let decrypted_content = aes_decrypt(name, password, &decode(encrypted_content).expect("failed to decode encrypted file content"));
-
     }
     
 }
 
 #[tauri::command]
-pub fn save_user(name: &str, password: &str){
-    let location = encode(aes_encrypt(name, password, name.as_bytes()));
-    let location = dir().join(format!("{:?}", location));
+pub fn save_user(name: &str, password: &str) {
+    let location = encode(aes_encrypt(name, password, name.as_bytes())).replace('/', "_");
+    let location = dir().join(location);
+    println!("{:?}", location.file_name());
     let data = data_bytes();
     let data_0: &[u8] = &data.0;
     let data_1: &[u8] = &data.1;
@@ -121,6 +123,7 @@ pub fn save_user(name: &str, password: &str){
     let encrypted_user_name = format!("{:?}", aes_encrypt(name, password, b"user data"));
     let encrypted_system_data = aes_encrypt(name, password, data_1);
     let encrypted_system_name = format!("{:?}", aes_encrypt(name, password, b"system data"));
+    println!("{:?}", location);
     if !location.exists(){create_dir(&location).expect("could not create a directory");}
     let encrypted_user_name_base64 = encode(&encrypted_user_name);
     let encrypted_system_name_base64 = encode(&encrypted_system_name);
