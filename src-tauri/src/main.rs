@@ -10,16 +10,16 @@ use crate::data::json::{init_user_data, user_get};
 use dirs::data_dir;
 use base64::{decode, encode};
 use crate::fs::encryption::aes_encrypt;
-use crate::data::auth::{init_dir, save_user, authenticate_user, update, load_user, user_exists};
+use crate::data::auth::{init_dir, save_user, authenticate_user, load_user, user_exists};
 use crate::data::auth::Encodable;
 use crate::fs::commands::{pwd, ls, FS, cd};
 
 pub fn dir() -> PathBuf {data_dir().expect("failed to enter data directory").join("d_vault_data")}
-pub fn get_user(name: &str, password: &str) -> PathBuf{
+pub fn get_user_dir(name: &str, password: &str) -> PathBuf{
   dir().join(encode(&aes_encrypt(name, password, name.as_bytes())).replace('/', "_"))
 }
 pub fn open_file(name: &str, password: &str, target: String) -> Option<PathBuf>{
-  let location = get_user(name, password);
+  let location = get_user_dir(name, password);
   if location.exists(){
     for file in read_dir(location).unwrap(){
       if file.is_err(){continue;}
@@ -59,7 +59,6 @@ first_init - initializes the app
 user_get - returns a saved object
 authenticate_user - makes sure the user's password and name are right
 user_exists - returns 'true' if the user exists and 'false' if he doesn't
-update - calls the "rust_event" event (document.addEventListener('rust_event', () => {/*your code here*/}))
 save_user - saves the current existing user
 load_user - load an existing user
 cd - enters a directory
@@ -71,6 +70,6 @@ pwd - shows your current path
 }
 fn main() {
    tauri::Builder::default().invoke_handler(tauri::generate_handler![
-    first_init, list_commands, console, user_get, authenticate_user, update, save_user, user_exists, load_user, ls, pwd, cd
+    first_init, list_commands, console, user_get, authenticate_user, save_user, user_exists, load_user, ls, pwd, cd
 ]).run(tauri::generate_context!()).expect("failed to run the code");
    }

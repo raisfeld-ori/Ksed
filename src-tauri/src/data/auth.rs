@@ -13,12 +13,16 @@ use base64::{decode, encode};
 use serde_json::Value;
 use tauri::{Manager, Pixel, Runtime};
 use std::ffi::OsStr;
+use crate::get_user_dir;
 
 pub fn init_dir() -> Result<(), std::io::Error>{if dir().exists() {Ok(())}else{create_dir(dir())}}
-trait Encodable{fn to_bytes(&self) -> Vec<u8>;}
-#[cfg(target_os = "windows")]
+
+#[tauri::command]
+pub fn user_exists(name: &str, password: &str) -> bool {get_user_dir(name, password).exists()}
+
 pub trait Encodable{fn to_bytes(&self) -> Vec<u8>;}
 impl Encodable for OsStr{
+    #[cfg(target_os = "windows")]
     fn to_bytes(&self) -> Vec<u8> {
         let mut bytes = Vec::new();
         for w_byte in self.encode_wide() {
@@ -30,9 +34,7 @@ impl Encodable for OsStr{
         }
         bytes
     }
-}
-#[cfg(target_os = "linux")]
-impl Encodable for OsStr {
+    #[cfg(target_os = "linux")]
     fn to_bytes(&self) -> Vec<u8> {
         self.as_encoded_bytes().to_vec()
     }
