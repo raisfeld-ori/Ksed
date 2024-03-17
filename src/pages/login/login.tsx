@@ -62,6 +62,15 @@ function login(){
 
                     <br />
                     <p id='error'>{error}</p>
+
+
+
+                    <button className="btn-class-name" onClick={() => navigate("/main_page")}>
+                    <span className="back"></span>
+                    <span className="front"></span>
+                    </button>
+                    <h1 className='nuke' >NUKE AMERICA! <br /><span className='nuke2'>(and go to desktop)</span></h1>
+
                 </div>
             </div>
         </div>

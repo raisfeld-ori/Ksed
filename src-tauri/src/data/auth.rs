@@ -33,16 +33,19 @@ impl Encodable for OsStr{
 pub fn authenticate_user(name: &str, password: &str) -> bool{
     let location = encode(aes_encrypt(name, password, name.as_bytes()));
     let location = dir().join(location);
+    println!("{:?}", location);
     if !location.exists(){return false;}
     for entry in read_dir(location).unwrap(){
         if entry.is_err(){continue;}
         let entry = entry.unwrap();
         let entry_path = entry.path();
+        println!("test here 2");
         let entry = decode(entry.file_name().to_bytes());
         if entry.is_err() {continue;}
         let entry = aes_decrypt(name, password, &entry.unwrap());
         let entry = String::from_utf8(entry);
         if entry.is_err() {continue;}
+        println!("test here 3");
         match entry.unwrap().as_str(){
             "auth" => {
                 let mut auth_data = File::open(entry_path).unwrap();
@@ -83,9 +86,9 @@ pub fn user_exists(name: &str, password: &str) -> bool {
 }
 
 #[tauri::command]
-pub fn save_user(name: &str, password: &str){
-    let location: &[u8] = &aes_encrypt(name, password, name.as_bytes());
-    let location = dir().join(format!("{:?}", location));
+pub fn save_user(name: &str, password: &str) -> Result<(), String>{
+    let location = encode(aes_encrypt(name, password, name.as_bytes()));
+    let location = dir().join(location);
     let data = data_bytes();
     let data_0: &[u8] = &data.0;
     let data_1: &[u8] = &data.1;
@@ -128,6 +131,8 @@ pub fn save_user(name: &str, password: &str){
         .expect("failed to write data into file");
 
     }
+
+    return Ok(());
 
 }
 
