@@ -1,8 +1,9 @@
-use std::{fs::{self, read}, io::Write, path::PathBuf};
+use std::{fs::{self, read}, io::{Read, Write}, path::PathBuf};
 use crate::dir;
 use serde::{Deserialize, Serialize};
 use serde_json::to_vec;
 use base64::{self, decode, encode};
+use std::error::Error;
 use tauri::api::file;
 
 use crate::fs::encryption::{aes_decrypt, xor_encrypt};
@@ -120,5 +121,5 @@ impl File{
 #[test]
 fn test_fs(){
     let err = save_fs(String::from("test"), String::from("test"));
-    println!("{}", err);
+    println!("{:?}", err);
 }
