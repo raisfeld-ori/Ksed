@@ -43,8 +43,9 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
     {Application}
     </div>;
     const [display, set_display] = useState('none');
-    let app = <App element={app_html} display={display} set_display={set_display} name='feet pics'/>;
+    let app = <App element={app_html} display={display} set_display={set_display} name='File System'/>;
     return [app, set_display];
-}
+};
+
 
 export default file_system;

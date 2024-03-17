@@ -17,8 +17,9 @@
   justify-content: flex-end; /* Align items to the right */
   position: fixed;
   bottom: 0;
+  z-index: 2000;
   height: 5svh;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(50px);
 
   width: 100%;
  }
@@ -126,7 +127,7 @@ color: white;
   bottom: 0;
   min-width: 100%;
   min-height: 100%;
-  z-index: -1;
+  z-index: -2;
   object-fit: cover;
  }
  
@@ -134,10 +135,27 @@ color: white;
 .menu{
   position: absolute;
   bottom: -50svh;
-  width: 30svw;
+  width: 25svw;
   height: 50svh;
+  z-index: 4;
   background-color: #3333338b;
   transition: all 0.1s ease-in-out;
+  backdrop-filter: blur(50px);
+  border-right: 2px #0202022f;
+  border-top: 2px #0202022f;
+  border-left: 2px #0202022f;
+  border-bottom: 3px rgba(249, 249, 249, 0.496);
+  border-style: outset;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+
+}
+
+.menutext {
+  margin-right: 500px;
+  padding-left: 10px;
+  color: rgb(255, 255, 255);
+  font-weight: normal;
 }
 
 .show{
