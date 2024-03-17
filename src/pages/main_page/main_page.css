@@ -252,10 +252,10 @@ color: white;
   display: inline-block;
   padding: 5px;
   margin-top: 2.5svh;
+  transition: transform 0.5s ease-in-out;
 }
 
 .right {
-  transform: rotate(-45deg);
   -webkit-transform: rotate(-45deg);
 }
 
@@ -301,6 +301,8 @@ color: white;
 }
 
 
-.test5:hover + .arrow {
-  display: block;
-}
+.test5:hover .arrow {
+  transform: rotate(315deg);
+  transition: transform 0.7s ease-in-out; /* Add transition for smooth rotation */
+ }
+ 
