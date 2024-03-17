@@ -23,7 +23,7 @@ pub fn aes_encrypt(username: &str, password: &str, data: &[u8]) -> Vec<u8> {
         Ok(BufferResult::BufferOverflow) => {
           final_result.extend(write_buffer.take_read_buffer().take_remaining());
         }
-        Err(e) => panic!("{:?}", e),
+        Err(e) => println!("{:?}", e),
     }
   }
   final_result.extend(write_buffer.take_read_buffer().take_remaining());
@@ -54,7 +54,7 @@ pub fn aes_decrypt(username: &str, password: &str, data: &[u8]) -> Vec<u8> {
             Ok(BufferResult::BufferOverflow) => {
                 final_result.extend(write_buffer.take_read_buffer().take_remaining());
             }
-            Err(e) => panic!("{:?}", e),
+            Err(e) => println!("{:?}", e),
         }
     }
 
