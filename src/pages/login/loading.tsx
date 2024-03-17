@@ -31,7 +31,7 @@ function loading(){
                 <p id='melody'>Welcome {location.state.name}!</p>
 
                 <div className="load">{state}
-                <p className='error'></p>
+                <p className='error'>{error}</p>
                 <span></span>
                 </div>
         </div>

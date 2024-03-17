@@ -60,7 +60,6 @@ pub fn authenticate_user(name: &str, password: &str) -> bool{
 
 #[tauri::command]
 pub fn load_user(name: &str, password: &str){
-    println!("{}, {}", name, password);
     let location: &[u8] = &aes_encrypt(name, password, name.as_bytes());
     let location = dir().join(format!("{:?}", location));
 
@@ -71,15 +70,16 @@ pub fn load_user(name: &str, password: &str){
     for entry in read_dir(location).expect("failed to read directory"){
         let entry = entry.expect("failed to read file");
         let path = entry.path();
-        let file_name = path.file_name().expect("failed to get file name").to_str().expect("failed to convert file name into string");
-        let decoded_file_name = decode(file_name).unwrap();
-        let decrypted_file_name = aes_decrypt(name, password, &decoded_file_name);
-            
-        let encrypted_content = read_to_string(&path).expect("failed to read file content");
-        let decrypted_content = aes_decrypt(name, password, &decode(encrypted_content).expect("failed to decode encrypted file content"));
-
     }
     
+}
+
+#[tauri::command]
+pub fn user_exists(name: &str, password: &str) -> bool {
+    let location: &[u8] = &aes_encrypt(name, password, name.as_bytes());
+    let location = dir().join(format!("{:?}", location));
+    if location.exists(){true}
+    else{false}
 }
 
 #[tauri::command]
