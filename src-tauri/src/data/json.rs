@@ -15,10 +15,17 @@ pub fn init_user_data() {
     })}
 }
 
-fn user<'a>() -> &'a Map<String, Value>{unsafe {USER_DATA.get("user").expect("USER_DATA WAS NOT INITIALIZED")}.as_object().expect("user was not an object")}
-fn system<'a>() -> &'a Map<String, Value>{unsafe {USER_DATA.get("system").expect("USER_DATA WAS NOT INITIALIZED")}.as_object().expect("user was not an object")}
-fn user_mut<'a>() -> &'a mut Map<String, Value> {unsafe {USER_DATA.get_mut("user").expect("USER_DATA WAS NOT INITIALIZED")}.as_object_mut().expect("user was not an object")}
-fn system_mut<'a>() -> &'a mut Map<String, Value>{unsafe {USER_DATA.get_mut("system").expect("USER_DATA WAS NOT INITIALIZED")}.as_object_mut().expect("user was not an object")}
+pub fn set_data(user: Map<String, Value>, system: Map<String, Value>){
+    unsafe {
+        USER_DATA.insert(String::from("user"), Value::Object(user));
+        USER_DATA.insert(String::from("system"), Value::Object(system));
+    }
+}
+
+pub fn user<'a>() -> &'a Map<String, Value>{unsafe {USER_DATA.get("user").expect("USER_DATA WAS NOT INITIALIZED")}.as_object().expect("user was not an object")}
+pub fn system<'a>() -> &'a Map<String, Value>{unsafe {USER_DATA.get("system").expect("USER_DATA WAS NOT INITIALIZED")}.as_object().expect("user was not an object")}
+pub fn user_mut<'a>() -> &'a mut Map<String, Value> {unsafe {USER_DATA.get_mut("user").expect("USER_DATA WAS NOT INITIALIZED")}.as_object_mut().expect("user was not an object")}
+pub fn system_mut<'a>() -> &'a mut Map<String, Value>{unsafe {USER_DATA.get_mut("system").expect("USER_DATA WAS NOT INITIALIZED")}.as_object_mut().expect("user was not an object")}
 
 
 #[tauri::command]
@@ -46,6 +53,12 @@ pub fn create_value(val_type: String, val: String) -> Value {
 
 #[tauri::command]
 pub fn user_make(key: String, data: Value) {
+    let result = user_mut();
+    result.insert(key, data);
+}
+
+#[tauri::command]
+pub fn system_make(key: String, data: Value) {
     let result = user_mut();
     result.insert(key, data);
 }
