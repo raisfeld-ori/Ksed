@@ -246,7 +246,7 @@ color: white;
   transform: translateY(-5px);
 }
 
-.arrow {
+.sigma {
   border: solid rgb(255, 255, 255);
   border-width: 0 3px 3px 0;
   display: inline-block;
@@ -301,7 +301,7 @@ color: white;
 }
 
 
-.test5:hover .arrow {
+.test5:hover .sigma {
   transform: rotate(315deg);
   transition: transform 0.7s ease-in-out; /* Add transition for smooth rotation */
  }

@@ -46,7 +46,7 @@ export default function MainPage() {
                 <p className='hiddenclose'>Exit 😭​</p>
                 
                 <div className='test5'>
-                <p><i className="arrow right"></i></p>
+                <p><i className="sigma right"></i></p>
                 <button className='folderappmenu'>
                     <img className='folderappmenu' src={folder} alt="filesystem" />
                 </button>
