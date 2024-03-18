@@ -150,7 +150,7 @@ pub fn create_user(name: &str, password: &str) -> Result<(), String> {
     permissions.set_readonly(false);
     let err = set_permissions(location, permissions);
     if err.is_err() {return Err(err.unwrap_err().to_string());}
-    return save_data(name, password, String::from("authenti"), b"arg arg mbc mbc".to_vec());
+    return save_data(name, password, String::from("auth"), b"arg arg mbc mbc".to_vec());
 }
 
 #[test]
