@@ -7,15 +7,12 @@ use std::io::{Read, Write};
 use std::os::windows::ffi::OsStrExt;
 #[cfg(target_os = "linux")]
 use std::os::unix::ffi::OsStrExt;
-use std::path::{Path, PathBuf};
-use crate::init_user_data;
+use crate::user_dir;
 use base64::{decode, encode};
-use serde_json::Value;
-use tauri::{Manager, Pixel, Runtime};
 use std::ffi::OsStr;
 
 pub fn init_dir() -> Result<(), std::io::Error>{if dir().exists() {Ok(())}else{create_dir(dir())}}
-trait Encodable{fn to_bytes(&self) -> Vec<u8>;}
+
 #[cfg(target_os = "windows")]
 pub trait Encodable{fn to_bytes(&self) -> Vec<u8>;}
 impl Encodable for OsStr{
@@ -69,6 +66,12 @@ pub fn authenticate_user(name: &str, password: &str) -> bool{
     return false;
 }
 
+#[tauri::command]
+pub fn user_exists(name: &str, password: &str) -> bool {
+    let location = user_dir(name, password);
+    if location.exists(){true}
+    else{false}
+}
 
 #[tauri::command]
 pub fn load_user(name: &str, password: &str){
@@ -112,53 +115,7 @@ pub fn load_user(name: &str, password: &str){
 
 #[tauri::command]
 pub fn save_user(name: &str, password: &str) {
-    let location = encode(aes_encrypt(name, password, name.as_bytes())).replace('/', "_");
-    let location = dir().join(location);
-    println!("{:?}", location.file_name());
-    let data = data_bytes();
-    let data_0: &[u8] = &data.0;
-    let data_1: &[u8] = &data.1;
-    let encrypted_user_data = aes_encrypt(name, password, data_0);
-    let encrypted_user_name = format!("{:?}", aes_encrypt(name, password, b"user data"));
-    let encrypted_system_data = aes_encrypt(name, password, data_1);
-    let encrypted_system_name = format!("{:?}", aes_encrypt(name, password, b"system data"));
-    println!("{:?}", location);
-    if !location.exists(){create_dir(&location).expect("could not create a directory");}
-    let encrypted_user_name_base64 = encode(&encrypted_user_name);
-    let encrypted_system_name_base64 = encode(&encrypted_system_name);
-    println!("us: {}",encrypted_user_name);
-    if location.join(&encrypted_user_name_base64).exists(){
-        OpenOptions::new() 
-        .write(true)
-        .append(true)
-        .open(location.join(encrypted_user_name_base64))
-        .expect("failed to open an existing file")
-        .write_all(&encrypted_user_data)
-        .expect("failed to write data");
-    }
-    else{ 
-        File::create(location.join(encrypted_user_name_base64))
-        .expect("failed to create a file")
-        .write_all(&encrypted_user_data)
-        .expect("failed to write data into file");
-        
-    }
-    if location.join(&encrypted_system_name_base64).exists(){
-        OpenOptions::new()
-        .write(true)
-        .append(true)
-        .open(location.join(encrypted_system_name_base64))
-        .expect("failed to open an existing file")
-        .write_all(&encrypted_system_data)
-        .expect("failed to write data");
-    }
-    else{ 
-        File::create(location.join(encrypted_system_name_base64))
-        .expect("failed to create a file")
-        .write_all(&encrypted_system_data)
-        .expect("failed to write data into file");
-
-    }
+    
 
 }
 
