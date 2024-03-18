@@ -35,7 +35,7 @@ impl Encodable for OsStr{
     }
     #[cfg(target_os = "linux")]
     fn to_bytes(&self) -> Vec<u8> {
-        self.as_encoded_bytes().to_vec()
+        self.as_bytes().to_vec()
     }
 }
 
