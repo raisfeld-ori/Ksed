@@ -10,7 +10,7 @@ use crate::data::json::{init_user_data, user_get};
 use dirs::data_dir;
 use base64::{decode, encode};
 use crate::fs::encryption::aes_encrypt;
-use crate::data::auth::{init_dir, save_user, authenticate_user, load_user, user_exists};
+use crate::data::auth::{init_dir, save_user, authenticate_user, load_user, user_exists, create_user};
 use crate::data::auth::Encodable;
 use crate::fs::commands::{pwd, ls, FS, cd};
 
@@ -38,7 +38,7 @@ pub fn open_file(name: &str, password: &str, target: String) -> Option<PathBuf>{
 fn test_general(){
   let name = "test";
   let password = "test";
-  user_dir(name, password);
+  get_user_dir(name, password);
   open_file(name, password, String::from("something"));
 }
 #[allow(unused)]
@@ -78,6 +78,6 @@ pwd - shows your current path
 }
 fn main() {
    tauri::Builder::default().invoke_handler(tauri::generate_handler![
-    first_init, list_commands, console, user_get, authenticate_user, save_user, user_exists, load_user, ls, pwd, cd
+    first_init, list_commands, console, user_get, authenticate_user, save_user, user_exists, create_user, load_user, ls, pwd, cd
 ]).run(tauri::generate_context!()).expect("failed to run the code");
    }
