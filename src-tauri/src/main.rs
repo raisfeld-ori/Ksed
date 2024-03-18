@@ -15,11 +15,11 @@ use crate::data::auth::Encodable;
 use crate::fs::commands::{pwd, ls, FS, cd};
 
 pub fn dir() -> PathBuf {data_dir().expect("failed to enter data directory").join("d_vault_data")}
-pub fn user_dir(name: &str, password: &str) -> PathBuf{
+pub fn get_user_dir(name: &str, password: &str) -> PathBuf{
   dir().join(encode(&aes_encrypt(name, password, name.as_bytes())).replace('/', "_"))
 }
 pub fn open_file(name: &str, password: &str, target: String) -> Option<PathBuf>{
-  let location = get_user(name, password);
+  let location = get_user_dir(name, password);
   if location.exists(){
     for file in read_dir(location).unwrap(){
       if file.is_err(){continue;}
