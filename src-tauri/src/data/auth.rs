@@ -55,7 +55,7 @@ pub fn authenticate_user(name: &str, password: &str) -> bool{
         let entry = String::from_utf8(entry);
         if entry.is_err() {continue;}
         match entry.unwrap().as_str(){
-            "authenti" => {
+            "auth" => {
                 let mut auth_data = File::open(entry_path).unwrap();
                 let mut buffer: Vec<u8> = Vec::new();
                 let result = auth_data.read_to_end(&mut buffer);
@@ -150,7 +150,7 @@ pub fn create_user(name: &str, password: &str) -> Result<(), String> {
     permissions.set_readonly(false);
     let err = set_permissions(location, permissions);
     if err.is_err() {return Err(err.unwrap_err().to_string());}
-    return save_data(name, password, String::from("authenti"), b"arg arg mbc mbc".to_vec());
+    return save_data(name, password, String::from("auth"), b"arg arg mbc mbc".to_vec());
 }
 
 #[test]
