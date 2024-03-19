@@ -170,8 +170,10 @@ color: white;
 .leave {
   float: right;
   z-index: 1;
-  margin-top: 39svh;
-  margin-right: .5svh;
+  margin-top: 39.5svh;
+  margin-right: 0.5svh;
+  margin-left: 0.8svh;
+
   transition: transform 250ms;
 
 }
@@ -180,8 +182,8 @@ color: white;
   display: inline-block;
   pointer-events: none;
   user-select: none;
-  height: 5svh;
-  width: 5svh;
+  height: 3.3svh;
+  width: 3.3svh;
 }
 
 .hiddentxt {
@@ -221,8 +223,8 @@ color: white;
   display: inline-block;
   pointer-events: none;
   user-select: none;
-  height: 4.2svh;
-  width: 4.2svh;
+  height: 3.5svh;
+  width: 3.5svh;
 }
 
 .hiddenclose {
@@ -246,7 +248,7 @@ color: white;
   transform: translateY(-5px);
 }
 
-.sigma {
+.line {
   border: solid rgb(255, 255, 255);
   border-width: 0 3px 3px 0;
   display: inline-block;
@@ -286,22 +288,22 @@ color: white;
   margin-left: 9svh;
 
  }
- .test5{
+ .appsmenu{
   display: flex;
   align-items: center;
  }
  
-.test5:hover{
+.appsmenu:hover{
   cursor: pointer;
 }
 
-.test5:hover > .filestxt {
+.appsmenu:hover > .filestxt {
   font-weight: 500;
   text-decoration: underline;
 }
 
 
-.test5:hover .sigma {
+.appsmenu:hover .line {
   transform: rotate(315deg);
   transition: transform 0.7s ease-in-out; /* Add transition for smooth rotation */
  }
