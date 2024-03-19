@@ -37,7 +37,7 @@ export default function MainPage() {
             <div className={`menu ${menu ? 'show' : 'hide'}`}>
             <div className="menu-header">
             <h1 className='menutext'>Applications</h1>
-            <i className='close'></i>
+
             </div>
                 <button className='leave'onClick={() => navigate("/")} >
                     <img src={leaveicon} alt="leaveicon" />

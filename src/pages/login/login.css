@@ -169,11 +169,12 @@
 
 }
 
-#plslogin{
-    font-size: 2.5svh;
-    color: #e7e7e9;
-
+#plslogin {
+  font-size: 2.5svh;
+  color: #e7e7e9;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 5px rgba(67, 67, 67, 0.5);
 }
+
 
 #error{
     color: #FF0000;
@@ -474,4 +475,51 @@
   cursor: not-allowed;
   margin-top: 2svh;
   font-size: 0.7em;
+}
+
+.IhaveNoEnemys {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  z-index: -2;
+  width: 100vw; 
+  height: 100vh; 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+ }
+ 
+ .iseewhoyouare {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw; 
+  height: 100vh;
+  z-index: -1; 
+  background-color: rgba(255, 255, 255, 0); 
+  display: flex; 
+  justify-content: center;
+  align-items: center; 
+  backdrop-filter: blur(20px);
+
+ }
+
+ .skippinclass {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 6svh;
+  width: 6svh;
+  
+}
+
+.dev{
+  height: 40vh;
+  margin-right: 2svh;
+  position: relative;
+}
+
+.skippinclass:hover {
+  cursor: not-allowed;
+  
 }
