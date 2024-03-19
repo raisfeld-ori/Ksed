@@ -11,9 +11,6 @@ import { desktop_app } from './Grid';
 import leaveicon from './assets/leave.png';
 import { useNavigate } from 'react-router-dom';
 import exit from './assets/exit.png';
-import daddy from './assets/daddyishome.png';
-
-
 
 
 
@@ -39,17 +36,15 @@ export default function MainPage() {
             <div className={`menu ${menu ? 'show' : 'hide'}`}>
             <div className="menu-header">
             <h1 className='menutext'>Applications</h1>
-
             </div>
                 <button className='leave'onClick={() => navigate("/")} >
                     <img src={leaveicon} alt="leaveicon" />
                 </button>
                 <p className='hiddentxt'>Logout​</p>
-                <button className='exit' >
+                <button className='exit'>
                     <img src={exit} alt="exiticon" />
                 </button>
-                <p className='hiddenclose'>Exit 😭​</p>
-                
+                <p className='hiddenclose'>Exit​</p>
             
                 <div className='appsmenu'onClick={() => {fs_display('inherit')}}>
                 <p><i className="line right"></i></p>
@@ -58,50 +53,6 @@ export default function MainPage() {
                 </button>
                 <p className='filestxt'>Files</p>
                 </div>
-
-                <div className='appsmenu'onClick={() => {fs_display('inherit')}}>
-                <p><i className="line right"></i></p>
-                <button className='folderappmenu'>
-                    <img className='folderappmenu' src={daddy} alt="filesystem" />
-                </button>
-                <p className='filestxt'>Undefined</p>
-                </div>
-             
-
-                <div className='appsmenu'onClick={() => {fs_display('inherit')}}>
-                <p><i className="line right"></i></p>
-                <button className='folderappmenu'>
-                    <img className='folderappmenu' src={daddy} alt="filesystem" />
-                </button>
-                <p className='filestxt'>Undefined</p>
-                </div>
-             
-
-                <div className='appsmenu'onClick={() => {fs_display('inherit')}}>
-                <p><i className="line right"></i></p>
-                <button className='folderappmenu'>
-                    <img className='folderappmenu' src={daddy} alt="filesystem" />
-                </button>
-                <p className='filestxt'>Undefined</p>
-                </div>
-             
-                <div className='appsmenu'onClick={() => {fs_display('inherit')}}>
-                <p><i className="line right"></i></p>
-                <button className='folderappmenu'>
-                    <img className='folderappmenu' src={daddy} alt="filesystem" />
-                </button>
-                <p className='filestxt'>Undefined</p>
-                </div>
-             
-
-                <div className='appsmenu'onClick={() => {fs_display('inherit')}}>
-                <p><i className="line right"></i></p>
-                <button className='folderappmenu'>
-                    <img className='folderappmenu' src={daddy} alt="filesystem" />
-                </button>
-                <p className='filestxt'>Undefined</p>
-                </div>
-                
                 
             </div>
             <video className='hakari' src={ibetonhakari} width="100%" height="100%" autoPlay muted loop>

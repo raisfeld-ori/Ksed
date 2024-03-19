@@ -97,7 +97,7 @@ pub fn load_user(name: &str, password: &str) -> Result<(), String>{
             "fs" => {
                 let file_content = read(&path).unwrap();
                 let original = aes_decrypt(name, password, &file_content);
-                
+                unsafe{}
 
             }
             _ => {}
