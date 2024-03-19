@@ -18,7 +18,7 @@ function login(){
 
     async function authenticate(){
         let response = await invoke("authenticate_user", {name, password}).catch(e => {console.log(e)});
-        
+        console.log(response);
         if (response){
             navigate("/loading", {state: {name, password}});
         }

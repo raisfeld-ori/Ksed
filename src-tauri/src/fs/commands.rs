@@ -51,7 +51,6 @@ impl Home{
         self.path.push(home_dir);
         println!("path:{:?}", self.path);
     }
-   
     pub fn cd_back(&mut self) {if self.path.len() > 1 {self.path.pop();self.current_dir = self.path.last().unwrap().clone();}}
     pub fn cd(&mut self, dir: Directory) {self.current_dir = dir.clone();self.path.push(dir);}
 }

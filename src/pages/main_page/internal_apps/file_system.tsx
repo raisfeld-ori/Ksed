@@ -2,7 +2,7 @@ import App from './App';
 import { invoke } from '@tauri-apps/api';
 import { useState, useEffect } from 'react';
 
-function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<string>>]{
+function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<string>>, JSX.Element]{
     const [location, set_location] = useState("Home");
     const [files, set_files] = useState([]);
     //@ts-expect-error
@@ -25,26 +25,23 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
         set_ctx_display('inherit');
         set_positions({dx: ev.clientX, dy: ev.clientY});
     }
-    const left_click = () =>{
-        if (ctx_display) {set_ctx_display('none');}
-    }
+
+    let context_menu = <div className='ContextMenu'
+    style={{
+        top: dy + 2 + 'px',
+        left: dx + 2 + 'px',
+        display: `${ctx_display}`,
+    }}
+    ><h1>test</h1><h1>test 2</h1></div>;
     let Application = <div className='ApplicationDirectory'>
             <h1 className='filesystemtxt2'>/{location}/</h1>
-
-            <div className='ContextMenu'
-            style={{
-                top: `${dy}px`,
-                left: `${dx}px`,
-                display: `${ctx_display}`,
-            }}
-            ><h1>test</h1><h1>test 2</h1></div>
-        </div>   
+        </div>
     let app_html = <div className='frametest2' onContextMenu={right_click}>
     {Application}
     </div>;
     const [display, set_display] = useState('none');
     let app = <App element={app_html} display={display} set_display={set_display} name='File System'/>;
-    return [app, set_display];
+    return [app, set_display, context_menu];
 };
 
 

@@ -1,7 +1,7 @@
 use crate::dir;
 use crate::fs::encryption::{aes_encrypt, aes_decrypt, aes_try_decrypt};
 use crate::data::json;
-use crate::fs::commands::FS;
+use crate::fs::commands::{Home, FS};
 use std::fs::{create_dir, read_dir, read, File};
 use std::io::{Read, Write};
 #[cfg(target_os = "windows")]
@@ -94,6 +94,12 @@ pub fn load_user(name: &str, password: &str) -> Result<(), String>{
                 let original_system_data: Map<String, Value> = serde_json::from_slice(&original).unwrap();
                 system_data = original_system_data;
             },
+            "fs" => {
+                let file_content = read(&path).unwrap();
+                let original = aes_decrypt(name, password, &file_content);
+                
+
+            }
             _ => {}
 
         }

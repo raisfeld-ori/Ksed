@@ -127,6 +127,7 @@ border-radius: 20px;
 
 .ContextMenu{
     height: 10svh;
-    position: fixed;
+    position: absolute;
     background-color: aliceblue;
+    z-index: 99;
 }

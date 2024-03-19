@@ -19,7 +19,7 @@ import daddy from './assets/daddyishome.png';
 
 export default function MainPage() {
     const navigate = useNavigate();
-    const [app, fs_display] = file_system();
+    const [app, fs_display, ctx_menu] = file_system();
     const example_app = desktop_app("Files", folder, () => {fs_display('inherit')});
     const not_example_app = desktop_app("Search", search, () => { console.log("test"); });
     const terminal = desktop_app("Terminal", terminald, () => {});
@@ -27,6 +27,7 @@ export default function MainPage() {
     return (
         <div id='background' onContextMenu={e => {e.preventDefault();}}>
             {app}
+            {ctx_menu}
             <Grid  apps={[example_app, not_example_app, terminal]} gridSize={50} margin={120} />
             <nav className='navbar' onContextMenu={e => e.preventDefault()}>
                 <img className='homeimg' onClick={() => set_menu(!menu)} src={menu_icon} alt="" />
