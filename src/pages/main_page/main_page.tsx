@@ -35,7 +35,10 @@ export default function MainPage() {
                 <p className='time'>12:09 AM <br /> 12/10/2027</p>
             </nav>
             <div className={`menu ${menu ? 'show' : 'hide'}`}>
-                <h1 className='menutext' >Applications</h1>
+            <div className="menu-header">
+            <h1 className='menutext'>Applications</h1>
+            <i className='close'></i>
+            </div>
                 <button className='leave'onClick={() => navigate("/")} >
                     <img src={leaveicon} alt="leaveicon" />
                 </button>
@@ -45,7 +48,7 @@ export default function MainPage() {
                 </button>
                 <p className='hiddenclose'>Exit 😭​</p>
                 
-                <div className='test5'>
+                <div className='test5'onClick={() => {fs_display('inherit')}}>
                 <p><i className="sigma right"></i></p>
                 <button className='folderappmenu'>
                     <img className='folderappmenu' src={folder} alt="filesystem" />
@@ -54,7 +57,7 @@ export default function MainPage() {
                 </div>
             </div>
             <video className='hakari' src={ibetonhakari} width="100%" height="100%" autoPlay muted loop>
-    Your browser does not support the video tag.
+    Your browser does not support the video tag
 </video>
         </div>
     );

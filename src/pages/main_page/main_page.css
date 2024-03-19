@@ -306,3 +306,41 @@ color: white;
   transition: transform 0.7s ease-in-out; /* Add transition for smooth rotation */
  }
  
+ .close {
+  display: flex;
+
+  flex-direction: column;
+  justify-content: space-between;
+  width: 60px;
+  height: 60px;
+  margin-top: 0;
+  margin-top: 2svh;
+  position: absolute;
+}
+.close:after {
+  content: '';
+  height: 40px;
+  border-left: 3px solid #fff;
+  position: absolute;
+  transform: rotate(45deg);
+  left: 20px;
+}
+
+.close:before {
+  content: '';
+  height: 40px;
+  border-left: 3px solid #fff;
+  position: absolute;
+  transform: rotate(-45deg);
+  left: 20px;
+}
+
+.close:hover{
+  cursor: pointer;
+}
+
+
+.menu-header {
+  display: flex;
+  align-items: center; /* Aligns items vertically in the center */
+ }
