@@ -9,7 +9,6 @@ use std::os::windows::prelude::*;
 #[cfg(target_os = "linux")]
 use std::os::unix::ffi::OsStrExt;
 use crate::get_user_dir;
-use crate::data::json::init_user_data;
 use base64::{decode_config, encode_config, URL_SAFE};
 use std::ffi::OsStr;
 use serde_json::{Map, Value};
@@ -117,13 +116,9 @@ fn save_data(username: &str, password: &str, data_name: String, data: Vec<u8>) -
             permissions.set_readonly(false);
             let err = file.set_permissions(permissions);
             if err.is_err(){return Err(String::from("failed to set permissions"));}
-            let file = file.write_all(&data);
-            if file.is_err() {return Err(String::from("failed to write into the file"));}
         }
-        else{
-            let file = file.write_all(&data);
-            if file.is_err() {return Err(String::from("failed to write into the file"))}
-        }
+        let file = file.write_all(&data);
+        if file.is_err() {return Err(String::from("failed to write into the file"))}
     }
     else{
         let file = File::create(location.as_path());
@@ -164,6 +159,7 @@ pub fn create_user(name: &str, password: &str) -> Result<(), String> {
 
 #[test]
 fn test_authentication(){
+    use crate::data::json::init_user_data;
     init_user_data();
     init_dir().expect("failed to create the main directory");
     let name = "a";
