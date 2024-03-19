@@ -2,6 +2,8 @@ import './login.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { invoke } from '@tauri-apps/api';
+import noenemies from '../main_page/assets/nature2.jpg';
+
 
 function Login() {
     const [name, setName] = useState("");
@@ -14,15 +16,18 @@ function Login() {
             await invoke("create_user", {name, password})
             await invoke("save_user", {username: name, password});
             navigate("/loading", {state: {name, password}});
+            
         }
     }
 
     return (
         <div id='background' onContextMenu={e => e.preventDefault()}>
-            <div className='triangle down'></div>
-            <div className='triangle left'></div>
+
             <button className='upperbutton' aria-current={false} onClick={() => navigate("/")}>Login</button>
             <button className='upperbutton' aria-current={true} onClick={() => navigate("/signup")}>Sign Up</button>
+            <img className='IhaveNoEnemys' src={noenemies} alt="backgroundimg" />
+        <div className='iseewhoyouare'></div>
+
             <div id='menu'>
                 <div id='form'>
                     <p id='plslogin'>Welcome!<td></td>Enter your credentials to Sign Up</p>
