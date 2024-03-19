@@ -213,7 +213,7 @@
   
   .input:hover, .input:focus, .input-group:hover .input {
     outline: none;
-    border-color: #05060f;
+    border-color: #ffffff94;
   }
   
   .input-group:hover .label, .input:focus {
