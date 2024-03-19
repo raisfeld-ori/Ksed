@@ -24,8 +24,9 @@ export default function MainPage() {
     const not_example_app = desktop_app("Search", search, () => { console.log("test"); });
     const terminal = desktop_app("Terminal", terminald, () => {});
     const [menu, set_menu] = useState(false);
+    const hide_menu = () => {if (menu) {set_menu(false)}}
     return (
-        <div id='background' onContextMenu={e => {e.preventDefault();}}>
+        <div id='background' onClick={hide_menu} onContextMenu={e => {e.preventDefault();}}>
             {app}
             {ctx_menu}
             <Grid  apps={[example_app, not_example_app, terminal]} gridSize={50} margin={120} />
@@ -100,9 +101,6 @@ export default function MainPage() {
                 </button>
                 <p className='filestxt'>Undefined</p>
                 </div>
-
-             
-
                 
                 
             </div>
