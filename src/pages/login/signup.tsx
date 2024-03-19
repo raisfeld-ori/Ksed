@@ -11,7 +11,8 @@ function Login() {
     async function authenticate() {
         let user_exists = await invoke("user_exists", {name, password});
         if (!user_exists) {
-            await invoke("save_user", {name, password});
+            await invoke("create_user", {name, password})
+            await invoke("save_user", {username: name, password});
             navigate("/loading", {state: {name, password}});
         }
     }

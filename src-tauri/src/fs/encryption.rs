@@ -140,7 +140,7 @@ fn test_xor_encryption(){
 fn test_aes_encryption(){
   let username = "name";
   let password = "passwordpasswora";
-  let data = b"aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+  let data = b"auth";
   let encrypted: &[u8] = &aes_encrypt(username, password, data);
   let decrypted = aes_decrypt(username, password, encrypted);
   assert_eq!(data.to_vec(), decrypted);

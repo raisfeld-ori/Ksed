@@ -10,7 +10,7 @@ use std::os::windows::ffi::OsStrExt;
 use std::os::unix::ffi::OsStrExt;
 use crate::get_user_dir;
 use crate::data::json::init_user_data;
-use base64::{decode, encode};
+use base64::{decode, encode, URL_SAFE_NO_PAD};
 use std::ffi::OsStr;
 use serde_json::{Map, Value};
 use super::json::set_data;
@@ -55,7 +55,7 @@ pub fn authenticate_user(name: &str, password: &str) -> bool{
         let entry = String::from_utf8(entry);
         if entry.is_err() {continue;}
         match entry.unwrap().as_str(){
-            "authenti" => {
+            "auth" => {
                 let mut auth_data = File::open(entry_path).unwrap();
                 let mut buffer: Vec<u8> = Vec::new();
                 let result = auth_data.read_to_end(&mut buffer);
@@ -104,7 +104,7 @@ pub fn load_user(name: &str, password: &str) -> Result<(), String>{
 }
 
 fn save_data(username: &str, password: &str, data_name: String, data: Vec<u8>) -> Result<(), String>{
-    let location = encode(aes_encrypt(username, password, &data_name.into_bytes())).replace('/', "_");
+    let location = encode(aes_encrypt(username, password, &data_name.into_bytes()));
     let location = get_user_dir(username, password).join(location);
     if location.exists(){
         let file = File::open(location.as_path());
@@ -150,15 +150,15 @@ pub fn create_user(name: &str, password: &str) -> Result<(), String> {
     permissions.set_readonly(false);
     let err = set_permissions(location, permissions);
     if err.is_err() {return Err(err.unwrap_err().to_string());}
-    return save_data(name, password, String::from("authenti"), b"arg arg mbc mbc".to_vec());
+    return save_data(name, password, String::from("auth"), b"arg arg mbc mbc".to_vec());
 }
 
 #[test]
 fn test_authentication(){
     init_user_data();
     init_dir().expect("failed to create the main directory");
-    let name = "non oe user";
-    let password = "non oe user";
+    let name = "a";
+    let password = "a";
     if user_exists(name, password) {}
     else {assert!(create_user(name, password).is_ok());}
     assert!(save_user(name, password).is_ok());
