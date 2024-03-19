@@ -1,4 +1,4 @@
-import App, {State} from './App';
+import App from './App';
 import { invoke } from '@tauri-apps/api';
 import { useState, useEffect } from 'react';
 

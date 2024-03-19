@@ -8,7 +8,7 @@ use fs::encryption::aes_decrypt;
 use tauri::Runtime;
 use crate::data::json::{init_user_data, user_get};
 use dirs::data_dir;
-use base64::{decode, encode};
+use base64::{decode_config, encode_config, URL_SAFE};
 use crate::fs::encryption::aes_encrypt;
 use crate::data::auth::{init_dir, save_user, authenticate_user, load_user, user_exists, create_user};
 use crate::data::auth::Encodable;
@@ -16,7 +16,7 @@ use crate::fs::commands::{pwd, ls, FS, cd};
 
 pub fn dir() -> PathBuf {data_dir().expect("failed to enter data directory").join("d_vault_data")}
 pub fn get_user_dir(name: &str, password: &str) -> PathBuf{
-  dir().join(encode(&aes_encrypt(name, password, name.as_bytes())).replace('/', "_"))
+  dir().join(encode_config(&aes_encrypt(name, password, name.as_bytes()), URL_SAFE))
 }
 pub fn open_file(name: &str, password: &str, target: String) -> Option<PathBuf>{
   let location = get_user_dir(name, password);
@@ -24,7 +24,7 @@ pub fn open_file(name: &str, password: &str, target: String) -> Option<PathBuf>{
     for file in read_dir(location).unwrap(){
       if file.is_err(){continue;}
       let file = file.unwrap();
-      let file_name = decode(file.file_name().to_bytes());
+      let file_name = decode_config(file.file_name().to_bytes(), URL_SAFE);
       if file_name.is_err() {continue;}
       if String::from_utf8(aes_decrypt(name, password, &file_name.unwrap())).unwrap() == target{
         return Some(file.path());
@@ -69,6 +69,7 @@ authenticate_user - makes sure the user's password and name are right
 user_exists - returns 'true' if the user exists and 'false' if he doesn't
 save_user - saves the current existing user
 load_user - load an existing user
+create_user - creates a new user using a name and a password
 cd - enters a directory
 cat - look what's inside a file if the file does not exists it creats the file
 mkdir - creats a new directory
@@ -78,6 +79,6 @@ pwd - shows your current path
 }
 fn main() {
    tauri::Builder::default().invoke_handler(tauri::generate_handler![
-    first_init, list_commands, console, user_get, authenticate_user, save_user, user_exists, load_user, ls, pwd, cd
+    first_init, list_commands, console, user_get, authenticate_user, save_user, user_exists, load_user, ls, pwd, cd, create_user
 ]).run(tauri::generate_context!()).expect("failed to run the code");
    }
