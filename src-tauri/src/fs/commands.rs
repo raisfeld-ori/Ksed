@@ -1,10 +1,11 @@
-use std::{fs::{self, read}, io::{Read, Write}, path::PathBuf};
+use std::{fs::{self, create_dir, read}, io::{Read, Write}, path::PathBuf};
 use crate::dir;
 use serde::{Deserialize, Serialize};
 use serde_json::to_vec;
 use base64::{self, decode, encode};
 use std::error::Error;
 use tauri::api::file;
+use std::ffi::OsStr;
 
 use crate::fs::encryption::{aes_decrypt, xor_encrypt};
 
@@ -49,9 +50,17 @@ pub struct Home{
 
 impl Home{
     pub const fn new() -> Self{return Home{path: Vec::new(), current_dir: Directory::new(String::new())}}
-    pub fn init_fs(&mut self) {self.path = Vec::new();self.current_dir = Directory::new(String::from("Home"));}
+    pub fn init_fs(&mut self) {
+        self.path = Vec::new();
+        let mut home_dir = Directory::new(String::from("Home"));
+        let bin_dir = Directory::new(String::from("bin"));
+        home_dir.files.push(DiretoryItems::Directory(bin_dir));
+        self.path.push(home_dir);
+        println!("path:{:?}", self.path);
+    }
+   
     pub fn cd_back(&mut self) {if self.path.len() > 1 {self.path.pop();self.current_dir = self.path.last().unwrap().clone();}}
-    pub fn cd(&mut self, new: Directory) {self.current_dir = new.clone();self.path.push(new);}
+    pub fn cd(&mut self, dir: Directory) {self.current_dir = dir.clone();self.path.push(dir);}
 }
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
@@ -87,5 +96,7 @@ impl File{
 
 #[test]
 fn test_fs(){
-    
+    let mut home = Home::new();
+    home.init_fs();
+
 }
