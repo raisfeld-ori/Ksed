@@ -2,6 +2,10 @@ import './login.css';
 import { useState } from 'react';
 import { invoke } from '@tauri-apps/api';
 import { useNavigate } from 'react-router-dom';
+import noenemies from '../main_page/assets/nature.jpg';
+import arrowright from '../main_page/assets/arrowright.png';
+
+
 
 
 
@@ -26,13 +30,10 @@ function login(){
 
 
         return <div id='background' onContextMenu={e => e.preventDefault()}>
-            
-
-
-                        <div className='triangle down'></div>
-        <div className='triangle left'></div>
-        <button className='upperbutton' aria-current={true} onClick={() => navigate("/")}>Login</button>
-                <button className='upperbutton' aria-current={false} onClick={() => navigate("/signup")}>Sign Up</button>
+                        <button className='upperbutton' aria-current={false} onClick={() => navigate("/")}>Login</button>
+            <button className='upperbutton' aria-current={true} onClick={() => navigate("/signup")}>Sign Up</button>
+        <img className='IhaveNoEnemys' src={noenemies} alt="backgroundimg" />
+        <div className='iseewhoyouare' ></div>
 
             <div id='menu'>
 
@@ -59,17 +60,14 @@ function login(){
                         </span>
                         <span className="button-text">Login</span>
                         </button>
-
+                        <div className='dev'>
+                            <img className='skippinclass' src={arrowright} alt="" onClick={() => navigate("/main_page")}/>
+                        </div>
                     <br />
                     <p id='error'>{error}</p>
 
 
 
-                    <button className="btn-class-name" onClick={() => navigate("/main_page")}>
-                    <span className="back"></span>
-                    <span className="front"></span>
-                    </button>
-                    <h1 className='nuke' >NUKE AMERICA! <br /><span className='nuke2'>(and go to desktop)</span></h1>
 
                 </div>
             </div>
