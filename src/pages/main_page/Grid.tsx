@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 
 function Grid(props: {apps: ((dx: number, dy: number, draggableRef: (nodeEle: any) => void) => JSX.Element)[], 
   gridSize: number, margin: number}) {

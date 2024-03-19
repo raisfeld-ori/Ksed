@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './main_page.css';
 import Grid from './Grid';
 import folder from './assets/folder.png';

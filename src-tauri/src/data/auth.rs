@@ -2,15 +2,15 @@ use crate::dir;
 use crate::fs::encryption::{aes_encrypt, aes_decrypt, aes_try_decrypt};
 use crate::data::json;
 use crate::fs::commands::FS;
-use std::fs::{create_dir, metadata, read_dir, read, set_permissions, File};
+use std::fs::{create_dir, read_dir, read, File};
 use std::io::{Read, Write};
 #[cfg(target_os = "windows")]
-use std::os::windows::ffi::OsStrExt;
+use std::os::windows::prelude::*;
 #[cfg(target_os = "linux")]
 use std::os::unix::ffi::OsStrExt;
 use crate::get_user_dir;
 use crate::data::json::init_user_data;
-use base64::{decode, encode, URL_SAFE_NO_PAD};
+use base64::{decode_config, encode_config, URL_SAFE};
 use std::ffi::OsStr;
 use serde_json::{Map, Value};
 use super::json::set_data;
@@ -42,14 +42,14 @@ impl Encodable for OsStr{
 
 #[tauri::command]
 pub fn authenticate_user(name: &str, password: &str) -> bool{
-    let location = encode(aes_encrypt(name, password, name.as_bytes()));
+    let location = encode_config(aes_encrypt(name, password, name.as_bytes()), URL_SAFE);
     let location = dir().join(location);
     if !location.exists(){return false;}
     for entry in read_dir(location).unwrap(){
         if entry.is_err(){continue;}
         let entry = entry.unwrap();
         let entry_path = entry.path();
-        let entry = decode(entry.file_name().to_bytes());
+        let entry = decode_config(entry.file_name().to_bytes(), URL_SAFE);
         if entry.is_err() {continue;}
         let entry = aes_decrypt(name, password, &entry.unwrap());
         let entry = String::from_utf8(entry);
@@ -77,7 +77,7 @@ pub fn load_user(name: &str, password: &str) -> Result<(), String>{
     for entry in read_dir(location).expect("failed to read directory"){
         let entry = entry.expect("failed to read file");
         let path = entry.path();
-        let entry = decode(entry.file_name().to_bytes()).unwrap();
+        let entry = decode_config(entry.file_name().to_bytes(), URL_SAFE).unwrap();
         let entry = aes_decrypt(name, password, &entry);
         let entry = String::from_utf8(entry).unwrap();
         let mut system_data = Map::new();
@@ -104,13 +104,26 @@ pub fn load_user(name: &str, password: &str) -> Result<(), String>{
 }
 
 fn save_data(username: &str, password: &str, data_name: String, data: Vec<u8>) -> Result<(), String>{
-    let location = encode(aes_encrypt(username, password, &data_name.into_bytes()));
+    let location = encode_config(aes_encrypt(username, password, &data_name.into_bytes()), URL_SAFE);
     let location = get_user_dir(username, password).join(location);
     if location.exists(){
         let file = File::open(location.as_path());
         if file.is_err() {return Err(String::from("failed to create the file"));}
-        let file = file.unwrap().write_all(&data);
-        if file.is_err() {return Err(String::from("failed to write into the file"))}
+        let mut file = file.unwrap();
+        let permissions = location.metadata();
+        if permissions.is_err() {return Err(String::from("couldn't gather permissions"))}
+        let mut permissions = permissions.unwrap().permissions();
+        if permissions.readonly(){
+            permissions.set_readonly(false);
+            let err = file.set_permissions(permissions);
+            if err.is_err(){return Err(String::from("failed to set permissions"));}
+            let file = file.write_all(&data);
+            if file.is_err() {return Err(String::from("failed to write into the file"));}
+        }
+        else{
+            let file = file.write_all(&data);
+            if file.is_err() {return Err(String::from("failed to write into the file"))}
+        }
     }
     else{
         let file = File::create(location.as_path());
@@ -146,10 +159,6 @@ pub fn create_user(name: &str, password: &str) -> Result<(), String> {
         let err = create_dir(location.as_path());
         if err.is_err() {return Err(err.unwrap_err().to_string());}
     }
-    let mut permissions = metadata(&location).unwrap().permissions();
-    permissions.set_readonly(false);
-    let err = set_permissions(location, permissions);
-    if err.is_err() {return Err(err.unwrap_err().to_string());}
     return save_data(name, password, String::from("auth"), b"arg arg mbc mbc".to_vec());
 }
 
