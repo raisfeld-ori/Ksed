@@ -43,7 +43,7 @@ export default function MainPage() {
                     <img src={leaveicon} alt="leaveicon" />
                 </button>
                 <p className='hiddentxt'>Logout​</p>
-                <button className='exit' >
+                <button className='exit' onClick={() => window.location.reload()}>
                     <img src={exit} alt="exiticon" />
                 </button>
                 <p className='hiddenclose'>Exit 😭​</p>
