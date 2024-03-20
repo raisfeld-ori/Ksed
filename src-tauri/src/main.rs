@@ -2,11 +2,11 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 mod fs;
 mod data;
-use std::fs::{read_dir, File};
+use std::fs::read_dir;
 use std::path::PathBuf;
 use fs::encryption::aes_decrypt;
 use tauri::Runtime;
-use crate::data::json::{init_user_data, user_get};
+use crate::data::json::{init_user_data, user_get, create_value};
 use dirs::data_dir;
 use base64::{decode_config, encode_config, URL_SAFE};
 use crate::fs::encryption::aes_encrypt;
@@ -79,6 +79,7 @@ pwd - shows your current path
 }
 fn main() {
    tauri::Builder::default().invoke_handler(tauri::generate_handler![
-    first_init, list_commands, console, user_get, authenticate_user, save_user, user_exists, load_user, ls, pwd, cd, create_user
+    first_init, list_commands, console, user_get, authenticate_user, save_user, user_exists, load_user, ls, pwd, cd, create_user,
+    create_value,
 ]).run(tauri::generate_context!()).expect("failed to run the code");
    }

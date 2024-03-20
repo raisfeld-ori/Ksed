@@ -11,22 +11,21 @@ import { desktop_app } from './Grid';
 import leaveicon from './assets/leave.png';
 import { useNavigate } from 'react-router-dom';
 import exit from './assets/exit.png';
-import daddy from './assets/daddyishome.png';
-
-
 
 
 
 export default function MainPage() {
     const navigate = useNavigate();
-    const [app, fs_display] = file_system();
+    const [app, fs_display, ctx_menu] = file_system();
     const example_app = desktop_app("Files", folder, () => {fs_display('inherit')});
     const not_example_app = desktop_app("Search", search, () => { console.log("test"); });
     const terminal = desktop_app("Terminal", terminald, () => {});
     const [menu, set_menu] = useState(false);
+    const hide_menu = () => {if (menu) {set_menu(false)}}
     return (
-        <div id='background' onContextMenu={e => {e.preventDefault();}}>
+        <div id='background' onClick={hide_menu} onContextMenu={e => {e.preventDefault();}}>
             {app}
+            {ctx_menu}
             <Grid  apps={[example_app, not_example_app, terminal]} gridSize={50} margin={120} />
             <nav className='navbar' onContextMenu={e => e.preventDefault()}>
                 <img className='homeimg' onClick={() => set_menu(!menu)} src={menu_icon} alt="" />
@@ -37,7 +36,6 @@ export default function MainPage() {
             <div className={`menu ${menu ? 'show' : 'hide'}`}>
             <div className="menu-header">
             <h1 className='menutext'>Applications</h1>
-
             </div>
                 <button className='leave'onClick={() => navigate("/")} >
                     <img src={leaveicon} alt="leaveicon" />
@@ -46,8 +44,7 @@ export default function MainPage() {
                 <button className='exit' onClick={() => window.location.reload()}>
                     <img src={exit} alt="exiticon" />
                 </button>
-                <p className='hiddenclose'>Exit 😭​</p>
-                
+                <p className='hiddenclose'>Exit​</p>
             
                 <div className='appsmenu'onClick={() => {fs_display('inherit')}}>
                 <p><i className="line right"></i></p>
@@ -56,53 +53,6 @@ export default function MainPage() {
                 </button>
                 <p className='filestxt'>Files</p>
                 </div>
-
-                <div className='appsmenu'onClick={() => {fs_display('inherit')}}>
-                <p><i className="line right"></i></p>
-                <button className='folderappmenu'>
-                    <img className='folderappmenu' src={daddy} alt="filesystem" />
-                </button>
-                <p className='filestxt'>Undefined</p>
-                </div>
-             
-
-                <div className='appsmenu'onClick={() => {fs_display('inherit')}}>
-                <p><i className="line right"></i></p>
-                <button className='folderappmenu'>
-                    <img className='folderappmenu' src={daddy} alt="filesystem" />
-                </button>
-                <p className='filestxt'>Undefined</p>
-                </div>
-             
-
-                <div className='appsmenu'onClick={() => {fs_display('inherit')}}>
-                <p><i className="line right"></i></p>
-                <button className='folderappmenu'>
-                    <img className='folderappmenu' src={daddy} alt="filesystem" />
-                </button>
-                <p className='filestxt'>Undefined</p>
-                </div>
-             
-                <div className='appsmenu'onClick={() => {fs_display('inherit')}}>
-                <p><i className="line right"></i></p>
-                <button className='folderappmenu'>
-                    <img className='folderappmenu' src={daddy} alt="filesystem" />
-                </button>
-                <p className='filestxt'>Undefined</p>
-                </div>
-             
-
-                <div className='appsmenu'onClick={() => {fs_display('inherit')}}>
-                <p><i className="line right"></i></p>
-                <button className='folderappmenu'>
-                    <img className='folderappmenu' src={daddy} alt="filesystem" />
-                </button>
-                <p className='filestxt'>Undefined</p>
-                </div>
-
-             
-
-                
                 
             </div>
             <video className='hakari' src={ibetonhakari} width="100%" height="100%" autoPlay muted loop>
