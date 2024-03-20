@@ -97,7 +97,7 @@
 #form{
     display: block;
     font-family: 'Ubuntu Mono';
-    margin-top: 12svh;
+    margin-top: 10svh;
 }
 
 
@@ -111,14 +111,13 @@
 
 .upperbutton{
     /* Login / Signup buttons*/ 
-    padding-left: 2.5svw;
-    padding-right: 2.5svw;
     padding-top: 2svh;
     padding-bottom: 2svh;
     border: 0;
     font-size: 2svh;
     margin: 20px;
     margin-top: 80px;
+    width: 15svh;
     color: white;
     border-radius: 10px;
     cursor: pointer;
@@ -191,8 +190,8 @@
 /* --------------------- SIGNUP ---------------------*/
 
 .input {
-    max-width: 190px;
-    height: 44px;
+    max-width: 250px;
+    height: 50px;
     background-color: #05060f37;
     border-radius: .5rem;
     color: #ffffff;
@@ -204,8 +203,8 @@
   
   .label {
     display: block;
-    margin-bottom: .3rem;
-    font-size: 1.2rem;
+    margin-bottom: .60rem;
+    font-size: 1.1rem;
     font-weight: bold;
     color: #ffffffc9;
     transition: color .3s cubic-bezier(.25,.01,.25,1) 0s;
@@ -223,7 +222,7 @@
 
   ::placeholder {
    
-    font-size: 0.92em;
+    font-size: 1em;
     color: #e7e7e9;
   }
 
@@ -408,75 +407,7 @@
 
 /* --------------------- DEV ACCESS BUTTONS ---------------------*/
 
-.btn-class-name {
-  --primarybutton: 255, 90, 120;
-  --secondarybutton: 150, 50, 60;
-  width: 60px;
-  height: 50px;
-  margin-top: 5svh;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  user-select: none;
-  touch-action: manipulation;
-  outline: 10px solid rgb(var(--primarybutton), .5);
-  border-radius: 100%;
-  position: relative;
-  transition: .4s;
-}
 
-.btn-class-name .back {
-  background: rgb(var(--secondarybutton));
-  border-radius: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.btn-class-name .front {
-  background: linear-gradient(0deg, rgba(var(--primarybutton), .6) 20%, rgba(var(--primarybutton)) 50%);
-  box-shadow: 0 .5em 1em -0.2em rgba(var(--secondarybutton), .5);
-  border-radius: 100%;
-  position: absolute;
-  border: 1px solid rgb(var(--secondarybutton));
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.2rem;
-  font-weight: 600;
-  font-family: inherit;
-  transform: translateY(-15%);
-  transition: .15s;
-  color: rgb(var(--secondarybutton));
-}
-
-.btn-class-name:active .front {
-  transform: translateY(0%);
-  box-shadow: 0 0;
-}
-
-.nuke {
-  color: red;
-  font-weight: bold;
-  cursor: not-allowed;
-  margin-top: 2svh;
-  font-size: 2em;
-}
-
-.nuke2{
-
-  color: rgb(0, 94, 255);
-  font-weight: bold;
-  cursor: not-allowed;
-  margin-top: 2svh;
-  font-size: 0.7em;
-}
 
 .IhaveNoEnemys {
   position: fixed; 
@@ -514,11 +445,7 @@
   
 }
 
-.dev{
-  height: 40vh;
-  margin-right: 0.5svh;
-  position: relative;
-}
+
 
 .skippinclass:hover {
   cursor: not-allowed;
@@ -531,16 +458,19 @@
 
 .login2{
   animation: text-shadow 1.5s ease-in-out infinite;
-  font-size: 2.5svh;
+  font-size: 3svh;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.571), 0 0 5px rgba(123, 123, 123, 0.5);
   font-weight: 400;
   color: #e7e7e9;
+  margin-bottom: 5svh;
+
 }
 
 .login{
-  font-size: 2.5svh;
-  font-weight: 400;
-  color: #e7e7e9;
-  text-shadow: 2px 2px 4px rgba(95, 95, 95, 0.571), 0 0 5px rgba(123, 123, 123, 0.5);
+  font-size: 3svh;
+  font-weight: 500;
+  color: #179bff;
+  text-shadow: 2px 2px 4px rgba(2, 39, 80, 0.571), 0 0 5px rgba(10, 21, 84, 0.818);
 
 }
 
@@ -548,58 +478,36 @@
   animation-play-state: paused;
 }
 
-a {
-  color: #024794;
-}
-
 a:hover {
   text-decoration: none;
+  cursor:wait;
 }
 
 @keyframes text-shadow {
   0% {  
       transform: translateY(0);
-      text-shadow: 
-          0 0 0 #64646480, 
-          0 0 0 #8d8d8d64, 
-          0 0 0 #56565663, 
-          0 0 0 #bbbbbb67;
+
   }
 
   20% {  
       transform: translateX(0.1em);
-      text-shadow: 
-      0 0 0 #64646480, 
-      0 0 0 #8d8d8d64, 
-      0 0 0 #74747463, 
-      0 0 0 #bbbbbb67;
+
   }
 
   40% {  
       transform: translateX(-0.1em);
-      text-shadow: 
-      0 0 0 #64646480, 
-      0 0 0 #8d8d8d64, 
-      0 0 0 #74747463, 
-      0 0 0 #bbbbbb67;
+
   }
   
  60% {
       transform: translateY(0em);
-      text-shadow: 
-      0 0 0 #64646480, 
-      0 0 0 #8d8d8d64, 
-      0 0 0 #74747463, 
-      0 0 0 #bbbbbb67;
+
   }
 
   80% {  
       transform: translateY(0);
-      text-shadow: 
-      0 0 0 #64646480, 
-      0 0 0 #8d8d8d64, 
-      0 0 0 #74747463, 
-      0 0 0 #bbbbbb67;
+
   }
 }
+
 
