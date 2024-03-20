@@ -15,8 +15,6 @@ import daddy from './assets/daddyishome.png';
 
 
 
-
-
 export default function MainPage() {
     const navigate = useNavigate();
     const [app, fs_display] = file_system();
