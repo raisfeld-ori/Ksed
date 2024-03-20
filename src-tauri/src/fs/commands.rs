@@ -1,7 +1,12 @@
-use std::{fs, path::PathBuf};
+use std::path::PathBuf;
+use base64::{encode_config, URL_SAFE};
 use serde::{Deserialize, Serialize};
 use serde_json::Error;
-use std::fs::{write,read};
+use std::fs::read;
+
+use crate::get_user_dir;
+
+use super::encryption::aes_encrypt;
 
 pub static mut FS: Home = Home::new();
 
@@ -34,14 +39,6 @@ pub fn ls() -> Vec<String> {
         DiretoryItems::File(file) => file.name.clone()
     }).collect::<Vec<String>>()}
 }
-#[tauri::command]
-pub fn create_file(file_name: String, location: PathBuf) {
-  unsafe {
-    let new_file = File::new(file_name, location);
-    FS.current_dir.files.push(DiretoryItems::File(new_file))
-   
-  }
-}
 
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
@@ -55,10 +52,10 @@ impl Home{
     pub const fn new() -> Self{return Home{path: Vec::new(), current_dir: Directory::new(String::new())}}
     pub fn init_fs(&mut self) {
         self.path = Vec::new();
-        let mut home_dir = Directory::new(String::from("Home"));
-        let bin_dir = Directory::new(String::from("bin"));
-        home_dir.files.push(DiretoryItems::Directory(bin_dir));
-        self.path.push(home_dir);
+        let home_dir = Directory::new(String::from("Home"));
+        self.path.push(home_dir.clone());
+        self.current_dir = home_dir;
+        mkdir(String::from("bin"));
     }
     
     pub fn cd_back(&mut self) {if self.path.len() > 1 {self.path.pop();self.current_dir = self.path.last().unwrap().clone();}}
@@ -68,7 +65,13 @@ impl Home{
 
 #[tauri::command]
 pub fn mkdir(name: String) {unsafe{FS.current_dir.files.push(DiretoryItems::Directory(Directory::new(name)))};}
-
+#[tauri::command]
+fn mk(name: &str, password: &str, file_name: String) -> Result<(), String> {
+    let new_file = File::new(name, password, file_name, unsafe{&FS.current_dir});
+    if new_file.is_none() {return Err(String::from("a file with this name already exists"));}
+    unsafe{FS.current_dir.files.push(DiretoryItems::File(new_file.unwrap()))};
+    Ok(())
+}
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Directory{
@@ -94,13 +97,13 @@ pub struct File{
     location: PathBuf,
 }
 impl File{
-    pub fn new(name: String,location: PathBuf) -> Self {return File {name, location}}
-    pub fn add_data(&self, data: Vec<String>) -> Option<()>{
-        let content = data.join("\n");
-        let data = fs::write(self.location.as_path(), content);
-        if data.is_err(){return None;}
-        // Ori will work on it later
-        None
+    pub fn new(name: &str, password: &str, file_name: String, parent: &Directory) -> Option<Self> {
+        let location = get_user_dir(name, password);
+        let name = encode_config(aes_encrypt(name, password, file_name.as_bytes()), URL_SAFE);
+        let location = location.join(name);
+        // i will change this in the future
+        if location.exists() {return None;}
+        return Some(File {name: file_name, location});
     }
     pub fn open(&self) -> Option<Vec<u8>> {
         let data = read(self.location.as_path());
@@ -113,11 +116,13 @@ impl File{
 
 #[test]
 fn test_fs() {
-    let mut home = Home::new();
-    let mut dir = Directory::new(String::from("man"));
-    home.cd(dir.clone());
-    let location = PathBuf::from("Home/man/");
-    let new_file = File::new(String::from("salves"), location.clone());
-    dir.files.push(DiretoryItems::File(new_file));
-    println!("dir files: {:?}", home.path);
+    unsafe{FS.init_fs();}
+    let name = "some";
+    let password = "thing";
+    let mut dir = Directory::new(String::from("home"));
+    let file = File::new(name, password, String::from("file"), &dir).unwrap();
+    dir.files.push(DiretoryItems::Directory(Directory::new(String::from("bin"))));
+    dir.files.push(DiretoryItems::File(file));
+    assert!(mk(name, password, String::from("file")).is_ok());
+    assert_eq!(unsafe{&FS.current_dir}, &dir);
 }
