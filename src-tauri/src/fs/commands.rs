@@ -55,6 +55,10 @@ impl Home{
     pub fn to_bytes(&self) -> Result<Vec<u8>, Error>{return serde_json::to_vec(self);}
 }
 
+#[tauri::command]
+pub fn mkdir(name: String) {unsafe{FS.current_dir.files.push(DiretoryItems::Directory(Directory::new(name)))};}
+
+
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Directory{
     files: Vec<DiretoryItems>,
