@@ -39,6 +39,16 @@ function login(){
 
                 <div id='form'>
 
+                <h4 className="wordCarousel">
+                <div>
+                    <ul className="flip5">
+                        <li>Hello 👋</li>
+                        <li>Shalom 👋</li>
+                        <li>Hola 👋</li>
+
+                    </ul>
+                </div>
+            </h4>
 
                 <h1 className='login' >Welcome back!</h1>
                 <p className='login2'>Please log to your account.</p>
