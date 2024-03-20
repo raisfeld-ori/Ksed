@@ -52,9 +52,7 @@ impl Home{
     }
     pub fn cd_back(&mut self) {if self.path.len() > 1 {self.path.pop();self.current_dir = self.path.last().unwrap().clone();}}
     pub fn cd(&mut self, dir: Directory) {self.current_dir = dir.clone();self.path.push(dir);}
-    pub fn to_bytes(self){
-        
-    }
+    pub fn to_bytes(&self) -> Result<Vec<u8>, Error>{return serde_json::to_vec(self);}
 }
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
@@ -73,16 +71,6 @@ pub enum DiretoryItems{File(File),Directory(Directory)}
 impl DiretoryItems{
     pub fn get_directory(&self) -> Option<Directory>{match self{Self::Directory(dir)=>{Some(dir.clone())} _=>{None}}}
     pub fn get_file(&self) -> Option<File>{match self{Self::File(file)=>{Some(file.clone())} _=>{None}}}
-    pub fn to_bytes(&self){
-        match self{
-            Self::Directory(dir) =>{
-
-            }
-            Self::File(file) => {
-                
-            }
-        }
-    }
 }
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
@@ -96,10 +84,6 @@ impl File{
         if data.is_err(){return None;}
         // i'l keep on working on it later
         None
-    }
-    pub fn to_bytes(&self) -> Result<Vec<u8>, Error> {
-        let result = serde_json::to_string(self);
-        return Ok(result?.as_bytes().to_vec());
     }
 }
 
