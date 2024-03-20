@@ -9,6 +9,7 @@ function Login() {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    
 
     async function authenticate() {
         let user_exists = await invoke("user_exists", {name, password});
@@ -30,7 +31,9 @@ function Login() {
 
             <div id='menu'>
                 <div id='form'>
-                    <p id='plslogin'>Welcome!<td></td>Enter your credentials to Sign Up</p>
+
+                    <h1 className='login' >Welcome!</h1>
+                <p className='login2'>Enter your credentials to Sign Up</p>
 
                     <div className="input-group">
                         <label className="label">Username</label>

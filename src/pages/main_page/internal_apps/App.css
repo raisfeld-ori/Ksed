@@ -1,5 +1,5 @@
 .frametest {
-    position: absolute;
+    position: relative;
     display: block;
     border: 2px #0202022f;
     border-style: solid;
@@ -12,6 +12,7 @@
     max-width: 100%;
     display: flex;
     align-items: flex-start;
+    height: 37px;
     background-color: #2f2f2f;
     
     
@@ -40,14 +41,13 @@
     max-width: 100%;
     display: flex;
     align-items: flex-start;
-    background-color: #2f2f2f;
-    height: 3.8svh;    
+    background-color: #2f2f2f;   
 }
 
 .frametest2 {
     position: absolute;
     display: block;
-    margin-top: 4svh;
+    margin-top: 1svh;
     border: 2px #0000001e;
     border-style: solid;
     cursor: move;
