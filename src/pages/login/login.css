@@ -171,8 +171,9 @@
 
 #plslogin {
   font-size: 2.5svh;
+  font-weight: 400;
   color: #e7e7e9;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 5px rgba(67, 67, 67, 0.5);
+  text-shadow: 2px 2px 4px rgba(56, 56, 56, 0.746), 0 0 5px rgba(67, 67, 67, 0.5);
 }
 
 
@@ -523,3 +524,82 @@
   cursor: not-allowed;
   
 }
+
+
+/* test ------------------------*/
+
+
+.login2{
+  animation: text-shadow 1.5s ease-in-out infinite;
+  font-size: 2.5svh;
+  font-weight: 400;
+  color: #e7e7e9;
+}
+
+.login{
+  font-size: 2.5svh;
+  font-weight: 400;
+  color: #e7e7e9;
+  text-shadow: 2px 2px 4px rgba(95, 95, 95, 0.571), 0 0 5px rgba(123, 123, 123, 0.5);
+
+}
+
+.login2:hover {
+  animation-play-state: paused;
+}
+
+a {
+  color: #024794;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+@keyframes text-shadow {
+  0% {  
+      transform: translateY(0);
+      text-shadow: 
+          0 0 0 #64646480, 
+          0 0 0 #8d8d8d64, 
+          0 0 0 #56565663, 
+          0 0 0 #bbbbbb67;
+  }
+
+  20% {  
+      transform: translateX(0.1em);
+      text-shadow: 
+      0 0 0 #64646480, 
+      0 0 0 #8d8d8d64, 
+      0 0 0 #74747463, 
+      0 0 0 #bbbbbb67;
+  }
+
+  40% {  
+      transform: translateX(-0.1em);
+      text-shadow: 
+      0 0 0 #64646480, 
+      0 0 0 #8d8d8d64, 
+      0 0 0 #74747463, 
+      0 0 0 #bbbbbb67;
+  }
+  
+ 60% {
+      transform: translateY(0em);
+      text-shadow: 
+      0 0 0 #64646480, 
+      0 0 0 #8d8d8d64, 
+      0 0 0 #74747463, 
+      0 0 0 #bbbbbb67;
+  }
+
+  80% {  
+      transform: translateY(0);
+      text-shadow: 
+      0 0 0 #64646480, 
+      0 0 0 #8d8d8d64, 
+      0 0 0 #74747463, 
+      0 0 0 #bbbbbb67;
+  }
+}
+
