@@ -1,6 +1,10 @@
-import App from './App';
+import App from '../App';
 import { invoke } from '@tauri-apps/api';
 import { useState, useEffect } from 'react';
+
+async function create_file(){
+    console.log(await invoke('system_get', {key: 'name'}));
+}
 
 function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<string>>, JSX.Element]{
     const [location, set_location] = useState("Home");
@@ -32,7 +36,7 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
         left: dx + 2 + 'px',
         display: `${ctx_display}`,
     }}
-    ><h1>test</h1><h1>test 2</h1></div>;
+    ><button onClick={create_file}>create dir</button></div>;
     let Application = <div className='ApplicationDirectory'>
             <h1 className='filesystemtxt2'>/{location}/</h1>
         </div>

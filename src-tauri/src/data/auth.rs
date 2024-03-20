@@ -111,27 +111,10 @@ pub fn load_user(name: &str, password: &str) -> Result<(), String>{
 fn save_data(username: &str, password: &str, data_name: String, data: Vec<u8>) -> Result<(), String>{
     let location = encode_config(aes_encrypt(username, password, &data_name.into_bytes()), URL_SAFE);
     let location = get_user_dir(username, password).join(location);
-    if location.exists(){
-        let file = File::open(location.as_path());
-        if file.is_err() {return Err(String::from("failed to create the file"));}
-        let mut file = file.unwrap();
-        let permissions = location.metadata();
-        if permissions.is_err() {return Err(String::from("couldn't gather permissions"))}
-        let mut permissions = permissions.unwrap().permissions();
-        if permissions.readonly(){
-            permissions.set_readonly(false);
-            let err = file.set_permissions(permissions);
-            if err.is_err(){return Err(String::from("failed to set permissions"));}
-        }
-        let file = file.write_all(&data);
-        if file.is_err() {return Err(String::from("failed to write into the file"))}
-    }
-    else{
-        let file = File::create(location.as_path());
-        if file.is_err() {return Err(String::from("failed to create the file"));}
-        let file = file.unwrap().write_all(&data);
-        if file.is_err() {return Err(String::from("failed to write into the file"))}
-    }
+    let file = File::create(location.as_path());
+    if file.is_err() {return Err(String::from("failed to create the file"));}
+    let file = file.unwrap().write_all(&data);
+    if file.is_err() {return Err(String::from("failed to write into the file"))}
     return Ok(());
 }
 

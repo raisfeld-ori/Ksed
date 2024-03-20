@@ -533,10 +533,10 @@ a:hover {
   }
 }
 
-.flip2 { animation: flip2 6s cubic-bezier(0.23, 1, 0.32, 1.2) infinite; }
-.flip3 { animation: flip3 6s cubic-bezier(0.23, 1, 0.32, 1.2) infinite; }
-.flip4 { animation: flip4 6s cubic-bezier(0.23, 1, 0.32, 1.2) infinite; }
-.flip5 { animation: flip5 6s cubic-bezier(0.23, 1, 0.32, 1.2) infinite; }
+.flip2 { animation: flip2 6s cubic-bezier(0.23, 1, 0.32, 1.2); }
+.flip3 { animation: flip3 6s cubic-bezier(0.23, 1, 0.32, 1.2); }
+.flip4 { animation: flip4 6s cubic-bezier(0.23, 1, 0.32, 1.2); }
+.flip5 { animation: flip5 6s cubic-bezier(0.23, 1, 0.32, 1.2); }
 
 @keyframes flip2 {
   0% { margin-top: -180px; }

@@ -38,6 +38,16 @@ pub fn user_get<'a>(key: String) -> &'a Value {
         .unwrap_or(&Value::Null)
     };
 }
+#[tauri::command]
+pub fn system_get<'a>(key: String) -> &'a Value  {
+    return unsafe { 
+        USER_DATA
+        .get("system")
+        .expect("USER_DATA was not initialized")
+        .get(key)
+        .unwrap_or(&Value::Null)
+    };
+}
 
 #[tauri::command]
 pub fn create_value(val_type: String, val: String) -> Value {
