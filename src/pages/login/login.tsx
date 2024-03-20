@@ -39,7 +39,9 @@ function login(){
 
                 <div id='form'>
 
-                    <p id='plslogin'>Welcome back! <td></td> Please log to your account.</p>
+
+                <h1 className='login' >Welcome back!</h1>
+                <p className='login2'>Please log to your account.</p>
 
 
                     <div className="input-group">
