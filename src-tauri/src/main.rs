@@ -12,7 +12,7 @@ use base64::{decode_config, encode_config, URL_SAFE};
 use crate::fs::encryption::aes_encrypt;
 use crate::data::auth::{init_dir, save_user, authenticate_user, load_user, user_exists, create_user};
 use crate::data::auth::Encodable;
-use crate::fs::commands::{pwd, ls, FS, cd};
+use crate::fs::commands::{pwd, ls, FS, cd, mkdir};
 
 pub fn dir() -> PathBuf {data_dir().expect("failed to enter data directory").join("d_vault_data")}
 pub fn get_user_dir(name: &str, password: &str) -> PathBuf{
@@ -80,6 +80,6 @@ pwd - shows your current path
 fn main() {
    tauri::Builder::default().invoke_handler(tauri::generate_handler![
     first_init, list_commands, console, user_get, authenticate_user, save_user, user_exists, load_user, ls, pwd, cd, create_user,
-    create_value,
+    create_value, mkdir
 ]).run(tauri::generate_context!()).expect("failed to run the code");
    }
