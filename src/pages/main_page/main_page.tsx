@@ -12,6 +12,7 @@ import leaveicon from './assets/leave.png';
 import { useNavigate } from 'react-router-dom';
 import exit from './assets/exit.png';
 import daddy from './assets/daddyishome.png';
+import { invoke } from '@tauri-apps/api';
 
 
 
@@ -19,7 +20,7 @@ export default function MainPage() {
     const navigate = useNavigate();
     const [app, fs_display] = file_system();
     const example_app = desktop_app("Files", folder, () => {fs_display('inherit')});
-    const not_example_app = desktop_app("Search", search, () => { console.log("test"); });
+    const not_example_app = desktop_app("Search", search, async () => { console.log(await invoke('system_get', {key: 'name'})); });
     const terminal = desktop_app("Terminal", terminald, () => {});
     const [menu, set_menu] = useState(false);
     return (

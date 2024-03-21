@@ -40,7 +40,7 @@ pub fn user_get<'a>(key: String) -> &'a Value {
 }
 #[tauri::command]
 pub fn system_get<'a>(key: String) -> &'a Value  {
-    return unsafe { 
+    return unsafe {
         USER_DATA
         .get("system")
         .expect("USER_DATA was not initialized")
@@ -65,7 +65,7 @@ pub fn create_value(valType: String, val: String) -> Value {
 pub fn user_make(key: String, data: Value) {user_mut().insert(key, data);}
 
 #[tauri::command]
-pub fn system_make(key: String, val: Value) {user_mut().insert(key, val);}
+pub fn system_make(key: String, val: Value) {system_mut().insert(key, val);}
 
 #[derive(Serialize)]
 struct SerializeUserData{
