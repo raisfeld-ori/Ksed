@@ -50,8 +50,8 @@ pub fn system_get<'a>(key: String) -> &'a Value  {
 }
 
 #[tauri::command]
-pub fn create_value(val_type: String, val: String) -> Value {
-    let result = match val_type.to_ascii_lowercase().as_str(){
+pub fn create_value(valType: String, val: String) -> Value {
+    let result = match valType.to_ascii_lowercase().as_str(){
         "string" => {Value::String(val)},
         "int" => {Value::Number(val.parse().unwrap_or(Number::from(0)))},
         "null" => {Value::Null},
@@ -62,16 +62,10 @@ pub fn create_value(val_type: String, val: String) -> Value {
 }
 
 #[tauri::command]
-pub fn user_make(key: String, data: Value) {
-    let result = user_mut();
-    result.insert(key, data);
-}
+pub fn user_make(key: String, data: Value) {user_mut().insert(key, data);}
 
 #[tauri::command]
-pub fn system_make(key: String, data: Value) {
-    let result = user_mut();
-    result.insert(key, data);
-}
+pub fn system_make(key: String, val: Value) {user_mut().insert(key, val);}
 
 #[derive(Serialize)]
 struct SerializeUserData{

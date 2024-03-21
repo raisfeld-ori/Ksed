@@ -5,11 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import noenemies from '../main_page/assets/nature.jpg';
 import arrowright from '../main_page/assets/arrowright.png';
 
-
-
-
-
-
 function login(){
     const [name, setname] = useState("");
     const [password, setpassword] = useState("");
@@ -18,6 +13,7 @@ function login(){
 
     async function authenticate(){
         let response = await invoke("authenticate_user", {name, password}).catch(e => {console.log(e)});
+        console.log(response);
         if (response){
             await invoke('system_make', {key: 'name',value: await invoke('create_value', {val_type: 'string', val: name})});
             await invoke('system_make', {key: 'password',value: await invoke('create_value', {val_type: 'string', val: password})});

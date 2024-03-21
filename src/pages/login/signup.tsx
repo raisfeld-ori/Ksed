@@ -14,6 +14,10 @@ function Login() {
     async function authenticate() {
         let user_exists = await invoke("user_exists", {name, password});
         if (!user_exists) {
+            let name_val = await invoke('create_value', {valType: 'string', val: name});
+            await invoke('system_make', {key: 'name',val: name_val});
+            let password_val = await invoke('create_value', {valType: 'string', val: password});
+            await invoke('system_make', {key: 'password',val: password_val});
             await invoke("create_user", {name, password})
             await invoke("save_user", {username: name, password});
             navigate("/loading", {state: {name, password}});
