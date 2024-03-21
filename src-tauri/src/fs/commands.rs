@@ -26,7 +26,7 @@ pub fn cd(new: String) {
             if dir.is_none(){continue}
             // if you use an else block then dir will need to be mutable
             let dir = dir.unwrap();
-            if dir.name == new{unsafe{FS.cd(dir);}}
+            if dir.name == new{FS.cd(dir);}
         }
     }
 } 
@@ -45,7 +45,6 @@ pub fn ls() -> Vec<String> {
 pub struct Home{
     path: Vec<Directory>,
     current_dir: Directory,
-
 }
 
 impl Home{
@@ -102,6 +101,7 @@ impl File{
         let name = encode_config(aes_encrypt(name, password, file_name.as_bytes()), URL_SAFE);
         let location = location.join(name);
         // i will change this in the future
+        // Ori what have you done!?
         if location.exists() {return None;}
         return Some(File {name: file_name, location});
     }
@@ -119,10 +119,11 @@ fn test_fs() {
     unsafe{FS.init_fs();}
     let name = "some";
     let password = "thing";
-    let mut dir = Directory::new(String::from("home"));
+    let mut dir = Directory::new(String::from("Home"));
     let file = File::new(name, password, String::from("file"), &dir).unwrap();
     dir.files.push(DiretoryItems::Directory(Directory::new(String::from("bin"))));
     dir.files.push(DiretoryItems::File(file));
     assert!(mk(name, password, String::from("file")).is_ok());
     assert_eq!(unsafe{&FS.current_dir}, &dir);
+    println!("Dir: {:?}",dir)
 }
