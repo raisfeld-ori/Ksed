@@ -41,12 +41,13 @@ function login(){
                 <div id='form'>
 
                 <h4 className="wordCarousel">
-                <div>
+                <div> 
                     <ul className="flip5">
-                        <li>Hello 👋</li>
+                        <li>olá 👋</li>
+                        <li>mrhban 👋</li>
                         <li>Shalom 👋</li>
                         <li>Hola 👋</li>
-
+                        <li>Hello 👋</li>
                     </ul>
                 </div>
             </h4>
