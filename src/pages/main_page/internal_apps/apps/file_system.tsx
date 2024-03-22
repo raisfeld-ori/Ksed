@@ -3,7 +3,7 @@ import { invoke } from '@tauri-apps/api';
 import { useState, useEffect } from 'react';
 
 async function create_file(){
-    console.log(await invoke('system_get', {key: 'name'}));
+    // console.log(await invoke('system_get', {key: 'name'}));
 }
 
 function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<string>>, JSX.Element]{
@@ -22,10 +22,8 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
     }, [])
 
     const right_click = (ev: React.MouseEvent) => {
-        //set_context({x: ev.clientX, y: ev.clientY});
         ev.preventDefault();
         console.log("right clicked");
-        //set_menu(true);
         set_ctx_display('inherit');
         set_positions({dx: ev.clientX, dy: ev.clientY});
     }
