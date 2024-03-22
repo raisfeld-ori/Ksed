@@ -151,8 +151,8 @@ fn test_authentication(){
     use crate::data::json::init_user_data;
     init_user_data();
     init_dir().expect("failed to create the main directory");
-    let name = "a";
-    let password = "a";
+    let name = "test";
+    let password = "test";
     if user_exists(name, password) {}
     else {assert!(create_user(name, password).is_ok());}
     assert!(save_user(name, password).is_ok());

@@ -3,7 +3,7 @@ import { invoke } from '@tauri-apps/api';
 import { useState, useEffect } from 'react';
 
 async function create_file(){
-    // console.log(await invoke('system_get', {key: 'name'}));
+    console.log(await invoke('system_get', {key: 'name'}));
 }
 
 function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<string>>, JSX.Element]{
