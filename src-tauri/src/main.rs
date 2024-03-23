@@ -5,7 +5,7 @@ mod data;
 use std::fs::read_dir;
 use std::path::PathBuf;
 use fs::encryption::aes_decrypt;
-use tauri::Runtime;
+use tauri::{Manager, Runtime};
 use crate::data::json::{init_user_data, user_get, create_value, user_make, system_get, system_make};
 use dirs::data_dir;
 use base64::{decode_config, encode_config, URL_SAFE};
@@ -53,10 +53,12 @@ async fn first_init<R: Runtime>(app: tauri::AppHandle<R>, window: tauri::Window<
 
 #[tauri::command]
 async fn console(value: String) {println!("{}", value)}
+#[tauri::command]
+async fn close_app<R: Runtime>(window: tauri::Window<R>) -> tauri::Result<()> {window.close()}
 
 fn main() {
    tauri::Builder::default().invoke_handler(tauri::generate_handler![
     first_init, console, user_get, authenticate_user, save_user, user_exists, load_user, ls, pwd, cd, create_user,
-    create_value, mkdir, system_get, system_make, user_make,
+    create_value, mkdir, system_get, system_make, user_make, close_app,
 ]).run(tauri::generate_context!()).expect("failed to run the code");
    }

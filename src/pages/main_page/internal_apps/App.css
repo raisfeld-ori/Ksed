@@ -24,8 +24,10 @@
 }
 
 .ApplicationDirectory {
-    position: absolute;
+    position:relative;
     display: block;
+    margin-bottom: 1px;
+    height: 10svh;
     border-top: 2px #0202022f;
     border-left: 2px #0202022f;
     border-top-right-radius: 20px;
@@ -87,7 +89,6 @@ border-radius: 20px;
     font-size: 1.5em;
     text-align: left;
     font-weight: lighter;
-
     color: rgb(189, 184, 184);
 
     font-style: italic;

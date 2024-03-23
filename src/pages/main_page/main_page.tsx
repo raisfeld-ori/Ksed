@@ -15,7 +15,6 @@ import daddy from './assets/daddyishome.png';
 import { invoke } from '@tauri-apps/api';
 
 
-
 export default function MainPage() {
     const navigate = useNavigate();
     const [app, fs_display, ctx_menu] = file_system();
@@ -43,7 +42,7 @@ export default function MainPage() {
                     <img src={leaveicon} alt="leaveicon" />
                 </button>
                 <p className='hiddentxt'>Logout​</p>
-                <button className='exit' onClick={() => window.close()}>
+                <button className='exit' onClick={async () => await invoke('close_app', {})}>
                     <img src={exit} alt="exiticon" />
                 </button>
                 <p className='hiddenclose'>Exit 😭​</p>
