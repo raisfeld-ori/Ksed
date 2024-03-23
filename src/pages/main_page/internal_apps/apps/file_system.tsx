@@ -6,10 +6,12 @@ import img from '../../assets/terminal.png';
 function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<string>>, JSX.Element]{
     const [location, set_location] = useState("Home");
     const [files, set_files] = useState<React.JSX.Element[]>([]);
-    //@ts-expect-error
-    invoke("ls", {}).then(result => set_files(result)).catch(console.log);
-    //@ts-expect-error
-    invoke("pwd", {}).then(result => set_location(result)).catch(console.log);
+    useState(() => {
+        //@ts-expect-error
+        invoke("ls", {}).then(result => set_files(result)).catch(console.log);
+        //@ts-expect-error
+        invoke("pwd", {}).then(result => set_location(result)).catch(console.log);
+    })
 
     const [{dx, dy}, set_positions] = useState({dx: 0, dy: 0});
     const [ctx_display, set_ctx_display] = useState('none');
@@ -26,7 +28,12 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
         const NewFile = () =>{
             const [editing, set_editing] = useState(true);
             const [text, set_text] = useState('');
-            const done_editing = () => {set_editing(false);}
+            const done_editing = async () => {
+                set_editing(false);
+                let name: string = await invoke('system_get', {key: 'name'});
+                let password: string = await invoke('system_get', {key: 'password'});
+                console.log(name, ", ", password)
+            }
 
             return <div className='file'>
             <img src={img} className='file_img'/><br />
@@ -35,7 +42,7 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
          : <p className='file_name'>{text}</p>}
         </div>
         }
-        set_files([...files, <NewFile/>]);
+        set_files([...files, <NewFile key={files.length + 1}/>]);
     }
     let context_menu = <div className='ContextMenu'
     style={{
