@@ -2,19 +2,28 @@ import App from '../App';
 import { invoke } from '@tauri-apps/api';
 import { useState, useEffect } from 'react';
 import img from '../../assets/terminal.png';
+enum FileType{
+    File, Directory,
+}
+
+function make_file(name: string, password: string, file: string, type: FileType){
+    
+}
 
 function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<string>>, JSX.Element]{
     const [location, set_location] = useState("Home");
     const [files, set_files] = useState<React.JSX.Element[]>([]);
-    useState(() => {
-        //@ts-expect-error
-        invoke("ls", {}).then(result => set_files(result)).catch(console.log);
-        //@ts-expect-error
-        invoke("pwd", {}).then(result => set_location(result)).catch(console.log);
-    })
 
     const [{dx, dy}, set_positions] = useState({dx: 0, dy: 0});
     const [ctx_display, set_ctx_display] = useState('none');
+    const update_fs = async () => {
+        await invoke('mkdir', {name: 'example dir'});
+        let files: any[] = await invoke('ls', {});
+        let pwd: string = await invoke('pwd', {});
+        console.log(files);
+        set_location(pwd);
+    }
+    useState(async () => await update_fs());
     useEffect(() => {
         document.addEventListener("click", () => set_ctx_display('none'));
         return () => document.removeEventListener("click", () => set_ctx_display('none'));
@@ -24,22 +33,21 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
         set_ctx_display('inherit');
         set_positions({dx: ev.clientX, dy: ev.clientY});
     }
-    const make_files = () => {
+    const make_files = (file_type: FileType) => {
         const NewFile = () =>{
-            const [editing, set_editing] = useState(true);
+            const [editing, set_editing] = useState('inherit');
             const [text, set_text] = useState('');
             const done_editing = async () => {
-                set_editing(false);
+                set_editing('none');
                 let name: string = await invoke('system_get', {key: 'name'});
                 let password: string = await invoke('system_get', {key: 'password'});
-                console.log(name, ", ", password)
+                make_file(name, password, text, file_type);
             }
 
-            return <div className='file'>
+            return <div className='file' style={{display: editing}}>
             <img src={img} className='file_img'/><br />
-            {editing ? <input className='editing' onChange={e => set_text(e.target.value)}
+            <input className='editing' onChange={e => set_text(e.target.value)}
             onBlur={done_editing} onKeyDownCapture={e => {if (e.key == 'Enter'){done_editing()}}} autoFocus></input>
-         : <p className='file_name'>{text}</p>}
         </div>
         }
         set_files([...files, <NewFile key={files.length + 1}/>]);
@@ -50,7 +58,7 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
         left: dx + 2 + 'px',
         display: `${ctx_display}`,
     }}
-    ><button onClick={make_files}>
+    ><button onClick={() => make_files(FileType.Directory)}>
         create dir</button></div>;
     let Application = <div className='ApplicationDirectory'>
             <h1 className='filesystemtxt2'>/{location}/</h1>

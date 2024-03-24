@@ -32,13 +32,7 @@ pub fn cd(new: String) {
 } 
 
 #[tauri::command]
-pub fn ls() -> Vec<String> {
-  unsafe {FS.current_dir.files.iter().map(|item| 
-    match item{
-        DiretoryItems::Directory(dir) => dir.name.clone(),
-        DiretoryItems::File(file) => file.name.clone()
-    }).collect::<Vec<String>>()}
-}
+pub fn ls() -> &'static Vec<DirectoryItems> {return unsafe {&FS.current_dir.files}}
 
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
@@ -63,18 +57,18 @@ impl Home{
 }
 
 #[tauri::command]
-pub fn mkdir(name: String) {unsafe{FS.current_dir.files.push(DiretoryItems::Directory(Directory::new(name)))};}
+pub fn mkdir(name: String) {unsafe{FS.current_dir.files.push(DirectoryItems::Directory(Directory::new(name)))};}
 #[tauri::command]
 pub fn mk(name: &str, password: &str, file_name: String) -> Result<(), String> {
     let new_file = File::new(name, password, file_name, unsafe{&FS.current_dir});
     if new_file.is_none() {return Err(String::from("a file with this name already exists"));}
-    unsafe{FS.current_dir.files.push(DiretoryItems::File(new_file.unwrap()))};
+    unsafe{FS.current_dir.files.push(DirectoryItems::File(new_file.unwrap()))};
     Ok(())
 }
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Directory{
-    files: Vec<DiretoryItems>,
+    files: Vec<DirectoryItems>,
     name: String,
 }
 
@@ -83,9 +77,15 @@ impl Directory{
 }
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
-pub enum DiretoryItems{File(File),Directory(Directory)}
+pub enum DirectoryItems{File(File),Directory(Directory)}
 
-impl DiretoryItems{
+impl DirectoryItems{
+    pub fn get_type(&self) -> String{
+        match self{
+            Self::Directory(_)=>String::from("directory"), 
+            Self::File(_) => String::from("file"),
+        }
+    }
     pub fn get_directory(&self) -> Option<Directory>{match self{Self::Directory(dir)=>{Some(dir.clone())} _=>{None}}}
     pub fn get_file(&self) -> Option<File>{match self{Self::File(file)=>{Some(file.clone())} _=>{None}}}
 }
@@ -121,8 +121,8 @@ fn test_fs() {
     let password = "thing";
     let mut dir = Directory::new(String::from("Home"));
     let file = File::new(name, password, String::from("file"), &dir).unwrap();
-    dir.files.push(DiretoryItems::Directory(Directory::new(String::from("bin"))));
-    dir.files.push(DiretoryItems::File(file));
+    dir.files.push(DirectoryItems::Directory(Directory::new(String::from("bin"))));
+    dir.files.push(DirectoryItems::File(file));
     assert!(mk(name, password, String::from("file")).is_ok());
     assert_eq!(unsafe{&FS.current_dir}, &dir);
     println!("Dir: {:?}",dir)
