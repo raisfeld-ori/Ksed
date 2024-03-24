@@ -2,6 +2,36 @@ import App from '../App';
 import { invoke } from '@tauri-apps/api';
 import { useState, useEffect } from 'react';
 import img from '../../assets/terminal.png';
+import { open } from '@tauri-apps/api/dialog';
+
+async function upload_file(update_fs: () => Promise<void>, set_files: React.Dispatch<React.SetStateAction<React.JSX.Element[]>>){
+    let file_selected = await open({});
+    if (Array.isArray(file_selected)){
+        for (let i = 0; i < file_selected.length;i++){
+            //@ts-expect-error
+            set_files(files => [...files, <File name={file_selected[i]} key={files.length + 1}/>])
+        }
+        await update_fs();
+    }
+    else if (file_selected == null){return;}
+    else{
+        console.log('test');
+        //@ts-expect-error
+        set_files(files => [...files, <File name={file_selected} key={files.length + 1}/>]);
+        await update_fs();
+    }
+}
+
+
+function File(props: {name: string}){
+
+
+    return <div className='file'>
+    <img src={img} className='file_img'/><br />
+    <p className='file_name'>{props.name}</p>
+</div>;
+}
+
 enum FileType{
     File, Directory,
 }
@@ -13,7 +43,7 @@ async function make_file(name: string, password: string, file: string, type: Fil
     }
 }
 
-function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<string>>, JSX.Element]{
+function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<string>>, JSX.Element, update_fs:  () => Promise<void>]{
     const [location, set_location] = useState("Home");
     const [files, set_files] = useState<React.JSX.Element[]>([]);
     const [{dx, dy}, set_positions] = useState({dx: 0, dy: 0});
@@ -23,15 +53,11 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
         let pwd: string = await invoke('pwd', {});
         let files_divs = [];
         for (let i = 0;i < files.length;i++){
-            files_divs.push(<div className='file' key={i}>
-            <img src={img} className='file_img'/><br />
-            <p className='file_name'>{files[i]}</p>
-       </div>);
+            files_divs.push(<File name={files[i]} key={'f' + i}/>);
         }
         set_files(files_divs);
         set_location(pwd);
     }
-    useEffect(() => {update_fs().catch(e => console.log(e))}, []);
     useEffect(() => {
         document.addEventListener("click", () => set_ctx_display('none'));
         return () => document.removeEventListener("click", () => set_ctx_display('none'));
@@ -63,14 +89,17 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
         }
         set_files([...files, <NewFile key={files.length + 1}/>]);
     }
-    let context_menu = <div className='ContextMenu'
+    let context_menu = 
+    <div className='ContextMenu'
     style={{
         top: dy + 2 + 'px',
         left: dx + 2 + 'px',
         display: `${ctx_display}`,
-    }}
-    ><button onClick={() => make_files(FileType.Directory)}>
-        create dir</button></div>;
+    }}>
+    <button onClick={() => make_files(FileType.Directory)}>create dir</button>
+    <br />
+    <button onClick={async () => await upload_file(update_fs, set_files)}>upload file</button>    
+    </div>;
     let Application = <div className='ApplicationDirectory'>
             <h1 className='filesystemtxt2'>/{location}/</h1>
         </div>
@@ -80,7 +109,7 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
     </div>;
     const [display, set_display] = useState('none');
     let app = <App element={app_html} display={display} set_display={set_display} name='File System'/>;
-    return [app, set_display, context_menu];
+    return [app, set_display, context_menu, update_fs];
 };
 
 

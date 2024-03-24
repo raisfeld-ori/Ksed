@@ -14,7 +14,7 @@ embed-resource = "*"
 
 
 [dependencies]
-tauri = { version = "1", features = [ "window-close", "window-set-fullscreen"] }
+tauri = { version = "1", features = [ "dialog-open", "dialog-save", "window-close", "window-set-fullscreen"] }
 serde = { version = "1", features = ["derive"] }
 base64 = "*"
 rust-crypto ="*"
