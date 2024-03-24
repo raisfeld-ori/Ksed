@@ -6,24 +6,32 @@ enum FileType{
     File, Directory,
 }
 
-function make_file(name: string, password: string, file: string, type: FileType){
-    
+async function make_file(name: string, password: string, file: string, type: FileType){
+    switch (type){
+        case FileType.Directory: {await invoke('mkdir', {name: file});break;}
+        case FileType.File: {await invoke('mk', {name, password, file});break;}
+    }
 }
 
 function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<string>>, JSX.Element]{
     const [location, set_location] = useState("Home");
     const [files, set_files] = useState<React.JSX.Element[]>([]);
-
     const [{dx, dy}, set_positions] = useState({dx: 0, dy: 0});
     const [ctx_display, set_ctx_display] = useState('none');
     const update_fs = async () => {
-        await invoke('mkdir', {name: 'example dir'});
         let files: any[] = await invoke('ls', {});
         let pwd: string = await invoke('pwd', {});
-        console.log(files);
+        let files_divs = [];
+        for (let i = 0;i < files.length;i++){
+            files_divs.push(<div className='file' key={i}>
+            <img src={img} className='file_img'/><br />
+            <p className='file_name'>{files[i]}</p>
+       </div>);
+        }
+        set_files(files_divs);
         set_location(pwd);
     }
-    useState(async () => await update_fs());
+    useEffect(() => {update_fs().catch(e => console.log(e))}, []);
     useEffect(() => {
         document.addEventListener("click", () => set_ctx_display('none'));
         return () => document.removeEventListener("click", () => set_ctx_display('none'));
@@ -37,17 +45,20 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
         const NewFile = () =>{
             const [editing, set_editing] = useState('inherit');
             const [text, set_text] = useState('');
-            const done_editing = async () => {
+            const done_editing = async (e: any) => {
+                e.preventDefault();
                 set_editing('none');
+                console.log(e);
                 let name: string = await invoke('system_get', {key: 'name'});
                 let password: string = await invoke('system_get', {key: 'password'});
-                make_file(name, password, text, file_type);
+                await make_file(name, password, text, file_type);
+                await update_fs();
             }
-
+            
             return <div className='file' style={{display: editing}}>
             <img src={img} className='file_img'/><br />
             <input className='editing' onChange={e => set_text(e.target.value)}
-            onBlur={done_editing} onKeyDownCapture={e => {if (e.key == 'Enter'){done_editing()}}} autoFocus></input>
+            onBlur={done_editing} onKeyDownCapture={e => {if (e.key == 'Enter'){set_editing('none');}}} autoFocus></input>
         </div>
         }
         set_files([...files, <NewFile key={files.length + 1}/>]);

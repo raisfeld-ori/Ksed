@@ -32,7 +32,13 @@ pub fn cd(new: String) {
 } 
 
 #[tauri::command]
-pub fn ls() -> &'static Vec<DirectoryItems> {return unsafe {&FS.current_dir.files}}
+pub fn ls() -> Vec<String> {
+  unsafe {FS.current_dir.files.iter().map(|item| 
+    match item{
+        DirectoryItems::Directory(dir) => dir.name.clone(),
+        DirectoryItems::File(file) => file.name.clone()
+    }).collect::<Vec<String>>()}
+}
 
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
@@ -80,12 +86,6 @@ impl Directory{
 pub enum DirectoryItems{File(File),Directory(Directory)}
 
 impl DirectoryItems{
-    pub fn get_type(&self) -> String{
-        match self{
-            Self::Directory(_)=>String::from("directory"), 
-            Self::File(_) => String::from("file"),
-        }
-    }
     pub fn get_directory(&self) -> Option<Directory>{match self{Self::Directory(dir)=>{Some(dir.clone())} _=>{None}}}
     pub fn get_file(&self) -> Option<File>{match self{Self::File(file)=>{Some(file.clone())} _=>{None}}}
 }
