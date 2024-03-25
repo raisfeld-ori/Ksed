@@ -59,6 +59,6 @@ async fn close_app<R: Runtime>(window: tauri::Window<R>) -> tauri::Result<()> {w
 fn main() {
    tauri::Builder::default().invoke_handler(tauri::generate_handler![
     first_init, console, user_get, authenticate_user, save_user, user_exists, load_user, ls, pwd, cd, create_user,
-    create_value, mkdir, system_get, system_make, user_make, close_app,
+    create_value, mkdir, system_get, system_make, user_make, close_app, mk
 ]).run(tauri::generate_context!()).expect("failed to run the code");
    }

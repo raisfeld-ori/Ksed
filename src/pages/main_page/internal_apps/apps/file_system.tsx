@@ -5,6 +5,8 @@ import img from '../../assets/terminal.png';
 import { open } from '@tauri-apps/api/dialog';
 
 async function upload_file(update_fs: () => Promise<void>, set_files: React.Dispatch<React.SetStateAction<React.JSX.Element[]>>){
+    let name: string = await invoke('system_get', {key: 'name'});
+    let password: string = await invoke('system_get', {key: 'password'});
     let file_selected = await open({});
     if (Array.isArray(file_selected)){
         for (let i = 0; i < file_selected.length;i++){
@@ -15,9 +17,7 @@ async function upload_file(update_fs: () => Promise<void>, set_files: React.Disp
     }
     else if (file_selected == null){return;}
     else{
-        console.log('test');
-        //@ts-expect-error
-        set_files(files => [...files, <File name={file_selected} key={files.length + 1}/>]);
+        make_file(name, password, file_selected, FileType.File);
         await update_fs();
     }
 }
@@ -39,7 +39,7 @@ enum FileType{
 async function make_file(name: string, password: string, file: string, type: FileType){
     switch (type){
         case FileType.Directory: {await invoke('mkdir', {name: file});break;}
-        case FileType.File: {await invoke('mk', {name, password, file});break;}
+        case FileType.File: {await invoke('mk', {name, password, fileName: file});break;}
     }
 }
 
@@ -53,7 +53,7 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
         let pwd: string = await invoke('pwd', {});
         let files_divs = [];
         for (let i = 0;i < files.length;i++){
-            files_divs.push(<File name={files[i]} key={'f' + i}/>);
+            files_divs.push(<File name={files[i]} key={i}/>);
         }
         set_files(files_divs);
         set_location(pwd);
@@ -74,7 +74,6 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
             const done_editing = async (e: any) => {
                 e.preventDefault();
                 set_editing('none');
-                console.log(e);
                 let name: string = await invoke('system_get', {key: 'name'});
                 let password: string = await invoke('system_get', {key: 'password'});
                 await make_file(name, password, text, file_type);

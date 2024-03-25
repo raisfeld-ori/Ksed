@@ -65,8 +65,8 @@ impl Home{
 #[tauri::command]
 pub fn mkdir(name: String) {unsafe{FS.current_dir.files.push(DirectoryItems::Directory(Directory::new(name)))};}
 #[tauri::command]
-pub fn mk(name: &str, password: &str, file_name: String) -> Result<(), String> {
-    let new_file = File::new(name, password, file_name, unsafe{&FS.current_dir});
+pub fn mk(name: &str, password: &str, fileName: String) -> Result<(), String> {
+    let new_file = File::new(name, password, fileName, unsafe{&FS.current_dir});
     if new_file.is_none() {return Err(String::from("a file with this name already exists"));}
     unsafe{FS.current_dir.files.push(DirectoryItems::File(new_file.unwrap()))};
     Ok(())
