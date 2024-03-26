@@ -15,8 +15,12 @@ function loading(){
     const [error, set_error] = useState("");
     if (!location.state){return <h1>DONT ACCESS THIS PAGE WITHOUT LOGGING IN</h1>}
     useEffect(() => {
-        invoke("load_user", location.state).then(result => {
+        invoke("load_user", location.state).then(async result => {
             if (result) {set_state("ERROR");set_error("failed to load the user data");return;}
+            let name_val = await invoke('create_value', {valType: 'string', val: location.state.name});
+            await invoke('system_make', {key: 'name',val: name_val});
+            let password_val = await invoke('create_value', {valType: 'string', val: location.state.password});
+            await invoke('system_make', {key: 'password',val: password_val});
             navigate('/main_page');
         });
     }, []);
