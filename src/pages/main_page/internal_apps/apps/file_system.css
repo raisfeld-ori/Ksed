@@ -11,6 +11,7 @@
     height: 10svh;
     width: 5svw;
 }
+
 .file_grid {
     display:grid;
     width: 100%;
@@ -18,6 +19,9 @@
     grid-template-columns: 7svw 7svw 7svw 7svw 7svw 7svw 7svw 7svw;
 }
 
+.file:hover{
+    background-color: #0000001e;
+}
 
 .ApplicationDirectory {
     position:relative;
@@ -48,7 +52,7 @@
     margin-top: 1svh;
     border: 2px #0000001e;
     border-style: solid;
-    cursor: move;
+    cursor:context-menu;
     font-size: 1em;
     color: white;
     width: 873px;
