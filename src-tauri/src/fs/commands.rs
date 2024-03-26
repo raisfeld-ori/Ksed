@@ -32,12 +32,12 @@ pub fn cd(new: String) {
 } 
 
 #[tauri::command]
-pub fn ls() -> Vec<String> {
+pub fn ls() -> Vec<(String, String)> {
   unsafe {FS.current_dir.files.iter().map(|item| 
     match item{
-        DirectoryItems::Directory(dir) => dir.name.clone(),
-        DirectoryItems::File(file) => file.name.clone()
-    }).collect::<Vec<String>>()}
+        DirectoryItems::Directory(dir) => (dir.name.clone(), String::from("Directory")),
+        DirectoryItems::File(file) => (file.name.clone(), String::from("File"))
+    }).collect::<Vec<(String, String)>>()}
 }
 
 

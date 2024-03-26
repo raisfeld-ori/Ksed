@@ -3,6 +3,8 @@ import { invoke } from '@tauri-apps/api';
 import { useState, useEffect } from 'react';
 import img from '../../assets/terminal.png';
 import { open } from '@tauri-apps/api/dialog';
+import folder from '../../assets/folder.png';
+import alpha from '../../assets/daddyishome.png'
 import './file_system.css';
 
 async function upload_file(update_fs: () => Promise<void>, set_files: React.Dispatch<React.SetStateAction<React.JSX.Element[]>>){
@@ -24,11 +26,11 @@ async function upload_file(update_fs: () => Promise<void>, set_files: React.Disp
 }
 
 
-function File(props: {name: string}){
+function File(props: {name: string, type: FileType}){
 
 
     return <div className='file'>
-    <img src={img} className='file_img'/><br />
+    <img src={props.type == FileType.File ? alpha: folder} className='file_img'/><br />
     <p className='file_name'>{props.name}</p>
 </div>;
 }
@@ -50,11 +52,17 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
     const [{dx, dy}, set_positions] = useState({dx: 0, dy: 0});
     const [ctx_display, set_ctx_display] = useState('none');
     const update_fs = async () => {
-        let files: any[] = await invoke('ls', {});
+        let files: [string, string][] = await invoke('ls', {});
         let pwd: string = await invoke('pwd', {});
         let files_divs = [];
         for (let i = 0;i < files.length;i++){
-            files_divs.push(<File name={files[i].slice(0, 10)} key={i}/>);
+            let file_type = (files[i][1] == 'File') ? FileType.File : FileType.Directory;
+            if (files[i][0].length > 10){
+                files_divs.push(<File name={files[i][0].slice(0, 7) + '...'} key={i} type={file_type}/>);
+            }
+            else{
+                files_divs.push(<File name={files[i][0]} key={i} type={file_type}/>);
+            }
         }
         set_files(files_divs);
         set_location(pwd);
