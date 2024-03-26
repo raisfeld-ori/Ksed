@@ -1,9 +1,8 @@
-use std::path::PathBuf;
+use std::{fs, path::PathBuf};
 use base64::{encode_config, URL_SAFE};
 use serde::{Deserialize, Serialize};
 use serde_json::Error;
-use std::fs::read;
-
+use std::fs::{read, write};
 use crate::get_user_dir;
 
 use super::encryption::aes_encrypt;
@@ -39,8 +38,16 @@ pub fn ls() -> Vec<String> {
         DirectoryItems::File(file) => file.name.clone()
     }).collect::<Vec<String>>()}
 }
-
-
+#[tauri::command]
+pub fn upload_file(name: &str, password: &str, file_path: String) -> Result<(), std::io::Error> {
+  let file_content = read(file_path.clone());
+  if file_content.is_err() {return Err(file_content.unwrap_err());}
+  let encrypted_content = aes_encrypt(name, password, &file_content.unwrap());
+  let path = PathBuf::from(file_path);
+  let file_name = path.file_name().unwrap().to_str().unwrap().to_string();
+  let new_file = File::new(name, password,file_name, unsafe {&FS.current_dir});
+  return Ok(());
+}
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Home{
     path: Vec<Directory>,
@@ -105,6 +112,12 @@ impl File{
         if location.exists() {return None;}
         return Some(File {name: file_name, location});
     }
+    pub fn save(&self,name: &str, password: &str, data: &[u8]) -> Result<(), std::io::Error>{
+        let encrypted_content = aes_encrypt(name, password, data);
+        let save = write(self.location.as_path(),encrypted_content);
+        if save.is_err() {return Err(save.unwrap_err());}
+        return Ok(());
+    }
     pub fn open(&self) -> Option<Vec<u8>> {
         let data = read(self.location.as_path());
         if data.is_err(){return None;}
@@ -126,4 +139,12 @@ fn test_fs() {
     assert!(mk(name, password, String::from("file")).is_ok());
     assert_eq!(unsafe{&FS.current_dir}, &dir);
     println!("Dir: {:?}",dir)
+}
+#[test]
+fn test_upload(){
+    unsafe{FS.init_fs();}
+    let name = "some";
+    let password = "thing";
+    File::new(name, password, String::from("test.txt"), unsafe {&FS.current_dir});
+    assert!(upload_file(name, password, String::from("/test.txt")).is_ok());
 }
