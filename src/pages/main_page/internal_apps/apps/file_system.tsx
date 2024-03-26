@@ -1,7 +1,7 @@
 import App from '../App';
 import { invoke } from '@tauri-apps/api';
 import { useState, useEffect } from 'react';
-import img from '../../assets/terminal.png';
+import img from '../../assets/folder.png';
 import { open } from '@tauri-apps/api/dialog';
 import folder from '../../assets/folder.png';
 import alpha from '../../assets/daddyishome.png'
@@ -104,9 +104,14 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
         left: dx + 2 + 'px',
         display: `${ctx_display}`,
     }}>
-    <button onClick={() => make_files(FileType.Directory)}>create dir</button>
-    <br />
-    <button onClick={async () => await upload_file(update_fs, set_files)}>upload file</button>    
+
+    <button className='buttoncontextmenu' onClick={() => make_files(FileType.Directory)}>Create File</button>
+ 
+    <button className='buttoncontextmenu' onClick={async () => await upload_file(update_fs, set_files)}>Upload File</button>    
+    <button className='buttoncontextmenu' >Rename</button>
+    <p className='linecontextmenu'></p>
+    <button className='buttoncontextmenu' >Delete</button>
+    <button className='buttoncontextmenu' >Copy</button>
     </div>;
     let Application = <div className='ApplicationDirectory'>
             <h1 className='filesystemtxt2'>{location}</h1>
