@@ -109,7 +109,7 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
     <button onClick={async () => await upload_file(update_fs, set_files)}>upload file</button>    
     </div>;
     let Application = <div className='ApplicationDirectory'>
-            <h1 className='filesystemtxt2'>/{location}/</h1>
+            <h1 className='filesystemtxt2'>{location}</h1>
         </div>
     let app_html = <div className='frametest2' onContextMenu={right_click}>
         {Application}
