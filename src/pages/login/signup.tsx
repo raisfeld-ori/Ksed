@@ -17,7 +17,6 @@ function Login() {
             await invoke("create_user", {name, password})
             await invoke("save_user", {username: name, password});
             navigate("/loading", {state: {name, password}});
-            
         }
     }
 
@@ -54,7 +53,9 @@ function Login() {
                     </div>
                     <div className="input-group">
                         <label className="label">Password</label>
-                        <input onChange={e => setPassword(e.currentTarget.value)} autoComplete="off" name="info" id="info" className="input" placeholder='Enter your password' type="info" />
+                     <input maxLength={16} onChange={e => setPassword(e.currentTarget.value)} 
+                     onKeyDown={async e => {if (e.key == 'Enter') {await authenticate()}}}
+                     autoComplete="off" name="info" id="info" className="input" placeholder='Enter your password' type="password" />
                         <div></div>
                     </div>
                     <button className="learn-more" onClick={authenticate}>
