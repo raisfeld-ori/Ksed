@@ -23,49 +23,6 @@
     position:sticky;
 }
 
-.ApplicationDirectory {
-    position:relative;
-    display: block;
-    margin-bottom: 1px;
-    height: 10svh;
-    border-top: 2px #0202022f;
-    border-left: 2px #0202022f;
-    border-top-right-radius: 20px;
-    border-top-left-radius: 20px;
-    border-right: 2px #0202022f;
-    border-bottom: 2px #0202022f;
-    border-top: #2f2f2f;
-    border-style: solid;
-    cursor: move;
-    font-size: 1em;
-    color: white    ;
-    width: 873px;
-    max-width: 100%;
-    display: flex;
-    align-items: flex-start;
-    background-color: #2f2f2f;   
-}
-
-.frametest2 {
-    position: absolute;
-    display: block;
-    margin-top: 1svh;
-    border: 2px #0000001e;
-    border-style: solid;
-    cursor: move;
-    font-size: 1em;
-    color: white;
-    width: 873px;
-    max-width: 100%;
-    display: flex;
-    align-items: flex-start;
-    z-index: 1;
-    background-color: #333333df;
-    height: 50svh;    
-    backdrop-filter: blur(10px);
-
-}
-
 .frametest {
     border-radius: 20px;
 }
@@ -80,20 +37,6 @@ border-radius: 20px;
     height: 50svh;    
 }
 
-.filesystemtxt {
-    font-size: 1em;
-    text-align: left;
-
-}
-.filesystemtxt2 {
-    font-size: 1.5em;
-    text-align: left;
-    font-weight: lighter;
-    color: rgb(189, 184, 184);
-
-    font-style: italic;
-
-}
 .sexy{
     color: white;
     font-weight: normal;

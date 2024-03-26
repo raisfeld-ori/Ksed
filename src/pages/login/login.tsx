@@ -56,7 +56,9 @@ function login(){
 
                      <div className="input-group">
                     <label className="label">Password</label>
-                     <input maxLength={16} onChange={e => setpassword(e.currentTarget.value)} autoComplete="off" name="info" id="info" className="input" placeholder='Enter your password' type="info" />
+                     <input maxLength={16} onChange={e => setpassword(e.currentTarget.value)} 
+                     onKeyDown={async e => {if (e.key == 'Enter') {await authenticate()}}} 
+                     autoComplete="off" name="info" id="info" className="input" placeholder='Enter your password' type="password" />
                     <div ></div>
                      </div>
 

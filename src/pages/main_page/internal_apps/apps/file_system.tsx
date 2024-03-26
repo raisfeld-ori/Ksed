@@ -3,6 +3,7 @@ import { invoke } from '@tauri-apps/api';
 import { useState, useEffect } from 'react';
 import img from '../../assets/terminal.png';
 import { open } from '@tauri-apps/api/dialog';
+import './file_system.css';
 
 async function upload_file(update_fs: () => Promise<void>, set_files: React.Dispatch<React.SetStateAction<React.JSX.Element[]>>){
     let name: string = await invoke('system_get', {key: 'name'});
@@ -53,7 +54,7 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
         let pwd: string = await invoke('pwd', {});
         let files_divs = [];
         for (let i = 0;i < files.length;i++){
-            files_divs.push(<File name={files[i]} key={i}/>);
+            files_divs.push(<File name={files[i].slice(0, 10)} key={i}/>);
         }
         set_files(files_divs);
         set_location(pwd);
@@ -104,7 +105,9 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
         </div>
     let app_html = <div className='frametest2' onContextMenu={right_click}>
         {Application}
+        <div className='file_grid'>
         <>{files}</>
+        </div>
     </div>;
     const [display, set_display] = useState('none');
     let app = <App element={app_html} display={display} set_display={set_display} name='File System'/>;
