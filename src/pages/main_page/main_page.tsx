@@ -22,7 +22,7 @@ async function save_user(){
 export default function MainPage() {
     const navigate = useNavigate();
     const [app, fs_display, ctx_menu, update_fs] = file_system();
-    const example_app = desktop_app("Files", folder, async () => {await update_fs();fs_display('inherit');});
+    const explorer_app = desktop_app("Files", folder, async () => {await update_fs();fs_display('inherit');});
     const not_example_app = desktop_app("Search", search, async () => { console.log(await invoke('system_get', {key: 'name'})); });
     const terminal = desktop_app("Terminal", terminald, () => {});
     const [menu, set_menu] = useState(false);
@@ -30,7 +30,7 @@ export default function MainPage() {
         <div id='background' onContextMenu={e => {e.preventDefault();}}>
             {ctx_menu}
             {app}
-            <Grid  apps={[example_app, not_example_app, terminal]} gridSize={50} margin={120} />
+            <Grid  apps={[explorer_app, not_example_app, terminal]} gridSize={50} margin={120} />
             <nav className='navbar' onContextMenu={e => e.preventDefault()}>
                 <img className='homeimg' onClick={() => set_menu(!menu)} src={menu_icon} alt="" />
                 <img className='searchimg' src={search} alt="" />
