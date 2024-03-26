@@ -122,16 +122,13 @@ fn save_data(username: &str, password: &str, data_name: String, data: Vec<u8>) -
 pub fn save_user(username: &str, password: &str) -> Result<(), String> {
     let (user_json, sys_json) = json::data_bytes();
     let user_json = aes_encrypt(username, password, &user_json);
-    let err = save_data(username, password, String::from("user_json"), user_json);
-    if err.is_err(){return err;}
+    let err = save_data(username, password, String::from("user_json"), user_json)?;
     let sys_json = aes_encrypt(username, password, &sys_json);
-    let err = save_data(username, password, String::from("sys_json"), sys_json);
-    if err.is_err(){return err;}
+    let err = save_data(username, password, String::from("sys_json"), sys_json)?;
     let fs = unsafe{serde_json::to_string(&FS)};
-    if fs.is_err(){return Err(String::from("failed to save the user data"));}
+    if fs.is_err(){return Err(fs.unwrap_err().to_string());}
     let fs = aes_encrypt(username, password, fs.unwrap().as_bytes());
-    let err = save_data(username, password, String::from("fs"), fs);
-    if err.is_err(){return err;}
+    let err = save_data(username, password, String::from("fs"), fs)?;
     return Ok(());
 }
 
