@@ -37,7 +37,7 @@ export default function MainPage() {
     const terminal = desktop_app("Terminal", terminald, () => {});
     const [menu, set_menu] = useState(false);
     return (
-        <div id='background' onContextMenu={e => {e.preventDefault();}}>
+        <div id='background' onContextMenu={e => {e.preventDefault();}} onClick={() => {if (menu) {set_menu(false)}}}>
             {ctx_menu}
             {app}
             <Grid  apps={[explorer_app, not_example_app, terminal]} gridSize={50} margin={120} />
