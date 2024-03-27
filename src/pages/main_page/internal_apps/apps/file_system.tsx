@@ -26,13 +26,24 @@ async function upload_file(update_fs: () => Promise<void>, set_files: React.Disp
 }
 
 
-function File(props: {name: string, type: FileType}){
-
-
-    return <div className='file'>
+function File(props: {name: string, type: FileType, update_fs: () => Promise<void>}){
+    async function cd(){
+        console.log('test');
+        await invoke('cd', {new: props.name});
+        await props.update_fs();
+    }
+    if (props.name.length > 10){
+        return <div className='file' onDoubleClick={cd}>
+        <img src={props.type == FileType.File ? alpha: folder} className='file_img'/><br />
+        <p className='file_name'>{props.name.slice(0, 7) + '...'}</p>
+        </div>;
+    }
+    else{
+    return <div className='file' onDoubleClick={cd}>
     <img src={props.type == FileType.File ? alpha: folder} className='file_img'/><br />
     <p className='file_name'>{props.name}</p>
-</div>;
+    </div>;
+    }
 }
 
 enum FileType{
@@ -57,12 +68,7 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
         let files_divs = [];
         for (let i = 0;i < files.length;i++){
             let file_type = (files[i][1] == 'File') ? FileType.File : FileType.Directory;
-            if (files[i][0].length > 10){
-                files_divs.push(<File name={files[i][0].slice(0, 7) + '...'} key={i} type={file_type}/>);
-            }
-            else{
-                files_divs.push(<File name={files[i][0]} key={i} type={file_type}/>);
-            }
+            files_divs.push(<File name={files[i][0]} key={i} type={file_type} update_fs={update_fs}/>);
         }
         set_files(files_divs);
         set_location(pwd);

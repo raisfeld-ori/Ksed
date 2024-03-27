@@ -23,7 +23,6 @@ pub fn cd(new: String) {
         for item in FS.current_dir.files.iter(){
             let dir = item.get_directory();
             if dir.is_none(){continue}
-            // if you use an else block then dir will need to be mutable
             let dir = dir.unwrap();
             if dir.name == new{FS.cd(dir);}
         }
