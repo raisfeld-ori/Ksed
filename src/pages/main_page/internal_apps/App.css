@@ -70,7 +70,9 @@ border-radius: 20px;
 }
 
 .ContextMenu{
-    height: 18.5svh;
+    height: 21.5svh;
+    min-height: 21.5svh;
+    max-height: 21.5svh;
     width: 15svh;
     position: absolute;
     background-color: rgb(252, 252, 252);
