@@ -17,16 +17,17 @@
     border: 2px solid transparent;
     width: 6em;
     height: 2.5em;
+    max-height: 2.5em;
     padding-left: 0.8em;
     outline: none;
     overflow: hidden;
     background-color: #F3F3F3;
-    border-radius: 10px;
+    border-radius: 5px;
     transition: all 0.5s;
   }
   
   .editing:hover, .editing:focus {
-    border: 2px solid #525252;
+    border: 2px solid #52525234;
     box-shadow: 0px 0px 0px 4px rgba(0, 0, 0, 0.2);
     background-color: white;
   }
@@ -39,7 +40,7 @@
     display:grid;
     width: 100%;
     gap: 15px 10px;
-    grid-template-columns: 7svw 7svw 7svw 7svw 7svw 7svw 7svw 7svw;
+    grid-template-columns: 7svw 7svw 7svw 7svw 7svw 7svw;
 }
 
 .file:hover{

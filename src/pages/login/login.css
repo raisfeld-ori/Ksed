@@ -433,6 +433,7 @@
   justify-content: center;
   align-items: center; 
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 
  }
 
@@ -515,23 +516,23 @@ a:hover {
   font-size: 36px;
   font-weight: 100;
   color: #ff0202;
-  div {
       overflow: hidden;
       position: relative;
       height: 65px;
       padding-top: 10px;
       margin-top: -10px;
-      li {
-          color: #0091ff;
-          font-weight: 700;
-          height: 45px;
-          margin-bottom: 45px;
-          display: block;
-          text-shadow: 2px 2px 4px rgba(2, 39, 80, 0.571), 0 0 5px rgba(10, 21, 84, 0.818);
-
-      }
   }
+
+li {
+  color: #0091ff;
+  font-weight: 700;
+  height: 45px;
+  margin-bottom: 45px;
+  display: block;
+  text-shadow: 2px 2px 4px rgba(2, 39, 80, 0.571), 0 0 5px rgba(10, 21, 84, 0.818);
+
 }
+
 
 .flip2 { animation: flip2 9s cubic-bezier(0.23, 1, 0.32, 1.2) infinite; }
 .flip3 { animation: flip3 9s cubic-bezier(0.23, 1, 0.32, 1.2) infinite; }
