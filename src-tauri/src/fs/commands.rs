@@ -3,9 +3,9 @@ use base64::{encode_config, URL_SAFE};
 use serde::{Deserialize, Serialize};
 use serde_json::Error;
 use std::fs::{read, write};
-use crate::{aes_decrypt, get_user_dir};
-
-use super::encryption::aes_encrypt;
+use crate::fs::encryption::aes_decrypt;
+use crate::fs::utilities::get_user_dir;
+use crate::fs::encryption::aes_encrypt;
 
 pub static mut FS: Home = Home::new();
 
