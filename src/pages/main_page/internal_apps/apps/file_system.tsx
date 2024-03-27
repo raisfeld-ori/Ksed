@@ -83,6 +83,7 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
             const done_editing = async (e: any) => {
                 e.preventDefault();
                 set_editing('none');
+                if (text == ''){return;}
                 let name: string = await invoke('system_get', {key: 'name'});
                 let password: string = await invoke('system_get', {key: 'password'});
                 await make_file(name, password, text, file_type);

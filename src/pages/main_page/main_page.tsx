@@ -4,7 +4,6 @@ import Grid from './Grid';
 import folder from './assets/folder.png';
 import menu_icon from './assets/computer-laptop-color-icon.webp';
 import search from './assets/search.png';
-import terminald from './assets/terminal.png';
 import file_system from './internal_apps/apps/file_system';
 import ibetonhakari from './assets/TOCA2.mp4';
 import { desktop_app } from './Grid';
@@ -33,18 +32,15 @@ export default function MainPage() {
     const navigate = useNavigate();
     const [app, fs_display, ctx_menu, update_fs] = file_system();
     const explorer_app = desktop_app("Files", folder, async () => {await update_fs();fs_display('inherit');});
-    const not_example_app = desktop_app("Search", search, async () => { console.log(await invoke('system_get', {key: 'name'})); });
-    const terminal = desktop_app("Terminal", terminald, () => {});
+    const search_apps = desktop_app("Search", search, async () => { set_menu(true);});
     const [menu, set_menu] = useState(false);
     return (
         <div id='background' onContextMenu={e => {e.preventDefault();}} onClick={() => {if (menu) {set_menu(false)}}}>
             {ctx_menu}
             {app}
-            <Grid  apps={[explorer_app, not_example_app, terminal]} gridSize={50} margin={120} />
+            <Grid  apps={[explorer_app, search_apps]} gridSize={50} margin={120} />
             <nav className='navbar' onContextMenu={e => e.preventDefault()}>
                 <img className='homeimg' onClick={() => set_menu(!menu)} src={menu_icon} alt="" />
-                <img className='searchimg' src={search} alt="" />
-                <img className='terminalimg' src={terminald} alt="" />
                 <p className='time'>12:09 AM <br /> 12/10/2027</p>
             </nav>
             <div className={`menu ${menu ? 'show' : 'hide'}`}>
@@ -55,7 +51,7 @@ export default function MainPage() {
                 <button className='leave'onClick={async () => {await save_user();navigate("/");}} >
                     <img src={leaveicon} alt="leaveicon" />
                 </button>
-                <p className='hiddentxt'>Logout​</p>
+                <p className='hiddentxt'>Logout</p>
                 <button className='exit' onClick={async () => {await save_user();await invoke('close_app', {});}}>
                     <img src={exit} alt="exiticon" />
                 </button>
