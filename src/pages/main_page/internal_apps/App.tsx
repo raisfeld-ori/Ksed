@@ -30,7 +30,7 @@ function App({ element, name, display, set_display }: AppProps) {
             key={name}
         >
             <div className="frametest">
-                <h1 className="sexy">{name}</h1>
+                <h1 className="frametext2">{name}</h1>
                 <div className="frame-buttons">
                     <button className="minimize-btn">-</button>
                     <button className="close-btn" onClick={()=>{set_display('none');}}>x</button>

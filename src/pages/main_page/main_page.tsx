@@ -57,7 +57,7 @@ export default function MainPage() {
                 </button>
                 <p className='hiddenclose'>Exit 😭​</p>
                 
-                <BinIcon display={async () => {await update_fs();fs_display('inherit');}} name='file explorer' img={folder}></BinIcon>
+                <BinIcon display={async () => {await update_fs();fs_display('inherit');}} name='Files' img={folder}></BinIcon>
                 
             </div>
             <video className='hakari' src={ibetonhakari} width="100%" height="100%" autoPlay muted loop>

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import img from '../../assets/folder.png';
 import { open } from '@tauri-apps/api/dialog';
 import folder from '../../assets/folder.png';
-import alpha from '../../assets/daddyishome.png'
+import alpha from '../../assets/image-solid.svg'
 import './file_system.css';
 
 async function upload_file(update_fs: () => Promise<void>, set_files: React.Dispatch<React.SetStateAction<React.JSX.Element[]>>){
