@@ -37,7 +37,7 @@ border-radius: 20px;
     height: 50svh;    
 }
 
-.sexy{
+.frametext2{
     color: white;
     font-weight: normal;
 }
@@ -70,7 +70,7 @@ border-radius: 20px;
 }
 
 .ContextMenu{
-    height: 19svh;
+    height: 18.5svh;
     width: 15svh;
     position: absolute;
     background-color: rgb(252, 252, 252);
