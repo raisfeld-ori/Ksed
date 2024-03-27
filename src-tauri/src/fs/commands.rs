@@ -38,9 +38,9 @@ pub fn ls() -> Vec<(String, String)> {
     }).collect::<Vec<(String, String)>>()}
 }
 #[tauri::command]
-pub fn upload_file(name: &str, password: &str, file_path: String) -> Result<(), std::io::Error> {
+pub fn upload_file(name: &str, password: &str, file_path: String) -> Result<(), String> {
   let file_content = read(file_path.clone());
-  if file_content.is_err() {return Err(file_content.unwrap_err());}
+  if file_content.is_err() {return Err(String::from("failed to read the uploaded file"));}
   let encrypted_content = aes_encrypt(name, password, &file_content.unwrap());
   let path = PathBuf::from(file_path);
   let file_name = path.file_name().unwrap().to_str().unwrap().to_string();
