@@ -34,12 +34,13 @@ function login(){
                 <div id='form'>
 
                 <h4 className="wordCarousel">
-                <div>
+                <div> 
                     <ul className="flip5">
-                        <li>Hello 👋</li>
+                        <li>olá 👋</li>
+                        <li>mrhban 👋</li>
                         <li>Shalom 👋</li>
                         <li>Hola 👋</li>
-
+                        <li>Hello 👋</li>
                     </ul>
                 </div>
             </h4>
@@ -66,7 +67,7 @@ function login(){
                         <span className="circle" aria-hidden="true">
                          <span className="icon arrow"></span>
                         </span>
-                        <span className="button-text">Login</span>
+                        <span className="button-text" onClick={() => navigate("main_page")}>Login</span>
                         </button>
                     <br />
                     <p id='error'>{error}</p>

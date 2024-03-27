@@ -31,6 +31,18 @@ function Login() {
             <div id='menu'>
                 <div id='form'>
 
+                <h4 className="wordCarousel">
+                <div> 
+                    <ul className="flip5">
+                        <li>Bem-vindo 👋</li>
+                        <li>mrhbaan 👋</li>
+                        <li>Baroh Aba 👋</li>
+                        <li>bienvenidas 👋</li>
+                        <li>Welcome 👋</li>
+                    </ul>
+                </div>
+            </h4>
+
                     <h1 className='login' >Welcome!</h1>
                 <p className='login2'>Enter your credentials to Sign Up</p>
 

@@ -7,10 +7,33 @@
     justify-content: flex-start;
 }
 
-.file_img{
-    height: 10svh;
-    width: 5svw;
+.file_img {
+    margin-top: 1svh; /* Adjust as needed */
+    height: 3.5svh;
+    width: 2svw;
 }
+
+.editing {
+    border: 2px solid transparent;
+    width: 6em;
+    height: 2.5em;
+    padding-left: 0.8em;
+    outline: none;
+    overflow: hidden;
+    background-color: #F3F3F3;
+    border-radius: 10px;
+    transition: all 0.5s;
+  }
+  
+  .editing:hover, .editing:focus {
+    border: 2px solid #525252;
+    box-shadow: 0px 0px 0px 4px rgba(0, 0, 0, 0.2);
+    background-color: white;
+  }
+
+
+
+
 
 .file_grid {
     display:grid;
@@ -27,7 +50,6 @@
     position:relative;
     display: block;
     margin-bottom: 1px;
-    height: 10svh;
     border-top: 2px #0202022f;
     border-left: 2px #0202022f;
     border-top-right-radius: 20px;
@@ -65,3 +87,24 @@
     backdrop-filter: blur(10px);
 
 }
+
+.buttoncontextmenu {
+    display: flex;
+    margin-left: 3svh;
+    flex-direction: column;
+    justify-content: center; /* Horizontally centers the context menu */
+    align-items: center; /* Vertically centers the buttons */
+    margin-top: 1svh;
+}
+
+
+
+.linecontextmenu::after {
+    content: "";
+    display: block;
+    margin-top: 10px;
+    width: 100%; /* Adjust width as needed */
+    height: 2px; /* Adjust height as needed */
+    background-color: rgba(167, 167, 167, 0.474); /* Change color as desired */
+    margin-right: 100%; /* This pushes the line to the left */
+  }
