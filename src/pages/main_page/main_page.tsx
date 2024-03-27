@@ -13,6 +13,16 @@ import { useNavigate } from 'react-router-dom';
 import exit from './assets/exit.png';
 import { invoke } from '@tauri-apps/api';
 
+function BinIcon(props: {display: () => Promise<void>, name: string, img: string}){
+    return   <div className='appsmenu'onClick={() => {props.display}}>
+    <p><i className="line right"></i></p>
+    <button className='folderappmenu'>
+        <img className='folderappmenu' src={props.img} alt="filesystem" />
+    </button>
+    <p className='filestxt'>{props.name}</p>
+    </div>;
+}
+
 async function save_user(){
     let username = await invoke('system_get', {key: 'name'});
     let password = await invoke('system_get', {key: 'password'});
@@ -51,14 +61,7 @@ export default function MainPage() {
                 </button>
                 <p className='hiddenclose'>Exit 😭​</p>
                 
-            
-                <div className='appsmenu'onClick={() => {fs_display('inherit')}}>
-                <p><i className="line right"></i></p>
-                <button className='folderappmenu'>
-                    <img className='folderappmenu' src={folder} alt="filesystem" />
-                </button>
-                <p className='filestxt'>Files</p>
-                </div>
+                <BinIcon display={async () => {await update_fs();fs_display('inherit');}} name='file explorer' img={folder}></BinIcon>
                 
             </div>
             <video className='hakari' src={ibetonhakari} width="100%" height="100%" autoPlay muted loop>
