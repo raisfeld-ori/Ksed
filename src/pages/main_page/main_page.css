@@ -20,6 +20,7 @@
   z-index: 2000;
   height: 5svh;
   backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
 
   width: 100%;
  }
@@ -50,6 +51,7 @@
   justify-content: right;
   padding-right: 1svh;
   margin-left: 2svh;
+  margin-top: .5svh;
 }
 
 
@@ -141,6 +143,7 @@ color: white;
   background-color: #3333338b;
   transition: all 0.1s ease-in-out;
   backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
   border-right: 2px #0202022f;
   border-top: 2px #0202022f;
   border-left: 2px #0202022f;
@@ -170,7 +173,7 @@ color: white;
 .leave {
   float: right;
   z-index: 1;
-  margin-top: 39.5svh;
+  margin-top: 41svh;
   margin-right: 0.5svh;
   margin-left: 0.8svh;
 
@@ -213,7 +216,7 @@ color: white;
 .exit {
   float: right;
   z-index: 1;
-  margin-top: 39.4svh;
+  margin-top: 41svh;
   margin-right: .5svh;
   transition: transform 250ms;
 

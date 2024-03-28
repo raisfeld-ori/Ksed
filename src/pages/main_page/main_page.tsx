@@ -4,6 +4,7 @@ import Grid from './Grid';
 import folder from './assets/folder.png';
 import menu_icon from './assets/computer-laptop-color-icon.webp';
 import search from './assets/search.png';
+import terminal from './assets/terminal.png';
 import file_system from './internal_apps/apps/file_system';
 import ibetonhakari from './assets/TOCA2.mp4';
 import { desktop_app } from './Grid';
@@ -58,6 +59,8 @@ export default function MainPage() {
                 <p className='hiddenclose'>Exit 😭​</p>
                 
                 <BinIcon display={async () => {await update_fs();fs_display('inherit');}} name='Files' img={folder}></BinIcon>
+                <BinIcon display={async () => {await update_fs();fs_display('inherit');}} name='Terminal' img={terminal}></BinIcon>
+
                 
             </div>
             <video className='hakari' src={ibetonhakari} width="100%" height="100%" autoPlay muted loop>
