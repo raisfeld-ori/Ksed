@@ -66,16 +66,21 @@ impl Home{
         mkdir(String::from("bin"));
     }
     
-    pub fn cd_back(&mut self) {if self.path.len() > 1 {
-        let files = &self.path.last().unwrap().files;
-        let mut new_files = Vec::new();
-        for file in self.current_dir.files.iter(){
-            if !files.contains(&file){new_files.push(file.clone());}
+    pub fn cd_back(&mut self) {
+        if self.path.len() > 1 {
+            let prev_current_dir = self.current_dir.clone();
+            self.path.pop();
+
+            if let Some(second_last_dir) = self.path.last_mut() {
+                second_last_dir.files.retain(|item| match item {
+                    DirectoryItems::Directory(dir) => dir.name != prev_current_dir.name,
+                    DirectoryItems::File(_) => true,
+                });
+            }
+            self.current_dir = self.path.clone().into_iter().last().unwrap();
+            self.current_dir.files.push(DirectoryItems::Directory(prev_current_dir));
         }
-        self.path.last_mut().unwrap().files.append(&mut new_files);
-        self.path.pop();
-        self.current_dir = self.path.last().unwrap().clone();
-    }}
+    }
     pub fn cd(&mut self, dir: Directory) {
         let files = &self.path.last().unwrap().files;
         let mut new_files = Vec::new();
@@ -120,7 +125,7 @@ impl DirectoryItems{
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct File{
     name: String,
-    location: PathBuf,
+    location: PathBuf
 }
 impl File{
     pub fn new(name: &str, password: &str, file_name: String, parent: &Directory) -> Option<Self> {
