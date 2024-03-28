@@ -65,7 +65,7 @@ function login(){
                         <span className="circle" aria-hidden="true">
                          <span className="icon arrow"></span>
                         </span>
-                        <span className="button-text" onClick={() => navigate("main_page")}>Login</span>
+                        <span className="button-text" onClick={authenticate}>Login</span>
                         </button>
                     <br />
                     <p id='error'>{error}</p>

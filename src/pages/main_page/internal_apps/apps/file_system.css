@@ -46,6 +46,8 @@
     display: flex;
     align-items: center;
     margin-bottom: 1px;
+    min-height: 5svh;
+    height: 5svh;
     border-top: 2px #0202022f;
     border-left: 2px #0202022f;
     border-top-right-radius: 20px;
@@ -79,6 +81,8 @@
     background-color: #333333df;
     height: 50svh;    
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
 }
 
 .buttoncontextmenu {
@@ -101,8 +105,11 @@
 }
 
 .backdir {
-    height: 3vh;
+    height: 3.5vh;
     width: 2vw;
-    margin-bottom: 0.7svh;
+    margin-bottom: 0.8svh;
     margin-right: 0.5svh;
+}
+.filesystemtxt2{
+    font-weight: 250;
 }
