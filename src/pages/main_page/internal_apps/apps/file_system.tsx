@@ -5,6 +5,7 @@ import img from '../../assets/folder.png';
 import { open } from '@tauri-apps/api/dialog';
 import folder from '../../assets/folder.png';
 import alpha from '../../assets/image-solid.svg'
+import arrowleft from '../../assets/arrowleft.png'
 import './file_system.css';
 
 async function upload_file(update_fs: () => Promise<void>, set_files: React.Dispatch<React.SetStateAction<React.JSX.Element[]>>){
@@ -120,7 +121,9 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
     <button className='buttoncontextmenu' >Copy</button>
     </div>;
     let Application = <div className='ApplicationDirectory'>
-            <button onClick={async () => {await invoke('cd_back', {});await update_fs();}}>go back</button>
+            <button onClick={async () => {await invoke('cd_back', {});await update_fs();}}>
+                <img className='backdir' src={arrowleft} alt="arrowleft" />
+            </button>
             <h1 className='filesystemtxt2'>{location}</h1>
         </div>
     let app_html = <div className='frametest2' onContextMenu={right_click}>
