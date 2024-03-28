@@ -11,8 +11,8 @@ function login(){
     const navigate = useNavigate();
 
     async function authenticate(){
+        if (name == '' || password == '') {seterror("your name/password can't be null");return;}
         let response = await invoke("authenticate_user", {name, password}).catch(e => {console.log(e)});
-        console.log(response);
         if (response){
             navigate("/loading", {state: {name, password}});
         }
@@ -20,8 +20,6 @@ function login(){
             seterror("failed to authenticate user");
         }
     }
-
-
 
         return <div id='background' onContextMenu={e => e.preventDefault()}>
                         <button className='upperbutton' aria-current={true} onClick={() => navigate("/")}>Login</button>
@@ -71,10 +69,6 @@ function login(){
                         </button>
                     <br />
                     <p id='error'>{error}</p>
-
-
-
-
                 </div>
             </div>
         </div>
