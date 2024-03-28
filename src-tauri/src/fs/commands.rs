@@ -3,9 +3,9 @@ use base64::{encode_config, URL_SAFE};
 use serde::{Deserialize, Serialize};
 use serde_json::Error;
 use std::fs::{read, write};
-use crate::{aes_decrypt, get_user_dir};
-
-use super::encryption::aes_encrypt;
+use crate::fs::encryption::aes_decrypt;
+use crate::fs::utilities::get_user_dir;
+use crate::fs::encryption::aes_encrypt;
 
 pub static mut FS: Home = Home::new();
 
@@ -38,9 +38,9 @@ pub fn ls() -> Vec<(String, String)> {
     }).collect::<Vec<(String, String)>>()}
 }
 #[tauri::command]
-pub fn upload_file(name: &str, password: &str, file_path: String) -> Result<(), std::io::Error> {
+pub fn upload_file(name: &str, password: &str, file_path: String) -> Result<(), String> {
   let file_content = read(file_path.clone());
-  if file_content.is_err() {return Err(file_content.unwrap_err());}
+  if file_content.is_err() {return Err(String::from("failed to read the uploaded file"));}
   let encrypted_content = aes_encrypt(name, password, &file_content.unwrap());
   let path = PathBuf::from(file_path);
   let file_name = path.file_name().unwrap().to_str().unwrap().to_string();
