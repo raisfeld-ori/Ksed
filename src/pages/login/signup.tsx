@@ -8,15 +8,20 @@ import noenemies from '../main_page/assets/nature2.jpg';
 function Login() {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
+    const [error, seterror] = useState("");
     const navigate = useNavigate();
     
 
     async function authenticate() {
+        if (name == '' || password == '') {seterror("your name/password can't be null");return;}
         let user_exists = await invoke("user_exists", {name, password});
         if (!user_exists) {
             await invoke("create_user", {name, password})
             await invoke("save_user", {username: name, password});
             navigate("/loading", {state: {name, password}});
+        }
+        else{
+            seterror('a user with this name already exists, please try a different');
         }
     }
 
@@ -64,6 +69,7 @@ function Login() {
                         </span>
                         <span className="button-text">Sign Up</span>
                     </button>
+                    <p id='error'>{error}</p>
                 </div>
             </div>
         </div>

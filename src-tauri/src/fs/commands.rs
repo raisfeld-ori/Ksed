@@ -1,4 +1,4 @@
-use std::{f32::consts::E, fs, path::PathBuf};
+use std::{fs, path::PathBuf};
 use base64::{encode_config, URL_SAFE};
 use serde::{Deserialize, Serialize};
 use serde_json::Error;
@@ -28,6 +28,8 @@ pub fn cd(new: String) {
         }
     }
 } 
+#[tauri::command]
+pub fn cd_back() {unsafe{FS.cd_back();}}
 
 #[tauri::command]
 pub fn ls() -> Vec<(String, String)> {
@@ -41,10 +43,10 @@ pub fn ls() -> Vec<(String, String)> {
 pub fn upload_file(name: &str, password: &str, file_path: String) -> Result<(), String> {
   let file_content = read(file_path.clone());
   if file_content.is_err() {return Err(String::from("failed to read the uploaded file"));}
-  let encrypted_content = aes_encrypt(name, password, &file_content.unwrap());
+  let _encrypted_content = aes_encrypt(name, password, &file_content.unwrap());
   let path = PathBuf::from(file_path);
   let file_name = path.file_name().unwrap().to_str().unwrap().to_string();
-  let new_file = File::new(name, password,file_name, unsafe {&FS.current_dir});
+  let _new_file = File::new(name, password,file_name, unsafe {&FS.current_dir});
   return Ok(());
 }
 
@@ -64,8 +66,31 @@ impl Home{
         mkdir(String::from("bin"));
     }
     
-    pub fn cd_back(&mut self) {if self.path.len() > 1 {self.path.pop();self.current_dir = self.path.last().unwrap().clone();}}
-    pub fn cd(&mut self, dir: Directory) {self.current_dir = dir.clone();self.path.push(dir);}
+    pub fn cd_back(&mut self) {
+        if self.path.len() > 1 {
+            let prev_current_dir = self.current_dir.clone();
+            self.path.pop();
+
+            if let Some(second_last_dir) = self.path.last_mut() {
+                second_last_dir.files.retain(|item| match item {
+                    DirectoryItems::Directory(dir) => dir.name != prev_current_dir.name,
+                    DirectoryItems::File(_) => true,
+                });
+            }
+            self.current_dir = self.path.clone().into_iter().last().unwrap();
+            self.current_dir.files.push(DirectoryItems::Directory(prev_current_dir));
+        }
+    }
+    pub fn cd(&mut self, dir: Directory) {
+        let files = &self.path.last().unwrap().files;
+        let mut new_files = Vec::new();
+        for file in self.current_dir.files.iter(){
+            if !files.contains(&file){new_files.push(file.clone());}
+        }
+        self.path.last_mut().unwrap().files.append(&mut new_files);
+        self.current_dir = dir.clone();
+        self.path.push(dir);
+    }
     pub fn to_bytes(&self) -> Result<Vec<u8>, Error>{return serde_json::to_vec(self);}
 }
 
@@ -100,15 +125,13 @@ impl DirectoryItems{
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct File{
     name: String,
-    location: PathBuf,
+    location: PathBuf
 }
 impl File{
     pub fn new(name: &str, password: &str, file_name: String, parent: &Directory) -> Option<Self> {
         let location = get_user_dir(name, password);
         let name = encode_config(aes_encrypt(name, password, file_name.as_bytes()), URL_SAFE);
         let location = location.join(name);
-        // i will change this in the future
-        // Ori what have you done!?
         if location.exists() {return None;}
         return Some(File {name: file_name, location});
     }
@@ -147,7 +170,6 @@ fn test_fs() {
     dir.files.push(DirectoryItems::File(file));
     assert!(mk(name, password, String::from("file")).is_ok());
     assert_eq!(unsafe{&FS.current_dir}, &dir);
-    println!("Dir: {:?}",dir)
 }
 #[test]
 fn test_upload(){
@@ -160,7 +182,6 @@ fn test_upload(){
     file.save(name, password, data).unwrap();
     dir.files.push(DirectoryItems::File(file.clone()));
     file.delete(name, password).unwrap();
-    println!("dir: {:?}", dir)
     
     
 }

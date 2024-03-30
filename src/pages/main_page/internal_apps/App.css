@@ -1,7 +1,10 @@
 .frametest {
     position: relative;
     display: block;
-    border: 2px #0202022f;
+    border-top: 1px #02020200;
+    border-left: 2px #0202022f;
+    border-right: 2px #0202022f;
+    border-bottom: 1px #02020200;
     border-style: solid;
     z-index: 99;
     padding-left: 373px;
@@ -14,7 +17,9 @@
     align-items: flex-start;
     height: 37px;
     background-color: #2f2f2f;
-    
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
     
 }
 
@@ -23,22 +28,20 @@
     position:sticky;
 }
 
-.frametest {
-    border-radius: 20px;
-}
 
 .frametest2{
 border-radius: 20px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     backdrop-filter: blur(30px);
-
+    -webkit-backdrop-filter: blur(30px);
     background-color: #333333d3;
     height: 50svh;    
 }
 
 .frametext2{
     color: white;
+    margin-top: .3svh;
     font-weight: normal;
 }
 .frame-content {
