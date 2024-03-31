@@ -588,3 +588,19 @@ li {
 }
 
 
+.ignore{
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 0px;
+}
+
+.ignore img {
+  width: 4.5svh;
+  height: 4.5svh;
+}
+
+.ignore img:hover{
+  width: 5svh;
+  height: 5svh;
+}
