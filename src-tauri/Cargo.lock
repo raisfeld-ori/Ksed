@@ -3,6 +3,22 @@
 version = 3
 
 [[package]]
+name = "Ksed"
+version = "0.0.0"
+dependencies = [
+ "base64 0.13.1",
+ "dirs",
+ "embed-resource",
+ "once_cell",
+ "rust-crypto",
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+ "tauri-winres",
+]
+
+[[package]]
 name = "addr2line"
 version = "0.21.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -485,22 +501,6 @@ checksum = "30d2b3721e861707777e3195b0158f950ae6dc4a27e4d02ff9f67e3eb3de199e"
 dependencies = [
  "quote",
  "syn 2.0.51",
-]
-
-[[package]]
-name = "d_vault"
-version = "0.0.0"
-dependencies = [
- "base64 0.13.1",
- "dirs",
- "embed-resource",
- "once_cell",
- "rust-crypto",
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
- "tauri-winres",
 ]
 
 [[package]]

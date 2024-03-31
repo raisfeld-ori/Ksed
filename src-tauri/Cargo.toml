@@ -1,8 +1,8 @@
 [package]
-name = "d_vault"
+name = "Ksed"
 version = "0.0.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "your hidden desktop in windows"
+authors = ["ori raisfeld", "ariel elaski", "aviv segal"]
 edition = "2021"
 build = "build.rs"
 

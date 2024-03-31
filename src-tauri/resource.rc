@@ -14,8 +14,8 @@ BLOCK "000004b0"
 {
 VALUE "FileVersion", "0.0.0"
 VALUE "ProductVersion", "0.0.0"
-VALUE "FileDescription", "d_vault"
-VALUE "ProductName", "d_vault"
+VALUE "FileDescription", "Ksed"
+VALUE "ProductName", "Ksed"
 }
 }
 BLOCK "VarFileInfo" {
