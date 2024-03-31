@@ -22,8 +22,8 @@ function login(){
     }
 
         return <div id='background' onContextMenu={e => e.preventDefault()}>
-                        <button className='upperbutton' aria-current={true} onClick={() => navigate("/")}>Login</button>
-            <button className='upperbutton' aria-current={false} onClick={() => navigate("/signup")}>Sign Up</button>
+                        <button className='upperbutton' aria-current={true} onClick={() => navigate("/", {state: {name, password}})}>Login</button>
+            <button className='upperbutton' aria-current={false} onClick={() => navigate("/signup", {state: {name, password}})}>Sign Up</button>
         <img className='IhaveNoEnemys' src={noenemies} alt="backgroundimg" />
         <div className='iseewhoyouare' ></div>
 

@@ -10,8 +10,6 @@ function Login() {
     const [password, setPassword] = useState("");
     const [error, seterror] = useState("");
     const navigate = useNavigate();
-    
-
     async function authenticate() {
         if (name == '' || password == '') {seterror("your name/password can't be null");return;}
         let user_exists = await invoke("user_exists", {name, password});
@@ -28,8 +26,8 @@ function Login() {
     return (
         <div id='background' onContextMenu={e => e.preventDefault()}>
 
-            <button className='upperbutton' aria-current={false} onClick={() => navigate("/")}>Login</button>
-            <button className='upperbutton' aria-current={true} onClick={() => navigate("/signup")}>Sign Up</button>
+            <button className='upperbutton' aria-current={false} onClick={() => navigate("/", {state: {name, password}})}>Login</button>
+            <button className='upperbutton' aria-current={true} onClick={() => navigate("/signup", {state: {name, password}})}>Sign Up</button>
             <img className='IhaveNoEnemys' src={noenemies} alt="backgroundimg" />
         <div className='iseewhoyouare'></div>
 
@@ -53,7 +51,8 @@ function Login() {
 
                     <div className="input-group">
                         <label className="label">Username</label>
-                        <input onChange={e => setName(e.currentTarget.value)} autoComplete="off" name="info" id="info" className="input" placeholder='Enter your username' type="info" />
+                        <input onChange={e => setName(e.currentTarget.value)} autoComplete="off" name="info" id="info" className="input" 
+                        placeholder='Enter your username' type="info" />
                         <div></div>
                     </div>
                     <div className="input-group">
