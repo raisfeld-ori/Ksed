@@ -173,10 +173,7 @@ color: white;
 .leave {
   float: right;
   z-index: 1;
-  margin-top: 41svh;
-  margin-right: 0.5svh;
-  margin-left: 0.8svh;
-
+  top: 37svh;
   transition: transform 250ms;
 
 }
@@ -191,13 +188,12 @@ color: white;
 
 .hiddentxt {
   position: absolute; 
-  right: 0; 
-  margin-top: 36.5svh;
+  right: 0;
+  top: 40svh;
   color: white;
   font-weight: 500;
   display: none;
   z-index: 5;
-  margin-right: 0.5svh;
 
  }
 
@@ -216,8 +212,8 @@ color: white;
 .exit {
   float: right;
   z-index: 1;
-  margin-top: 41svh;
-  margin-right: .5svh;
+  top: 37svh;
+  margin-right: 5svh;
   transition: transform 250ms;
 
 }
@@ -233,7 +229,7 @@ color: white;
 .hiddenclose {
   position: absolute; 
   right: 0; 
-  margin-top: 36.5svh;
+  top: 40svh;
   z-index: 4;
   display: none;
   margin-right: 5.5svh;

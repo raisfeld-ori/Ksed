@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { invoke } from '@tauri-apps/api';
 import { useNavigate } from 'react-router-dom';
 import noenemies from '../main_page/assets/nature.jpg';
+import exiticon from '../main_page/assets/x_icon.png';
 
 function login(){
     const [name, setname] = useState("");
@@ -26,7 +27,9 @@ function login(){
             <button className='upperbutton' aria-current={false} onClick={() => navigate("/signup", {state: {name, password}})}>Sign Up</button>
         <img className='IhaveNoEnemys' src={noenemies} alt="backgroundimg" />
         <div className='iseewhoyouare' ></div>
-
+        <button className='ignore' onClick={async () => {await invoke('close_app', {});}}>
+                <img src={exiticon} alt="" />
+            </button>
             <div id='menu'>
 
                 <div id='form'>
