@@ -1,24 +1,11 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Ksed: your hidden desktop",
-  description: "Ksed is an application that emulates a desktop, but is 100% safe and is hidden inside your computer",
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+import { Html, Head, Main, NextScript } from 'next/document';
+export default function Document() {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-
-    <nav>
+    <Html lang="en">
+      <link rel="stylesheet" href="globals.css" />
+      <Head />
+      <body>
+      <nav>
       <div className="wrapper">
         <div className="logo"><a href="#">
           <img src="logo.png" alt="" />
@@ -48,8 +35,9 @@ export default function RootLayout({
       </div>
     </nav>
 
-        {children}
+      <Main />
+      <NextScript />
       </body>
-    </html>
-  );
+    </Html>
+  )
 }
