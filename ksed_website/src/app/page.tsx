@@ -3,6 +3,7 @@ import './page.css';
 export default function Home() {
   return (
     <main className="main">
+
     <nav>
       <div className="wrapper">
         <div className="logo"><a href="#">
