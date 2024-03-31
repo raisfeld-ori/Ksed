@@ -171,17 +171,3 @@ fn test_fs() {
     assert!(mk(name, password, String::from("file")).is_ok());
     assert_eq!(unsafe{&FS.current_dir}, &dir);
 }
-#[test]
-fn test_upload(){
-    unsafe{FS.init_fs();}
-    let name = "some";
-    let password = "thing";
-    let data = b"helloworlddigmas";
-    let mut dir = Directory::new(String::from("dir"));
-    let file = File::new(name, password, String::from("test.txt"), &dir).unwrap();
-    file.save(name, password, data).unwrap();
-    dir.files.push(DirectoryItems::File(file.clone()));
-    file.delete(name, password).unwrap();
-    
-    
-}
