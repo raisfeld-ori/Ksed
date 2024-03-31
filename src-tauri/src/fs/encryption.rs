@@ -79,7 +79,7 @@ pub fn aes_try_decrypt(username: &str, password: &str, data: &[u8]) -> bool {
       match decryption_result {
           Ok(BufferResult::BufferUnderflow) => break,
           Ok(BufferResult::BufferOverflow) => {}
-          Err(e) => return false,
+          Err(_e) => return false,
       }
   }
   return true;

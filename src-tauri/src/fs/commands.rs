@@ -128,7 +128,7 @@ pub struct File{
     location: PathBuf
 }
 impl File{
-    pub fn new(name: &str, password: &str, file_name: String, parent: &Directory) -> Option<Self> {
+    pub fn new(name: &str, password: &str, file_name: String, _parent: &Directory) -> Option<Self> {
         let location = get_user_dir(name, password);
         let name = encode_config(aes_encrypt(name, password, file_name.as_bytes()), URL_SAFE);
         let location = location.join(name);
@@ -144,10 +144,10 @@ impl File{
     pub fn export(&self, name: &str, password: &str) -> Result<(), std::io::Error>{
         let encrypted_content = read(self.location.as_path());
         if encrypted_content.is_err(){return Err(encrypted_content.unwrap_err());}
-        let decrypted_content = aes_decrypt(name, password, &encrypted_content.unwrap());
+        let _decrypted_content = aes_decrypt(name, password, &encrypted_content.unwrap());
         return Ok(());
     }
-    pub fn delete(&self, name: &str, password: &str) -> Result<(), std::io::Error>{
+    pub fn delete(&self, _name: &str, _password: &str) -> Result<(), std::io::Error>{
         fs::remove_file(self.location.as_path())
     }
     pub fn open(&self) -> Option<Vec<u8>> {

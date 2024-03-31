@@ -1,7 +1,7 @@
 use crate::dir;
 use crate::fs::encryption::{aes_encrypt, aes_decrypt, aes_try_decrypt};
 use crate::data::json;
-use crate::fs::commands::{Home, FS};
+use crate::fs::commands::{FS};
 use std::fs::{create_dir, read_dir, read, File};
 use std::io::{Read, Write};
 #[cfg(target_os = "windows")]
@@ -122,13 +122,13 @@ fn save_data(username: &str, password: &str, data_name: String, data: Vec<u8>) -
 pub fn save_user(username: &str, password: &str) -> Result<(), String> {
     let (user_json, sys_json) = json::data_bytes();
     let user_json = aes_encrypt(username, password, &user_json);
-    let err = save_data(username, password, String::from("user_json"), user_json)?;
+    let _err = save_data(username, password, String::from("user_json"), user_json)?;
     let sys_json = aes_encrypt(username, password, &sys_json);
-    let err = save_data(username, password, String::from("sys_json"), sys_json)?;
+    let _err = save_data(username, password, String::from("sys_json"), sys_json)?;
     let fs = unsafe{serde_json::to_string(&FS)};
     if fs.is_err(){return Err(fs.unwrap_err().to_string());}
     let fs = aes_encrypt(username, password, fs.unwrap().as_bytes());
-    let err = save_data(username, password, String::from("fs"), fs)?;
+    let _err = save_data(username, password, String::from("fs"), fs)?;
     return Ok(());
 }
 
