@@ -1,16 +1,15 @@
 html, body {
     margin: 0;
     padding: 0;
-    height: 100%;
-    background-color: #242526;
+    background-color: #0f0f0f;
+    text-align: center;
 }
 
-
 nav{
-  position: fixed;
+  position: sticky;
   z-index: 99;
   width: 100%;
-  
+  top: 0;
   background: #242526;
 }
 nav .wrapper{
@@ -239,3 +238,4 @@ nav input{
   font-size: 45px;
   font-weight: 600;
 }
+
