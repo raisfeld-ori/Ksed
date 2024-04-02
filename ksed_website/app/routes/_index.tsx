@@ -1,15 +1,20 @@
 import type { MetaFunction } from "@remix-run/node";
-
+import './style/index.css';
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: "Ksed" },
+    { name: "Ksed", content: "your private hidden desktop" },
   ];
 };
 
 export default function Index() {
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
+    <div className="main">
+      <div className="square">
+        <h1 className="text"><span className="K">K</span><span className="sed">sed</span></h1>
+        <h2 className="text">your private, hidden desktop</h2>
+        <button></button>
+      </div>
       
     </div>
   );
