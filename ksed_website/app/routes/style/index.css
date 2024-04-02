@@ -1,3 +1,7 @@
+.square:nth-child(2){
+    background-color: azure;
+}
+
 .square{
     height: 100vh;
 }
