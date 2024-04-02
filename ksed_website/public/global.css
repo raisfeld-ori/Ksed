@@ -203,9 +203,6 @@ body{
   opacity: 0.8;
   transition: width 250ms linear;
 }
-.nav ul li a:hover:after{
-  width: 100%;
-}
 
 
 .menu-icon:checked ~ .nav  ul li {
