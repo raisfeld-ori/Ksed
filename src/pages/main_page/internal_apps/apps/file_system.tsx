@@ -1,4 +1,4 @@
-import App from '../App';
+import App, {AppInterface} from '../App';
 import { invoke } from '@tauri-apps/api';
 import { useState, useEffect } from 'react';
 import img from '../../assets/folder.png';
@@ -57,18 +57,18 @@ async function make_file(name: string, password: string, file: string, type: Fil
     }
 }
 
-function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<string>>, JSX.Element, update_fs:  () => Promise<void>]{
+function file_system() : AppInterface{
     const [location, set_location] = useState("Home");
     const [files, set_files] = useState<React.JSX.Element[]>([]);
     const [{dx, dy}, set_positions] = useState({dx: 0, dy: 0});
     const [ctx_display, set_ctx_display] = useState('none');
-    const update_fs = async () => {
+    const update = async () => {
         let files: [string, string][] = await invoke('ls', {});
         let pwd: string = await invoke('pwd', {});
         let files_divs = [];
         for (let i = 0;i < files.length;i++){
             let file_type = (files[i][1] == 'File') ? FileType.File : FileType.Directory;
-            files_divs.push(<File name={files[i][0]} key={i} type={file_type} update_fs={update_fs}/>);
+            files_divs.push(<File name={files[i][0]} key={i} type={file_type} update_fs={update}/>);
         }
         set_files(files_divs);
         set_location(pwd);
@@ -93,7 +93,7 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
                 let name: string = await invoke('system_get', {key: 'name'});
                 let password: string = await invoke('system_get', {key: 'password'});
                 await make_file(name, password, text, file_type);
-                await update_fs();
+                await update();
             }
             
             return <div className='file' style={{display: editing}}>
@@ -114,14 +114,14 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
 
     <button className='buttoncontextmenu' onClick={() => make_files(FileType.Directory)}>Create File</button>
  
-    <button className='buttoncontextmenu' onClick={async () => await upload_file(update_fs, set_files)}>Upload File</button>    
+    <button className='buttoncontextmenu' onClick={async () => await upload_file(update, set_files)}>Upload File</button>    
     <button className='buttoncontextmenu' >Rename</button>
     <p className='linecontextmenu'></p>
     <button className='buttoncontextmenu' >Delete</button>
     <button className='buttoncontextmenu' >Copy</button>
     </div>;
     let Application = <div className='ApplicationDirectory'>
-            <button onClick={async () => {await invoke('cd_back', {});await update_fs();}}>
+            <button onClick={async () => {await invoke('cd_back', {});await update();}}>
                 <img className='backdir' src={arrowleft} alt="arrowleft" />
             </button>
             <h1 className='filesystemtxt2'>{location}</h1>
@@ -132,9 +132,8 @@ function file_system() : [JSX.Element, React.Dispatch<React.SetStateAction<strin
         <>{files}</>
         </div>
     </div>;
-    const [display, set_display] = useState('none');
-    let app = <App element={app_html} display={display} set_display={set_display} name='File System'/>;
-    return [app, set_display, context_menu, update_fs];
+    let [screen, set_display] = App(app_html, 'file system');
+    return {screen, context_menu, update, set_display};
 };
 
 

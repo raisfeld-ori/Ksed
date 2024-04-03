@@ -31,14 +31,14 @@ async function save_user(){
 
 export default function MainPage() {
     const navigate = useNavigate();
-    const [app, fs_display, ctx_menu, update_fs] = file_system();
-    const explorer_app = desktop_app("Files", folder, async () => {await update_fs();fs_display('inherit');});
+    const {screen, context_menu, update, set_display} = file_system();
+    const explorer_app = desktop_app("Files", folder, async () => {await update();set_display('inherit');});
     const search_apps = desktop_app("Search", search, async () => { set_menu(true);});
     const [menu, set_menu] = useState(false);
     return (
         <div id='background' onContextMenu={e => {e.preventDefault();}} onClick={() => {if (menu) {set_menu(false)}}}>
-            {ctx_menu}
-            {app}
+            {context_menu}
+            {screen}
             <Grid  apps={[explorer_app, search_apps]} gridSize={50} margin={120} />
             <nav className='navbar' onContextMenu={e => e.preventDefault()}>
                 <img className='homeimg' onClick={() => set_menu(!menu)} src={menu_icon} alt="" />
@@ -58,8 +58,8 @@ export default function MainPage() {
                 </button>
                 <p className='hiddenclose'>Exit 😭​</p>
                 
-                <BinIcon display={async () => {await update_fs();fs_display('inherit');}} name='Files' img={folder}></BinIcon>
-                <BinIcon display={async () => {await update_fs();fs_display('inherit');}} name='Terminal' img={terminal}></BinIcon>
+                <BinIcon display={async () => {await update();set_display('inherit');}} name='Files' img={folder}></BinIcon>
+                <BinIcon display={async () => {await update();set_display('inherit');}} name='Terminal' img={terminal}></BinIcon>
 
                 
             </div>
