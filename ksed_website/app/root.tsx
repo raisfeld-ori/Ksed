@@ -22,10 +22,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <label htmlFor="menu-icon"></label>
   	<nav className="nav">
   		<ul className="pt-5">
-  			<li><a href="#">get back to Work!</a></li>
-  			<li><a href="#">Studio</a></li>
-  			<li><a href="#">News</a></li>
-  			<li><a href="#">Contact</a></li>
+  			<li><a href="/buy">buy the app</a></li>
+  			<li><a href="/plans">future plans</a></li>
+  			<li><a href="/support">support us</a></li>
+  			<li><a href="/contact">Contact us</a></li>
+        <li><a href="/">main page</a></li>
   		</ul>
   	</nav>
         {children}
