@@ -31,15 +31,12 @@ async function save_user(){
 
 export default function MainPage() {
     const navigate = useNavigate();
-    const {screen, context_menu, update, set_display} = file_system();
-    const explorer_app = desktop_app("Files", folder, async () => {await update();set_display('inherit');});
-    const search_apps = desktop_app("Search", search, async () => { set_menu(true);});
+    const fs_props = file_system();
+    const explorer_app = desktop_app("Files", folder, fs_props);
     const [menu, set_menu] = useState(false);
     return (
         <div id='background' onContextMenu={e => {e.preventDefault();}} onClick={() => {if (menu) {set_menu(false)}}}>
-            {context_menu}
-            {screen}
-            <Grid  apps={[explorer_app, search_apps]} gridSize={50} margin={120} />
+            <Grid  apps={[explorer_app]} gridSize={50} margin={120} />
             <nav className='navbar' onContextMenu={e => e.preventDefault()}>
                 <img className='homeimg' onClick={() => set_menu(!menu)} src={menu_icon} alt="" />
                 <p className='time'>12:09 AM <br /> 12/10/2027</p>
@@ -58,10 +55,9 @@ export default function MainPage() {
                 </button>
                 <p className='hiddenclose'>Exit 😭​</p>
                 
-                <BinIcon display={async () => {await update();set_display('inherit');}} name='Files' img={folder}></BinIcon>
-                <BinIcon display={async () => {await update();set_display('inherit');}} name='Terminal' img={terminal}></BinIcon>
+                <BinIcon display={async () => {fs_props.update;
+                    fs_props.set_display('inherit');}} name='Files' img={folder}></BinIcon>
 
-                
             </div>
             <video className='hakari' src={ibetonhakari} width="100%" height="100%" autoPlay muted loop>
     Your browser does not support the video tag

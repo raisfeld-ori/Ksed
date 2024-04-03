@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { AppInterface } from "./internal_apps/App";
 
 function Grid(props: {apps: ((dx: number, dy: number, draggableRef: (nodeEle: any) => void) => JSX.Element)[], 
   gridSize: number, margin: number}) {
@@ -17,18 +18,22 @@ function Grid(props: {apps: ((dx: number, dy: number, draggableRef: (nodeEle: an
 }
 export default Grid;
 
-export function desktop_app(name: string, image: string, dblclick: () => void){
+export function desktop_app(name: string, image: string, app: AppInterface){
+    useEffect(() => {app.set_display('none');}, [])
   return function MakeApp(dx: number, dy: number, ref: ((nodeEle: any) => void)){
-  return <div className="draggable"
+  return <div   key={name}>
+    {app.context_menu}
+    {app.screen}
+    <div className="draggable"
   ref={ref}
-  key={name}
   style={{
   transform: `translate3d(${dx}px, ${dy}px, 0)`,
     }}
-    onDoubleClick={dblclick}>
+    onDoubleClick={() => {app.update();app.set_display('inherit');}}>
       <img src={image} alt={name} className="icon" />
       <p className="name">{name}</p>
-  </div>}
+  </div>
+    </div>}
 }
 
 export const useDraggable = ({gridSize} : {gridSize : number}) => {

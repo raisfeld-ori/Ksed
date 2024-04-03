@@ -1,6 +1,6 @@
 import App, {AppInterface} from '../App';
 import { invoke } from '@tauri-apps/api';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch } from 'react';
 import img from '../../assets/folder.png';
 import { open } from '@tauri-apps/api/dialog';
 import folder from '../../assets/folder.png';
@@ -27,19 +27,21 @@ async function upload_file(update_fs: () => Promise<void>, set_files: React.Disp
 }
 
 
-function File(props: {name: string, type: FileType, update_fs: () => Promise<void>}){
+function File(props: {name: string, type: FileType, update_fs: () => Promise<void>, is_selected: Dispatch<string>}){
     async function cd(){
         await invoke('cd', {new: props.name});
         await props.update_fs();
     }
     if (props.name.length > 10){
-        return <div className='file' onDoubleClick={cd}>
+        return <div className='file' onDoubleClick={cd} 
+        onContextMenu={() => props.is_selected(props.name)}>
         <img src={props.type == FileType.File ? alpha: folder} className='file_img'/><br />
         <p className='file_name'>{props.name.slice(0, 7) + '...'}</p>
         </div>;
     }
     else{
-    return <div className='file' onDoubleClick={cd}>
+    return <div className='file' onDoubleClick={cd} 
+    onContextMenu={() => props.is_selected(props.name)}>
     <img src={props.type == FileType.File ? alpha: folder} className='file_img'/><br />
     <p className='file_name'>{props.name}</p>
     </div>;
@@ -49,7 +51,6 @@ function File(props: {name: string, type: FileType, update_fs: () => Promise<voi
 enum FileType{
     File, Directory,
 }
-
 async function make_file(name: string, password: string, file: string, type: FileType){
     switch (type){
         case FileType.Directory: {await invoke('mkdir', {name: file});break;}
@@ -59,6 +60,7 @@ async function make_file(name: string, password: string, file: string, type: Fil
 
 function file_system() : AppInterface{
     const [location, set_location] = useState("Home");
+    const [selected, set_selected] = useState('');
     const [files, set_files] = useState<React.JSX.Element[]>([]);
     const [{dx, dy}, set_positions] = useState({dx: 0, dy: 0});
     const [ctx_display, set_ctx_display] = useState('none');
@@ -68,13 +70,13 @@ function file_system() : AppInterface{
         let files_divs = [];
         for (let i = 0;i < files.length;i++){
             let file_type = (files[i][1] == 'File') ? FileType.File : FileType.Directory;
-            files_divs.push(<File name={files[i][0]} key={i} type={file_type} update_fs={update}/>);
+            files_divs.push(<File name={files[i][0]} key={i} type={file_type} update_fs={update} is_selected={set_selected}/>);
         }
         set_files(files_divs);
         set_location(pwd);
     }
     useEffect(() => {
-        document.addEventListener("click", () => set_ctx_display('none'));
+        document.addEventListener("click", () => {set_ctx_display('none');set_selected('')});
         return () => document.removeEventListener("click", () => set_ctx_display('none'));
     }, [])
     const right_click = (ev: React.MouseEvent) => {
@@ -114,11 +116,15 @@ function file_system() : AppInterface{
 
     <button className='buttoncontextmenu' onClick={() => make_files(FileType.Directory)}>Create File</button>
  
-    <button className='buttoncontextmenu' onClick={async () => await upload_file(update, set_files)}>Upload File</button>    
-    <button className='buttoncontextmenu' >Rename</button>
-    <p className='linecontextmenu'></p>
-    <button className='buttoncontextmenu' >Delete</button>
-    <button className='buttoncontextmenu' >Copy</button>
+    <button className='buttoncontextmenu' onClick={async () => await upload_file(update, set_files)}>Upload File</button>
+    {selected != '' ?
+        <div>
+        <button className='buttoncontextmenu' >Rename</button>
+        <p className='linecontextmenu'></p>
+        <button className='buttoncontextmenu' >Delete</button>
+        <button className='buttoncontextmenu' >Copy</button>
+        </div>
+        : <div></div>}
     </div>;
     let Application = <div className='ApplicationDirectory'>
             <button onClick={async () => {await invoke('cd_back', {});await update();}}>
