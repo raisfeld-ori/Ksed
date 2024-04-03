@@ -44,13 +44,28 @@ export default function Index() {
         </div>
       </div>
       <div className="square">
-        <div className="exception">once upon a time</div>
+        <div className="exception"><h1>once upon a time</h1></div>
         <div className="row">
           <div className="container">
             <img className="sized" src="literally_me.jpg"></img>
           </div>
-          <div className="continer">
-            <h1 className="text"></h1>
+          <div className="container">
+            <h1 className="text">one fool thought he'd find, hoo.</h1>
+            <p className="text">
+            Purpose in his life along the way
+            Don't you run and hide from the truth, you decide
+            Everything that lives is gone to waste
+            </p>
+            <h1 className="text">Don't you run and hide from the truth</h1>
+            <p className="text">
+            you decide Everything that lives is gone to waste
+            Hoo, hoo
+            Hoo, hoo
+            Hoo, hoo
+            Hoo
+            Once upon a time, was a fool who thought he'd find
+            Purpose in his life along the way
+            </p>
           </div>
         </div>
       </div>
