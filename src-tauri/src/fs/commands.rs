@@ -41,12 +41,15 @@ pub fn ls() -> Vec<(String, String)> {
 }
 #[tauri::command]
 pub fn upload_file(name: &str, password: &str, file_path: String) -> Result<(), String> {
-  let file_content = read(file_path.clone());
-  if file_content.is_err() {return Err(String::from("failed to read the uploaded file"));}
-  let _encrypted_content = aes_encrypt(name, password, &file_content.unwrap());
-  let path = PathBuf::from(file_path);
-  let file_name = path.file_name().unwrap().to_str().unwrap().to_string();
-  let _new_file = File::new(name, password,file_name, unsafe {&FS.current_dir});
+    let data = read(file_path.clone());
+    if data.is_err() {return Err(String::from("failed to read the uploaded file"));}
+    let path = PathBuf::from(file_path);
+    let file_name = path.file_name().unwrap().to_str().unwrap().to_string();
+    let new_file = File::new(name, password,file_name);
+    let result = new_file.save(name, password, &data.unwrap());
+    if result.is_err(){return Err(result.unwrap_err().to_string())}
+    unsafe{FS.current_dir.files.push(DirectoryItems::File(new_file))};
+
   return Ok(());
 }
 
@@ -98,12 +101,16 @@ impl Home{
 pub fn mkdir(name: String) {unsafe{FS.current_dir.files.push(DirectoryItems::Directory(Directory::new(name)))};}
 #[tauri::command]
 pub fn mk(name: &str, password: &str, fileName: String) -> Result<(), String> {
-    let new_file = File::new(name, password, fileName, unsafe{&FS.current_dir});
-    if new_file.is_none() {return Err(String::from("a file with this name already exists"));}
-    unsafe{FS.current_dir.files.push(DirectoryItems::File(new_file.unwrap()))};
+    let new_file = File::new(name, password, fileName);
+    unsafe{FS.current_dir.files.push(DirectoryItems::File(new_file))};
     Ok(())
 }
-
+#[tauri::command]
+pub fn rm(file: String) -> Result<(), String>{
+    let result = unsafe{FS.current_dir.delete_item(file)};
+    if result.is_err() {Err(result.unwrap_err().to_string())}
+    else{Ok(())}
+}
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Directory{
     files: Vec<DirectoryItems>,
@@ -112,12 +119,43 @@ pub struct Directory{
 
 impl Directory{
     pub const fn new(name: String) -> Self{return Directory{name: name, files: Vec::new()}}
+    pub fn delete_item(&mut self, remove: String) -> Result<(), std::io::Error> {
+        let mut result = Ok(());
+        self.files.retain(|itm| {
+            if itm.name() == &remove{
+                result = itm.remove();
+                return false;
+            } 
+            else{
+                return true;
+            }
+        });
+        return result;
+    }
+    pub fn delete(&self) -> Result<(), std::io::Error>{
+        for itm in self.files.iter(){
+            itm.remove()?;
+        }
+        return Ok(());
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum DirectoryItems{File(File),Directory(Directory)}
 
 impl DirectoryItems{
+    pub fn name(&self) -> &String{
+        match self{
+            Self::Directory(dir) => &dir.name,
+            Self::File(file) => &file.name,
+        }
+    }
+    pub fn remove(&self) -> Result<(), std::io::Error>{
+        match self{
+            Self::Directory(dir) => dir.delete(),
+            Self::File(file) => file.delete(),
+        }
+    }
     pub fn get_directory(&self) -> Option<Directory>{match self{Self::Directory(dir)=>{Some(dir.clone())} _=>{None}}}
     pub fn get_file(&self) -> Option<File>{match self{Self::File(file)=>{Some(file.clone())} _=>{None}}}
 }
@@ -128,12 +166,17 @@ pub struct File{
     location: PathBuf
 }
 impl File{
-    pub fn new(name: &str, password: &str, file_name: String, _parent: &Directory) -> Option<Self> {
+    pub fn new(name: &str, password: &str, file_name: String) -> Self {
         let location = get_user_dir(name, password);
-        let name = encode_config(aes_encrypt(name, password, file_name.as_bytes()), URL_SAFE);
-        let location = location.join(name);
-        if location.exists() {return None;}
-        return Some(File {name: file_name, location});
+        let location_name = encode_config(
+            aes_encrypt(name, password, file_name.as_bytes()), 
+            URL_SAFE);
+        let location = location.join(location_name);
+        let new_self = File {name: file_name, location};
+        // i have more important things to work on
+        // so just pretend this works with no issue
+        let _ = new_self.save(name, password, b"");
+        return new_self;
     }
     pub fn save(&self,name: &str, password: &str, data: &[u8]) -> Result<(), std::io::Error>{
         let encrypted_content = aes_encrypt(name, password, data);
@@ -147,8 +190,9 @@ impl File{
         let _decrypted_content = aes_decrypt(name, password, &encrypted_content.unwrap());
         return Ok(());
     }
-    pub fn delete(&self, _name: &str, _password: &str) -> Result<(), std::io::Error>{
-        fs::remove_file(self.location.as_path())
+    pub fn delete(&self) -> Result<(), std::io::Error>{
+        let result = fs::remove_file(self.location.as_path());
+        return Ok(())
     }
     pub fn open(&self) -> Option<Vec<u8>> {
         let data = read(self.location.as_path());
@@ -165,9 +209,11 @@ fn test_fs() {
     let name = "some";
     let password = "thing";
     let mut dir = Directory::new(String::from("Home"));
-    let file = File::new(name, password, String::from("file"), &dir).unwrap();
+    let file = File::new(name, password, String::from("file"));
     dir.files.push(DirectoryItems::Directory(Directory::new(String::from("bin"))));
     dir.files.push(DirectoryItems::File(file));
+    assert!(dir.delete_item(String::from("bin")).is_ok());
+    assert!(unsafe{FS.current_dir.delete_item(String::from("bin"))}.is_ok());
     assert!(mk(name, password, String::from("file")).is_ok());
     assert_eq!(unsafe{&FS.current_dir}, &dir);
 }

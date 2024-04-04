@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './main_page.css';
 import Grid from './Grid';
 import folder from './assets/folder.png';
@@ -29,6 +29,26 @@ async function save_user(){
     await invoke('save_user', {username, password});
 }
 
+const Clock = () => {
+    const [currentTime, setCurrentTime] = useState(new Date());
+  
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setCurrentTime(new Date());
+      }, 1000);
+  
+      return () => clearInterval(interval);
+    }, []);
+
+    var day = String(currentTime.getDate()).padStart(2, '0');
+    var month = String(currentTime.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var year = currentTime.getFullYear();
+  
+    return (
+        <p className='time'>{currentTime.toLocaleTimeString()}<br />{day + '/' + month + '/' + year}</p>
+    );
+  };
+
 export default function MainPage() {
     const navigate = useNavigate();
     const fs_props = file_system();
@@ -39,7 +59,7 @@ export default function MainPage() {
             <Grid  apps={[explorer_app]} gridSize={50} margin={120} />
             <nav className='navbar' onContextMenu={e => e.preventDefault()}>
                 <img className='homeimg' onClick={() => set_menu(!menu)} src={menu_icon} alt="" />
-                <p className='time'>12:09 AM <br /> 12/10/2027</p>
+                <Clock></Clock>
             </nav>
             <div className={`menu ${menu ? 'show' : 'hide'}`}>
             <div className="menu-header">

@@ -93,8 +93,9 @@ fn pad(data: &[u8]) -> Vec<u8> {
 }
 
 fn unpad(data: &[u8]) -> Vec<u8> {
-  let padding_size = data.last().unwrap();
-  data[..data.len() - *padding_size as usize].to_vec()
+  let padding_size = data.last();
+  if padding_size.is_none(){data[..data.len()].to_vec()}
+  else{data[..data.len() - *padding_size.unwrap() as usize].to_vec()}
 }
 
 pub fn xor_encrypt(data: Vec<u8>, key: &[u8]) -> Vec<u8>{
