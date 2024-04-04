@@ -21,16 +21,16 @@ export default function Index() {
         <div className="exception"><h1>what is Ksed?</h1></div>
         <div className="row">
         <div className="container">
-          <h1 className="text">its justice!</h1>
+          <h1 className="text">it's your own, hidden desktop</h1>
           <p className="text">
-            Lorem ipsum dolor, sit amet 
-            consectetur adipisicing elit. 
-            Earum voluptatem esse minima, 
-            quisquam, sed dolore iste id 
-            repudiandae corporis saepe, 
-            explicabo ullam? Assumenda 
-            ullam corrupti eius ipsum 
-            distinctio corporis nostrum.
+            do you have important files? or something that you want to hide.
+            it could be that you job requires you to have some important files,
+            or maybe you just have a secret hobby that you want to hide.
+            well, that's what ksed is for! it's a hidden app in your computer,
+            that after being opened, will act like a desktop, except everything you
+            do is hidden, and after finishing, the app will just save the state of
+            the machine the last time you used it and then continue hiding like you
+            didn't even use it.
           </p> 
           <h1 className="text">Ksed = desK</h1>
           <p className="text">
