@@ -1,8 +1,8 @@
 .square:nth-child(2){
-    background-color: #311919;
+    background-color: #ffffff;
 }
 .square:nth-child(3){
-    background-color: #220c0c;
+    background-color: #ffffff;
 }
 
 h1{
@@ -39,18 +39,26 @@ h1{
 }
 
 #K{
-    font-size: 2rem;
+    font-size: 4rem;
     color: rgb(49, 49, 222);
 }
 #sed{
-    font-size: 1rem;
-    color: rgb(90, 90, 226);
+    font-size: 3rem;
+    color: rgb(2, 107, 255);
 }
 
 .text {
-    color: azure;
+    color: rgb(0, 0, 0);
     text-align: center;
     font-size: 0.5rem;
+    margin: 0;
+    user-select: none;
+}
+
+.textpmain {
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-size: 1rem;
     margin: 0;
     user-select: none;
 }
@@ -72,7 +80,7 @@ h2.text{
 
 .learn{
     position: relative;
-    background-color: #444;
+    background-color: #0066ff;
     border-radius: 100px;
     color: #fff;
     text-decoration: none;
@@ -87,14 +95,65 @@ h2.text{
     margin-top: 2rem;
 }
 .learn:hover{
-    background-color: #2c2c2c;
+    background-color: #1e00ff;
 }
 
 .learn:active{
-    background-color: #1c1c1c;
+    background-color: #0080ff;
 }
 
 .sized{
     margin: .5rem;
     height: 6rem;
+}
+
+.square:nth-child(1){
+    background-color: #192431;
+}
+
+.squareinsquare{
+    position: absolute;
+    z-index: 2;
+    height: 100vh;
+    width: 98vw;
+    border-radius: 30px;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    background-color: rgb(7, 35, 129);
+
+}
+
+
+    .squareinsquareinsquare{
+        position: absolute;
+        border-radius: 30px;
+        background-color: rgba(52, 64, 173, 0.83);
+        width: 563px;
+        height: 700px;
+        top: 14px;
+        bottom: auto;
+        left: 0;
+        right: 0%;
+        z-index: -1;
+        filter: blur(200px);
+        margin-right: auto;
+        margin-left: auto;
+
+    
+    }
+    
+
+
+.textinsquare{
+    color: rgb(255, 255, 255);
+    text-align: center;
+    z-index: 2000;
+    font-size: 0.5rem;       
+    padding-right: 14svh;
+    padding-top: 2svh;
+    margin: 0;
+    user-select: none;
+
 }
