@@ -3,8 +3,6 @@ import './main_page.css';
 import Grid from './Grid';
 import folder from './assets/folder.png';
 import menu_icon from './assets/computer-laptop-color-icon.webp';
-import search from './assets/search.png';
-import terminal from './assets/terminal.png';
 import file_system from './internal_apps/apps/file_system';
 import ibetonhakari from './assets/TOCA2.mp4';
 import { desktop_app } from './Grid';
