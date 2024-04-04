@@ -121,7 +121,7 @@ h2.text{
     left: 0;
     right: 0;
     margin-left: auto;
-    background-color: rgb(7, 35, 129);
+    background-color: rgb(51, 52, 56);
 
 }
 
@@ -129,7 +129,7 @@ h2.text{
     .squareinsquareinsquare{
         position: absolute;
         border-radius: 30px;
-        background-color: rgba(52, 64, 173, 0.83);
+        background-color: rgba(44, 44, 44, 0.83);
         width: 563px;
         height: 700px;
         top: 14px;
@@ -137,7 +137,7 @@ h2.text{
         left: 0;
         right: 0%;
         z-index: -1;
-        filter: blur(200px);
+        filter: blur(6000px);
         margin-right: auto;
         margin-left: auto;
 
@@ -198,11 +198,11 @@ h2.text{
 }
 
 .navbutton:hover{
-    background-color: #1558d4;
+    background-color: #474749;
 }
 
 .navbutton:active{
-    background-color: #0080ff;
+    background-color: #585859;
 }
 
 .navbuttons{
