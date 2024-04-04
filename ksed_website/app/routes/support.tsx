@@ -1,8 +1,8 @@
 
 export default function Justice(){
     return <div>
-        <h1>pleassee give us moneyy!!!!</h1>
-        <p>PLEEASSEE</p>
+        <h1>REAL 💸💰  MONEY 💸💰  TYPE 💸💰  SHIT 💸💰 </h1>
+        <p>PLEEASSEE GIVE US YOUR LIFE SAVINGS!!</p>
         
     </div>
 }

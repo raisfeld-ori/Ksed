@@ -13,7 +13,7 @@ export default function Index() {
       <div className="square">
         <div className="column">
           <h1 className="text"><span id="K">K</span><span id="sed">sed</span></h1>
-          <h2 className="text">Your hidden desktop</h2>
+          <h2 className="textpmain">Your hidden desktop</h2>
           <button className="learn">learn more</button>
         </div>
       </div>
@@ -44,20 +44,21 @@ export default function Index() {
         </div>
       </div>
       <div className="square">
+      <div className="squareinsquare">
         <div className="exception"><h1>once upon a time</h1></div>
         <div className="row">
           <div className="container">
             <img className="sized" src="literally_me.jpg"></img>
           </div>
           <div className="container">
-            <h1 className="text">one fool thought he'd find, hoo.</h1>
-            <p className="text">
+            <h1 className="textinsquare">one fool thought he'd find, hoo.</h1>
+            <p className="textinsquare">
             Purpose in his life along the way
             Don't you run and hide from the truth, you decide
             Everything that lives is gone to waste
             </p>
-            <h1 className="text">Don't you run and hide from the truth</h1>
-            <p className="text">
+            <h1 className="textinsquare">Don't you run and hide from the truth</h1>
+            <p className="textinsquare">
             you decide Everything that lives is gone to waste
             Hoo, hoo
             Hoo, hoo
@@ -66,8 +67,10 @@ export default function Index() {
             Once upon a time, was a fool who thought he'd find
             Purpose in his life along the way
             </p>
+            <div className="squareinsquareinsquare"></div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
