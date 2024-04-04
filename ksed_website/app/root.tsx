@@ -17,18 +17,31 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
       <link rel="stylesheet" href="global.css" />
-
-  	<input className="menu-icon" type="checkbox" id="menu-icon" name="menu-icon"/>
-    <label htmlFor="menu-icon"></label>
-  	<nav className="nav">
-  		<ul className="pt-5">
-  			<li><a href="/buy">buy the app</a></li>
-  			<li><a href="/plans">future plans</a></li>
-  			<li><a href="/support">support us</a></li>
-  			<li><a href="/contact">Contact us</a></li>
-        <li><a href="/">main page</a></li>
-  		</ul>
-  	</nav>
+      <nav>
+      <div className="wrapper">
+        <div className="logo"><a href="#">Logo</a></div>
+        <input type="radio" name="slider" id="menu-btn" />
+        <input type="radio" name="slider" id="close-btn" />
+        <ul className="nav-links">
+          <label htmlFor="close-btn" className="btn close-btn"><i className="fas fa-times"></i></label>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li>
+            <a href="#" className="desktop-item">Purchases</a>
+            <input type="checkbox" id="showDrop" />
+            <label htmlFor="showDrop" className="mobile-item">Dropdown Menu</label>
+            <ul className="drop-menu">
+              <li><a href="#">Weekly Package</a></li>
+              <li><a href="#">Monthly Package</a></li>
+              <li><a href="#">Yearly Package</a></li>
+              <li><a href="#">Lifetime Package</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+        <label htmlFor="menu-btn" className="btn menu-btn"><i className="fas fa-bars"></i></label>
+      </div>
+    </nav>
         {children}
         <ScrollRestoration />
         <Scripts />
