@@ -26,7 +26,6 @@ async function upload_file(update_fs: () => Promise<void>, set_files: React.Disp
     }
 }
 
-
 function File(props: {name: string, type: FileType, update_fs: () => Promise<void>, is_selected: Dispatch<string>}){
     async function cd(){
         await invoke('cd', {new: props.name});
@@ -119,9 +118,11 @@ function file_system() : AppInterface{
     <button className='buttoncontextmenu' onClick={async () => await upload_file(update, set_files)}>Upload File</button>
     {selected != '' ?
         <div>
-        <button className='buttoncontextmenu' >Rename</button>
+        {/*<button className='buttoncontextmenu' >Rename</button>*/}
         <p className='linecontextmenu'></p>
-        <button className='buttoncontextmenu' >Delete</button>
+        <button className='buttoncontextmenu' onClick={async () => {await invoke('rm', {file: selected});await update();}}>
+            Delete
+        </button>
         <button className='buttoncontextmenu' >Copy</button>
         </div>
         : <div></div>}
