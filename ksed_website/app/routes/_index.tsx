@@ -1,6 +1,7 @@
 import type { MetaFunction } from "@remix-run/node";
 import './style/index.css';
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import React from 'react';
 export const meta: MetaFunction = () => {
   return [
     { title: "Ksed" },
@@ -24,9 +25,36 @@ function get_text(selected: string): {title: string, text: string}[]{
 }
 
 export default function Index() {
+  const popRef = useRef<HTMLDivElement>();
+
+ useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {entry.target.classList.add('visible')}
+          else{entry.target.classList.remove('visible')}
+        });
+      },
+    );
+    if (popRef.current) {
+      const popElements = popRef.current.querySelectorAll('.pop');
+      popElements.forEach((element: Element) => {
+        observer.observe(element);
+      });
+    }
+    return () => {
+      if (popRef.current) {
+        const popElements = popRef.current.querySelectorAll('.pop');
+        popElements.forEach((element: Element) => {
+          observer.unobserve(element);
+        });
+      }
+    };
+ }, []);
   const [selected, set_selected] = useState("A");
   return (
-    <div className="main">
+    //@ts-expect-error
+    <div className="main" ref={popRef}>
       <div className="square">
         <div className="column">
           <h1 className="text"><span id="K">K</span><span id="sed">sed</span></h1>
@@ -38,8 +66,8 @@ export default function Index() {
         <div className="exception"><h1>what is Ksed?</h1></div>
         <div className="row">
         <div className="container">
-          <h1 className="text">it's your own, hidden desktop</h1>
-          <p className="text">
+          <h1 className="text pop">it's your own, hidden desktop</h1>
+          <p className="text pop">
             do you have important files? or something that you want to hide.
             it could be that you job requires you to have some important files,
             or maybe you just have a secret hobby that you want to hide.
