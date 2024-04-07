@@ -85,8 +85,9 @@ h2.text{
     border: none;
     letter-spacing: 0.1rem;
     font-size: 0.5rem;
-    padding: 0.5rem 1.5rem;
+    padding: 0.5rem 1rem;
     transition: 0.2s;
+    font-family: secular one;
     cursor: pointer;
     transition: 500ms all ease-in-out;
     margin-top: 2rem;
