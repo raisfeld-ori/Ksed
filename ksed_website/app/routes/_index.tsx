@@ -97,7 +97,7 @@ export default function Index() {
           <button className="learn">learn more</button>
         </div>
       </div>
-      <div className="exception"><h1 className="pop">what is Ksed?</h1></div>
+      <div className="exception"><h1 id="kimidayo" className="pop">What is Ksed?</h1></div>
       <div className="column" style={{justifyContent: "unset"}}>
         <div className="square"><div id="text0"className="ilegaltext left">Secured</div></div>
         <div className="square"><div id="text1"className="ilegaltext right">Beautiful</div></div>
@@ -150,11 +150,13 @@ export default function Index() {
             </p>
             <div className="linesqr2"></div>
 
-            <h1 className="textinsquare">{get_text(selected)[3].title}</h1>
+            <h1 className="textinsquareheader">{get_text(selected)[3].title}</h1>
             <p className="textinsquare">
             {get_text(selected)[3].text}
             </p>
+            <div className="linesqr2"></div>
             <div className="squareinsquareinsquare"></div>
+            
           </div>
         </div>
       </div>
