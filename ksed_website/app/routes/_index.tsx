@@ -70,13 +70,15 @@ export default function Index() {
       </div>
       <div className="square">
         <div className="exception"><h1>what is Ksed?</h1></div>
-        <div className="column">
+        <div className="column" style={{justifyContent: "unset"}}>
         <div className="container">
-          <h1 className="text pop">your own, hidden desktop</h1>
-          
-        </div>
-        <div className="container">
-          <img className="sized" src="alpha.jpeg"></img>
+        <div id="text" className="text0">Secured</div>
+    <div id="text" className="text1">Beautiful</div>
+    <div id="text" className="text2">Easy to use</div>
+    <div id="text" className="text3">Safe</div>
+  
+  
+
         </div>
         </div>
       </div>
