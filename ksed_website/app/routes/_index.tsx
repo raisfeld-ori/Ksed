@@ -1,5 +1,7 @@
 import type { MetaFunction } from "@remix-run/node";
 import './style/index.css';
+import { useEffect, useRef, useState } from "react";
+import React from 'react';
 export const meta: MetaFunction = () => {
   return [
     { title: "Ksed" },
@@ -7,9 +9,52 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+function is_selected(selected: string, name: string){
+    if (selected == name){return 'selected'}
+    else {return ''}
+}
+function get_text(selected: string): {title: string, text: string}[]{
+  switch (selected){
+    case "A":
+      return [{title: "A", text: "A"}, {title: "A", text: "A"}, {title: "A", text: "A"}, {title: "A", text: "A"}];
+    case "B":
+      return [{title: "B", text: "B"}, {title: "B", text: "B"}, {title: "B", text: "B"}, {title: "B", text: "B"}];
+    default:
+      return [{title: "null", text: "null"}, {title: "null", text: "null"}, {title: "null", text: "null"}, {title: "null", text: "null"}];
+  }
+}
+
 export default function Index() {
+  const popRef = useRef<HTMLDivElement>();
+
+ useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {entry.target.classList.add('visible')}
+          else{entry.target.classList.remove('visible')}
+        });
+      },
+    );
+    if (popRef.current) {
+      const popElements = popRef.current.querySelectorAll('.pop');
+      popElements.forEach((element: Element) => {
+        observer.observe(element);
+      });
+    }
+    return () => {
+      if (popRef.current) {
+        const popElements = popRef.current.querySelectorAll('.pop');
+        popElements.forEach((element: Element) => {
+          observer.unobserve(element);
+        });
+      }
+    };
+ }, []);
+  const [selected, set_selected] = useState("A");
   return (
-    <div className="main">
+    //@ts-expect-error
+    <div className="main" ref={popRef}>
       <div className="square">
         <div className="column">
           <h1 className="text"><span id="K">K</span><span id="sed">sed</span></h1>
@@ -21,8 +66,8 @@ export default function Index() {
         <div className="exception"><h1>what is Ksed?</h1></div>
         <div className="row">
         <div className="container">
-          <h1 className="text">it's your own, hidden desktop</h1>
-          <p className="text">
+          <h1 className="text pop">it's your own, hidden desktop</h1>
+          <p className="text pop">
             do you have important files? or something that you want to hide.
             it could be that you job requires you to have some important files,
             or maybe you just have a secret hobby that you want to hide.
@@ -48,39 +93,50 @@ export default function Index() {
         <div className="exception"><h1>Questions ✦ Answers</h1></div>
 
       <div className="navbuttons">
-        <button className="navbutton">Slaves</button>
-        <button className="navbutton">pls money</button>
-        <button className="navbutton">click for cookies</button>
-        <button className="navbutton">Women Rights</button>
+        <button 
+        className={"navbutton " + is_selected(selected, "A")}
+        onClick={() => set_selected('A')}
+        >A
+        </button>
+        <button 
+        className={"navbutton " + is_selected(selected, "B")}
+        onClick={() => set_selected('B')}
+        >B
+        </button>
+        <button 
+        className={"navbutton " + is_selected(selected, "C")}
+        onClick={() => set_selected('C')}
+        >C
+        </button>
+        <button 
+        className={"navbutton " + is_selected(selected, "D")}
+        onClick={() => set_selected('D')}
+        >D
+        </button>
         </div>
         <div className="row">
           <div className="container">
-            <h1 className="sqrtextleftheadhead">Your lie in april</h1>
-            <p className="sqrtextleft">Kimi da yo  kimi nanda yo  egao wo kureta
-               Namida mo hikaru nara  ryuusei ni naru
-                Kizutsuita sono te wo  mou hanasanai de
+            <h1 className="sqrtextleftheadhead">{get_text(selected)[0].title}</h1>
+            <p className="sqrtextleft">
+              {get_text(selected)[0].text}
             </p>
             <div className="linesqr"></div>
-            <h1 className="sqrtextlefthead">Your lie in april</h1>
-            <p className="sqrtextleft">Kimi da yo  kimi nanda yo  egao wo kureta
-               Namida mo hikaru nara  ryuusei ni naru
-                Kizutsuita sono te wo  mou hanasanai de
+            <h1 className="sqrtextleftheadhead">{get_text(selected)[1].title}</h1>
+            <p className="sqrtextleft">
+              {get_text(selected)[1].text}
             </p>
+            <div className="linesqr"></div>
           </div>
           <div className="container">
-            <h1 className="textinsquareheaderheader">one fool thought he'd find, hoo.</h1>
+            <h1 className="textinsquareheaderheader">{get_text(selected)[2].title}</h1>
             <p className="textinsquare">
-            Purpose in his life along the way
-            Don't you run and hide from the truth, you decide
-            Everything that lives is gone to waste
+            {get_text(selected)[2].text}
             </p>
             <div className="linesqr2"></div>
 
-            <h1 className="textinsquare">Don't you run and hide from the truth</h1>
+            <h1 className="textinsquare">{get_text(selected)[3].title}</h1>
             <p className="textinsquare">
-            you decide Everything that lives is gone to waste
-            Once upon a time, was a fool who thought he'd find
-            Purpose in his life along the way
+            {get_text(selected)[3].text}
             </p>
             <div className="squareinsquareinsquare"></div>
           </div>

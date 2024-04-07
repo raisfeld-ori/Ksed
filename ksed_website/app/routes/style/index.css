@@ -213,7 +213,9 @@ h2.text{
         grid-row-gap: 16px;
     }
 
-
+.selected{
+    background-color: #222222;
+}
     
 .sqrtextleftheadhead{
     color: rgb(255, 255, 255);
