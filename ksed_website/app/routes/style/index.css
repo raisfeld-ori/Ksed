@@ -277,3 +277,14 @@ h2.text{
     left: auto;
     right: 0%;
 }
+
+.pop{
+    transition: all 1s ease-in-out;
+}
+.invisible{
+    opacity: 0;
+}
+
+.visible{
+    opacity: 1;
+}
