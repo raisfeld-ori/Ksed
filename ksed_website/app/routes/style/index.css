@@ -275,13 +275,19 @@ h2.text{
 
 .pop{
     transition: all 1.2s ease-out;
+    user-select: none;
+
 }
 .invisible{
     opacity: 0;
+    user-select: none;
+
 }
 
 .visible{
     opacity: 1;
+    user-select: none;
+
 }
 
 .ilegaltext{
@@ -289,14 +295,20 @@ h2.text{
   position:relative;
   font-size:2.5em;
   transition: all 1.2s ease-out;
+  user-select: none;
+
 }
 #text0,#text2{
 color: #1c67b2;
 text-shadow: 0px 5px 5px rgba(0, 0, 0, 0.603);
+user-select: none;
+
 }
 #text1,#text3{
 color: #0a4971;
 text-shadow: 0px 5px 5px rgba(0, 0, 0, 0.603);
+user-select: none;
+
 
 }
 
