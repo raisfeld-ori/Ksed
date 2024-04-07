@@ -51,6 +51,7 @@
   justify-content: right;
   padding-right: 1svh;
   margin-left: 2svh;
+  margin-top: .5svh;
 }
 
 
@@ -79,7 +80,12 @@
   flex-direction: column; 
   align-items: center; 
   justify-content: center;
+  padding-top: .5svh;
+  padding-bottom: .5svh;
+  padding-right: .5svh;
+  padding-left: .5svh;
  }
+
  
 
 .selected{
@@ -87,7 +93,10 @@
 }
 
 .draggable:hover{
-  background-color: #3333338b;
+  background-color: #33333387;
+  border-radius: 6px;
+
+
 }
 
 .draggable .name{
@@ -104,8 +113,8 @@
   display: inline-block;
   pointer-events: none;
   user-select: none;
-  height: 6.5svh;
-  width: 6.5svh;
+  height: 5.0svh;
+  width: 5.0svh;
 
 }
 .homeimg {
