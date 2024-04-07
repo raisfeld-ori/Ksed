@@ -1,4 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
+import { gsap } from "gsap";
 import './style/index.css';
 import { useEffect, useRef, useState } from "react";
 import React from 'react';
@@ -31,6 +32,14 @@ export default function Index() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          gsap.set('.left', {
+            x: '0%',
+            rotate: 0,
+          });
+          gsap.set('.right', {
+            x: '0%',
+            rotate: 0,
+          });
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
             entry.target.classList.remove('invisible');
@@ -38,6 +47,26 @@ export default function Index() {
           else{
             entry.target.classList.remove('visible');
             entry.target.classList.add('invisible');
+            gsap.set('.left', {
+              x: '20%',
+              rotate: 10,
+              duration: 0.85,
+              scrollTrigger: {
+                trigger: '.pop',
+                scrub: true,
+                start: 'top 20%',
+              }
+           });
+           gsap.set('.right', {
+            x: '-20%',
+            rotate: 10,
+            duration: 0.85,
+            scrollTrigger: {
+              trigger: '.pop',
+              scrub: true,
+              start: 'top 20%',
+            }
+         });
           }
         });
       },
@@ -68,19 +97,12 @@ export default function Index() {
           <button className="learn">learn more</button>
         </div>
       </div>
-      <div className="square">
-        <div className="exception"><h1>what is Ksed?</h1></div>
-        <div className="column" style={{justifyContent: "unset"}}>
-        <div className="container">
-        <div id="text" className="text0">Secured</div>
-    <div id="text" className="text1">Beautiful</div>
-    <div id="text" className="text2">Easy to use</div>
-    <div id="text" className="text3">Safe</div>
-  
-  
-
-        </div>
-        </div>
+      <div className="exception"><h1 className="pop">what is Ksed?</h1></div>
+      <div className="column" style={{justifyContent: "unset"}}>
+        <div className="square"><div id="text0"className="ilegaltext left">Secured</div></div>
+        <div className="square"><div id="text1"className="ilegaltext right">Beautiful</div></div>
+        <div className="square"><div id="text2"className="ilegaltext left">Easy to use</div></div>
+        <div className="square"><div id="text3"className="ilegaltext right">Safe</div></div>
       </div>
       <div className="square">
       <div className="squareinsquare">
