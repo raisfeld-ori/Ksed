@@ -97,7 +97,7 @@ export default function Index() {
           <button className="learn">learn more</button>
         </div>
       </div>
-      <div className="exception"><h1 id="kimidayo" className="pop">What is Ksed?</h1></div>
+      <div className="exception"><h1 id="whatis" className="pop">What is Ksed?</h1></div>
       <div className="column" style={{justifyContent: "unset"}}>
         <div className="square"><div id="text0"className="ilegaltext left">Secured</div></div>
         <div className="square"><div id="text1"className="ilegaltext right">Beautiful</div></div>
