@@ -1,10 +1,10 @@
 import './login.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { invoke } from '@tauri-apps/api';
 import noenemies from '../main_page/assets/nature2.jpg';
 import exiticon from '../main_page/assets/x_icon.png';
-
+import { useLocation } from 'react-router-dom';
 
 
 function Login() {
@@ -12,6 +12,10 @@ function Login() {
     const [password, setPassword] = useState("");
     const [error, seterror] = useState("");
     const navigate = useNavigate();
+    const location = useLocation();
+    useEffect(() => {
+        if (location.state) {setName(location.state.name);setPassword(location.state.password);}
+    }, [location.state]);
     async function authenticate() {
         if (name == '' || password == '') {seterror("your name/password can't be null");return;}
         let user_exists = await invoke("user_exists", {name, password});
@@ -56,7 +60,7 @@ function Login() {
                     <div className="input-group">
                         <label className="label">Username</label>
                         <input onChange={e => setName(e.currentTarget.value)} autoComplete="off" name="info" id="info" className="input" 
-                        placeholder='Enter your username' type="info" />
+                        placeholder='Enter your username' type="info" maxLength={16} />
                         <div></div>
                     </div>
                     <div className="input-group">
