@@ -10,9 +10,10 @@ function login(){
     const [password, setpassword] = useState("");
     const [error, seterror] = useState("");
     const navigate = useNavigate();
-    const location = useLocation();
+    const location = useLocation()
     useEffect(() => {
         if (location.state) {setname(location.state.name);setpassword(location.state.password);}
+        if (location.state?.refresh) {window.location.reload();}
     }, [location.state]);
 
     async function authenticate(){
