@@ -115,7 +115,7 @@ h2.text{
     left: 0;
     right: 0;
     margin-left: auto;
-    background-color: rgb(51, 52, 56);
+    background-color: rgb(24, 44, 67);
 
 }
 
@@ -123,7 +123,7 @@ h2.text{
     .squareinsquareinsquare{
         position: absolute;
         border-radius: 30px;
-        background-color: rgba(44, 44, 44, 0.83);
+        background-color: rgba(11, 54, 90, 0.83);
         width: 563px;
         height: 500px;
         top: 14px;
@@ -176,7 +176,7 @@ h2.text{
 
 .navbutton{
     position: relative;
-    background-color: #3d3d3d;
+    background-color: #151c2a;
     border-radius: 100px;
     color: #fff;
     border: none;
@@ -194,11 +194,11 @@ h2.text{
 }
 
 .navbutton:hover{
-    background-color: #474749;
+    background-color: #031e38;
 }
 
 .navbutton:active{
-    background-color: #585859;
+    background-color: #192459;
 }
 
 .navbuttons{
@@ -210,7 +210,7 @@ h2.text{
     }
 
 .selected{
-    background-color: #222222;
+    background-color: #0f1e3f;
 }
     
 .sqrtextleftheadhead{
@@ -337,7 +337,46 @@ user-select: none;
     margin-top: 10svh;
 }
 
-#kimidayo{
+#whatis{
+    animation: text-shadow 1.5s ease-in-out infinite;
     font-size: 4em;
     margin-bottom: 5svh;
+    color: #134676;
 }
+
+.whatis:hover {
+    animation-play-state: paused;
+  
+  }
+  
+  .whatis:hover {
+    text-decoration: none;
+    cursor:wait;
+  }
+  
+  @keyframes text-shadow {
+    0% {  
+        transform: translateY(0);
+  
+    }
+  
+    20% {  
+        transform: translateX(0.1em);
+  
+    }
+  
+    40% {  
+        transform: translateX(-0.1em);
+  
+    }
+    
+   60% {
+        transform: translateY(0em);
+  
+    }
+  
+    80% {  
+        transform: translateY(0);
+  
+    }
+  }

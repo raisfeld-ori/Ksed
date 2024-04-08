@@ -98,7 +98,7 @@ function file_system() : AppInterface{
             }
             
             return <div className='file' style={{display: editing}}>
-            <img src={img} className='file_img'/><br />
+            <img src={img} className='file_img2'/><br />
             <input className='editing' onChange={e => set_text(e.target.value)}
             onBlur={done_editing} onKeyDownCapture={e => {if (e.key == 'Enter'){set_editing('none');}}} autoFocus></input>
         </div>
@@ -113,7 +113,7 @@ function file_system() : AppInterface{
         display: `${ctx_display}`,
     }}>
 
-    <button className='buttoncontextmenu' onClick={() => make_files(FileType.Directory)}>Create File</button>
+    <button className='buttoncontextmenu' onClick={() => make_files(FileType.Directory)}>Create Folder</button>
  
     <button className='buttoncontextmenu' onClick={async () => await upload_file(update, set_files)}>Upload File</button>
     {selected != '' ?
@@ -123,7 +123,6 @@ function file_system() : AppInterface{
         <button className='buttoncontextmenu' onClick={async () => {await invoke('rm', {file: selected});await update();}}>
             Delete
         </button>
-        <button className='buttoncontextmenu' >Copy</button>
         </div>
         : <div></div>}
     </div>;
