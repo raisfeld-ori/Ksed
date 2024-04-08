@@ -98,7 +98,7 @@ function file_system() : AppInterface{
             }
             
             return <div className='file' style={{display: editing}}>
-            <img src={img} className='file_img'/><br />
+            <img src={img} className='file_img2'/><br />
             <input className='editing' onChange={e => set_text(e.target.value)}
             onBlur={done_editing} onKeyDownCapture={e => {if (e.key == 'Enter'){set_editing('none');}}} autoFocus></input>
         </div>

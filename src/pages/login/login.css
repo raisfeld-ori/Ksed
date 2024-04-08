@@ -11,34 +11,7 @@
     text-align: center;
 }
 
-.triangle{
-    width: 0;
-	height: 0;
-    position: absolute;
-    z-index: -1;
-    animation-duration: 2s;
-    animation-name: slidein;
-  }
-  
-  @keyframes slidein {
-    from {
-        margin-right: 100%;
-    }
-    to {
-        margin-right: 0%;
-    }
-  }
 
-
-.left{
-    right: 0;
-    top: 10svh;
-    border-top: 40svh solid transparent;
-	border-right: 110svh solid #4359CD;
-	border-bottom: 40svh solid transparent;
-    position: absolute;
-    z-index: -2;
-}
 
 
 
@@ -88,16 +61,22 @@
 
 .writenamelogin {
     font-size: 2svh;
+    user-select: none;
+
 }
 
 .writepasswordlogin{
     font-size: 2svh;
+    user-select: none;
+
 }
 
 #form{
     display: block;
     font-family: 'Ubuntu Mono';
     margin-top: 7svh;
+    user-select: none;
+
 }
 
 
@@ -106,6 +85,8 @@
     border: 0;
     border-radius: 20px;
     color: #FFFFFF;
+    user-select: none;
+
 }
 
 
@@ -122,6 +103,8 @@
     border-radius: 10px;
     cursor: pointer;
     font-family: 'Ubuntu Mono';
+    user-select: none;
+
 }
 
 .upperbutton[aria-current=false]{
@@ -151,6 +134,7 @@
     border: 0;
     font-size: 2svh;
     margin: 10px;
+    user-select: none;
     color: white;
     
     border-radius: 50px;
@@ -165,6 +149,8 @@
 
     font-size: 6svh;
     color: #e7e7e9;
+    user-select: none;
+
 
 }
 
@@ -173,18 +159,24 @@
   font-weight: 400;
   color: #e7e7e9;
   text-shadow: 2px 2px 4px rgba(56, 56, 56, 0.746), 0 0 5px rgba(67, 67, 67, 0.5);
+  user-select: none;
+
 }
 
 
 #error{
     color: #FF0000;
     font-size: 2svh;
+    user-select: none;
+
 }
 
 #melody {
     margin-top: 2svh;
     color: #ffffff;
     font-size: 2svh;
+    user-select: none;
+
 }
 
 /* --------------------- SIGNUP ---------------------*/
@@ -199,6 +191,8 @@
     border: 2px solid transparent;
     font-size: 1rem;
     transition: border-color .3s cubic-bezier(.25,.01,.25,1) 0s, color .3s cubic-bezier(.25,.01,.25,1) 0s,background .2s cubic-bezier(.25,.01,.25,1) 0s;
+    user-select: none;
+
   }
   
   .label {
@@ -209,6 +203,8 @@
     color: #ffffffc9;
     transition: color .3s cubic-bezier(.25,.01,.25,1) 0s;
     margin-top: 20px;
+    user-select: none;
+
   }
   
   .input:hover, .input:focus, .input-group:hover .input {
@@ -218,12 +214,16 @@
   
   .input-group:hover .label, .input:focus {
     color: #ffffffc2;
+    user-select: none;
+
   }
 
   ::placeholder {
    
     font-size: 1em;
     color: #e7e7e9;
+    user-select: none;
+
   }
 
 
@@ -240,6 +240,8 @@
     padding: 0;
     font-size: inherit;
     font-family: inherit;
+    user-select: none;
+
    }
    
    button.learn-more {
@@ -419,6 +421,8 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  user-select: none;
+
  }
  
  .iseewhoyouare {
@@ -434,6 +438,8 @@
   align-items: center; 
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  user-select: none;
+
 
  }
 
@@ -442,6 +448,7 @@
   bottom: 0;
   right: 0;
   height: 6svh;
+  user-select: none;
   width: 6svh;
   
 }
@@ -464,6 +471,8 @@
   font-weight: 400;
   color: #e7e7e9;
   margin-bottom: 5svh;
+  user-select: none;
+
 
 }
 
@@ -473,11 +482,16 @@
   color: #179bff;
   text-shadow: 2px 2px 4px rgba(2, 39, 80, 0.571), 0 0 5px rgba(10, 21, 84, 0.818);
   margin-top: 3svh;
+  user-select: none;
+
 
 }
 
 .login2:hover {
   animation-play-state: paused;
+  user-select: none;
+
+
 }
 
 a:hover {
@@ -520,6 +534,7 @@ a:hover {
       position: relative;
       height: 65px;
       padding-top: 10px;
+      user-select: none;
       margin-top: -10px;
   }
 
@@ -529,15 +544,16 @@ li {
   height: 45px;
   margin-bottom: 45px;
   display: block;
+  user-select: none;
   text-shadow: 2px 2px 4px rgba(2, 39, 80, 0.571), 0 0 5px rgba(10, 21, 84, 0.818);
 
 }
 
 
-.flip2 { animation: flip2 9s cubic-bezier(0.23, 1, 0.32, 1.2) infinite; }
-.flip3 { animation: flip3 9s cubic-bezier(0.23, 1, 0.32, 1.2) infinite; }
-.flip4 { animation: flip4 9s cubic-bezier(0.23, 1, 0.32, 1.2) infinite; }
-.flip5 { animation: flip5 14s cubic-bezier(0.23, 1, 0.32, 1.2) infinite; }
+.flip2 { animation: flip2 9s cubic-bezier(0.23, 1, 0.32, 1.2) infinite;     user-select: none;}
+.flip3 { animation: flip3 9s cubic-bezier(0.23, 1, 0.32, 1.2) infinite;     user-select: none;}
+.flip4 { animation: flip4 9s cubic-bezier(0.23, 1, 0.32, 1.2) infinite;     user-select: none;}
+.flip5 { animation: flip5 14s cubic-bezier(0.23, 1, 0.32, 1.2) infinite;    user-select: none;}
 
 @keyframes flip2 {
   0% { margin-top: -180px; }
@@ -593,6 +609,8 @@ li {
   top: 0;
   right: 0;
   margin-top: 0px;
+  user-select: none;
+
 }
 
 .ignore img {
@@ -603,4 +621,9 @@ li {
 .ignore img:hover{
   width: 5svh;
   height: 5svh;
+}
+
+.flip5{
+  user-select: none;
+
 }

@@ -3,13 +3,26 @@
     flex-direction: column;
     align-items:flex-start;
     justify-content: flex-start;
+    user-select: none;
+
 }
 
 .file_img {
     margin-top: 1svh;
     height: 3.5svh;
     width: 2svw;
+    justify-content: center;
+
 }
+
+.file_img2 {
+    margin-top: 1svh;
+    height: 3.5svh;
+    width: 2svw;
+    justify-content: center;
+    margin-left: 2svh;
+}
+
 
 .editing {
     border: 2px solid transparent;
@@ -22,12 +35,16 @@
     background-color: #F3F3F3;
     border-radius: 5px;
     transition: all 0.5s;
+    user-select: none;
+
 }
 
 .editing:hover, .editing:focus {
     border: 2px solid #52525234;
     box-shadow: 0px 0px 0px 4px rgba(0, 0, 0, 0.2);
     background-color: white;
+    user-select: none;
+
 }
 
 .file_grid {
@@ -39,6 +56,8 @@
 
 .file:hover{
     background-color: #0000001e;
+    user-select: none;
+
 }
 
 .ApplicationDirectory {
@@ -59,6 +78,8 @@
     width: 873px;
     max-width: 100%;
     background-color: #2f2f2f;
+    user-select: none;
+
 }
 
 .frametest2 {
@@ -76,6 +97,8 @@
     height: 50svh;    
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    user-select: none;
+
 
 }
 
@@ -86,6 +109,8 @@
     justify-content: center;
     align-items: center;
     margin-top: 1svh;
+    user-select: none;
+
 }
 
 .linecontextmenu::after {
@@ -96,6 +121,8 @@
     height: 2px;
     background-color: rgba(167, 167, 167, 0.474);
     margin-right: 100%;
+    user-select: none;
+
 }
 
 .backdir {
@@ -103,7 +130,17 @@
     width: 2vw;
     margin-bottom: 0.8svh;
     margin-right: 0.5svh;
+    user-select: none;
+
 }
 .filesystemtxt2{
     font-weight: 250;
 }
+
+.file{
+    justify-content: center;
+    user-select: none;
+
+    
+}
+
