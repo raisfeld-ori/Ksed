@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import './style/index.css';
 import { useEffect, useState } from "react";
 import React from 'react';
+import { useNavigate } from "react-router";
 export const meta: MetaFunction = () => {
   return [
     { title: "Ksed" },
@@ -27,6 +28,7 @@ function get_text(selected: string): {title: string, text: string}[]{
 
 export default function Index() {
   const popRef = React.createRef<HTMLDivElement>();
+  const navigate = useNavigate();
 
  useEffect(() => {
     const observer = new IntersectionObserver(
@@ -93,15 +95,15 @@ export default function Index() {
         <div className="column">
           <h1 className="text"><span id="K">K</span><span id="sed">sed</span></h1>
           <h2 className="textpmain">Your hidden desktop</h2>
-          <button className="learn">learn more</button>
+          <button className="learn" onClick={() => navigate('about')}>learn more</button>
         </div>
       </div>
-      <div className="exception"><h1 id="whatis" className="pop">What is Ksed?</h1></div>
       <div className="column" style={{justifyContent: "unset"}}>
-        <div className="square"><div id="text0"className="ilegaltext left">Secured</div></div>
-        <div className="square"><div id="text1"className="ilegaltext right">Beautiful</div></div>
-        <div className="square"><div id="text2"className="ilegaltext left">Easy to use</div></div>
-        <div className="square"><div id="text3"className="ilegaltext right">Safe</div></div>
+       <div id="text0"className="ilegaltext left">Secure</div>
+        <div id="text1"className="ilegaltext right">Beautiful</div>
+        <div id="text2"className="ilegaltext left">Easy to use</div>
+        <div id="text3"className="ilegaltext right">Safe</div>
+        <div className="exception"><h1 id="whatis" className="pop">that, is what ksed is about</h1></div>
       </div>
       <div className="square">
       <div className="squareinsquare">
