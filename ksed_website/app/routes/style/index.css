@@ -380,3 +380,9 @@ user-select: none;
   
     }
   }
+
+  .explanation{
+    text-align: center;
+    font-size: 0.9em;
+    
+  }

@@ -7,7 +7,7 @@ import file_system from './internal_apps/apps/file_system';
 import ibetonhakari from './assets/TOCA2.mp4';
 import { desktop_app } from './Grid';
 import leaveicon from './assets/leave.png';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import exit from './assets/exit.png';
 import { invoke } from '@tauri-apps/api';
 
@@ -52,6 +52,9 @@ export default function MainPage() {
     const fs_props = file_system();
     const explorer_app = desktop_app("Files", folder, fs_props);
     const [menu, set_menu] = useState(false);
+    useEffect(() => {
+        fs_props.update();
+    }, [useLocation().state]);
     return (
         <div id='background' onContextMenu={e => {e.preventDefault();}} onClick={() => {if (menu) {set_menu(false)}}}>
             <Grid  apps={[explorer_app]} gridSize={50} margin={120} />
