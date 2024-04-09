@@ -12,7 +12,7 @@ import exit from './assets/exit.png';
 import { invoke } from '@tauri-apps/api';
 
 function BinIcon(props: {display: () => Promise<void>, name: string, img: string}){
-    return   <div className='appsmenu'onClick={() => {props.display}}>
+    return   <div className='appsmenu'onClick={props.display}>
     <p><i className="line right"></i></p>
     <button className='folderappmenu'>
         <img className='folderappmenu' src={props.img} alt="filesystem" />
@@ -76,8 +76,8 @@ export default function MainPage() {
                 </button>
                 <p className='hiddenclose'>Exit 😭​</p>
                 
-                <BinIcon display={async () => {fs_props.update;
-                    fs_props.set_display('inherit');}} name='Files' img={folder}></BinIcon>
+                <BinIcon display={async () => {fs_props.update();fs_props.set_display('inherit');}} 
+                name='Files' img={folder}></BinIcon>
 
             </div>
             <video className='hakari' src={ibetonhakari} width="100%" height="100%" autoPlay muted loop>
