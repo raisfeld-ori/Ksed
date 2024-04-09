@@ -1,7 +1,7 @@
 import type { MetaFunction } from "@remix-run/node";
 import { gsap } from "gsap";
 import './style/index.css';
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import React from 'react';
 export const meta: MetaFunction = () => {
   return [
@@ -26,7 +26,7 @@ function get_text(selected: string): {title: string, text: string}[]{
 }
 
 export default function Index() {
-  const popRef = useRef<HTMLDivElement>();
+  const popRef = React.createRef<HTMLDivElement>();
 
  useEffect(() => {
     const observer = new IntersectionObserver(
@@ -88,7 +88,6 @@ export default function Index() {
  }, []);
   const [selected, set_selected] = useState("A");
   return (
-    //@ts-expect-error
     <div className="main" ref={popRef}>
       <div className="square">
         <div className="column">
@@ -103,6 +102,20 @@ export default function Index() {
         <div className="square"><div id="text1"className="ilegaltext right">Beautiful</div></div>
         <div className="square"><div id="text2"className="ilegaltext left">Easy to use</div></div>
         <div className="square"><div id="text3"className="ilegaltext right">Safe</div></div>
+      </div>
+      <div className="square">
+          <p className="explanation">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+            Quaerat temporibus a incidunt in error blanditiis sit vero, 
+            ut quisquam perspiciatis, 
+            iste culpa alias beatae aperiam cum dolores, numquam ad accusamus?
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+            Ipsam provident autem sapiente quae quibusdam, corporis inventore tenetur beatae 
+            voluptatem nulla commodi itaque neque in earum culpa quia laudantium doloribus! Ex.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore ratione dolorum eaque 
+            temporibus asperiores repellat aliquam voluptate iste quas hic
+             deleniti fugit quaerat quisquam quidem, ipsa autem dolor rem deserunt.
+          </p>
       </div>
       <div className="square">
       <div className="squareinsquare">
