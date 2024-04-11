@@ -1,7 +1,7 @@
 import './login.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { invoke } from '@tauri-apps/api';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import noenemies from '../main_page/assets/nature.jpg';
 import exiticon from '../main_page/assets/x_icon.png';
 
@@ -10,6 +10,11 @@ function login(){
     const [password, setpassword] = useState("");
     const [error, seterror] = useState("");
     const navigate = useNavigate();
+    const location = useLocation()
+    useEffect(() => {
+        if (location.state) {setname(location.state.name);setpassword(location.state.password);}
+        if (location.state?.refresh) {window.location.reload();}
+    }, [location.state]);
 
     async function authenticate(){
         if (name == '' || password == '') {seterror("your name/password can't be null");return;}
