@@ -2,14 +2,16 @@ import { useEffect, useState } from 'react';
 import './main_page.css';
 import Grid from './Grid';
 import folder from './assets/folder.png';
+import settings from './assets/setting-icon.svg';
 import menu_icon from './assets/computer-laptop-color-icon.webp';
-import file_system from './internal_apps/apps/file_system';
+import file_system from './internal_apps/apps/file_system/file_system';
 import ibetonhakari from './assets/TOCA2.mp4';
 import { desktop_app } from './Grid';
 import leaveicon from './assets/leave.png';
 import { useLocation, useNavigate } from 'react-router-dom';
 import exit from './assets/exit.png';
 import { invoke } from '@tauri-apps/api';
+import Settings from './internal_apps/apps/settings/settings';
 
 function BinIcon(props: {display: () => Promise<void>, name: string, img: string}){
     return   <div className='appsmenu'onClick={props.display}>
@@ -50,6 +52,8 @@ const Clock = () => {
 export default function MainPage() {
     const navigate = useNavigate();
     const fs_props = file_system();
+    const settings_props = Settings();
+    const settings_app = desktop_app("settings", settings, settings_props);
     const explorer_app = desktop_app("Files", folder, fs_props);
     const [menu, set_menu] = useState(false);
     useEffect(() => {
@@ -57,7 +61,7 @@ export default function MainPage() {
     }, [useLocation().state]);
     return (
         <div id='background' onContextMenu={e => {e.preventDefault();}} onClick={() => {if (menu) {set_menu(false)}}}>
-            <Grid  apps={[explorer_app]} gridSize={50} margin={120} />
+            <Grid  apps={[explorer_app, settings_app]} gridSize={50} margin={120} />
             <nav className='navbar' onContextMenu={e => e.preventDefault()}>
                 <img className='homeimg' onClick={() => set_menu(!menu)} src={menu_icon} alt="" />
                 <Clock></Clock>

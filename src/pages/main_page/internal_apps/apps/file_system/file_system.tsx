@@ -1,11 +1,11 @@
-import App, {AppInterface} from '../App';
+import App, {AppInterface} from '../../App';
 import { invoke } from '@tauri-apps/api';
 import { useState, useEffect, Dispatch } from 'react';
-import img from '../../assets/folder.png';
+import img from '../../../assets/folder.png';
 import { open } from '@tauri-apps/api/dialog';
-import folder from '../../assets/folder.png';
-import alpha from '../../assets/image-solid.svg'
-import arrowleft from '../../assets/arrowleft.png'
+import folder from '../../../assets/folder.png';
+import alpha from '../../../assets/image-solid.svg'
+import arrowleft from '../../../assets/arrowleft.png'
 import './file_system.css';
 
 async function upload_file(update_fs: () => Promise<void>, set_files: React.Dispatch<React.SetStateAction<React.JSX.Element[]>>){
