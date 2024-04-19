@@ -8,7 +8,7 @@ export default function Settings() : AppInterface{
     </h1>
     let context_menu = <h1></h1>
     let update = async () => {}
-    let [screen, set_display] = App(app_html, "settings");
-    return {screen, set_display, context_menu, update};
+    let [screen, set_display, fullscreen] = App(app_html, "settings");
+    return {screen, set_display, context_menu, update, fullscreen};
 }
 
