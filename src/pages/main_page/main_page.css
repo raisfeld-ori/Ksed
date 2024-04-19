@@ -21,6 +21,7 @@
   backdrop-filter: blur(50px);
   -webkit-backdrop-filter: blur(50px);
   width: 100%;
+  height: 7svh;
  }
 
 .navbar *{
@@ -173,7 +174,7 @@ color: white;
 }
 
 .show{
-  bottom: 5svh;
+  bottom: 7svh;
 }
 
 .leave {
