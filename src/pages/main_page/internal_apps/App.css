@@ -51,17 +51,42 @@ border-radius: 20px;
     width: 100%;
 }
 
-.minimize-btn, .close-btn {
+.frame-buttons{
+    display: inline-flex;
+    
+}
+
+.minimize-btn, .close-btn, .fullscreen-btn {
     background-color: #00000000;
     color: white;
     border-radius: 10px;
-    padding: 0.1px 10px;
+    padding: 0.1px 9px;
     margin-top: 0px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 24px;
     cursor: pointer;
+}
+
+.background {
+    position: absolute;
+    display: block;
+    cursor:context-menu;
+    font-size: 1em;
+    color: white;
+    width: 873px;
+    max-width: 100%;
+    display: flex;
+    align-items: flex-start;
+    z-index: 1;
+    background-color: #333333df;
+    height: 50svh;    
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    user-select: none;
+
+
 }
 
 .minimize-btn {

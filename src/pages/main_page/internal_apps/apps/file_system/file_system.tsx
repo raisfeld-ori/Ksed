@@ -138,8 +138,8 @@ function file_system() : AppInterface{
         <>{files}</>
         </div>
     </div>;
-    let [screen, set_display] = App(app_html, 'file system');
-    return {screen, context_menu, update, set_display};
+    let [screen, set_display, fullscreen] = App(app_html, 'file system');
+    return {screen, context_menu, update, set_display, fullscreen};
 };
 
 

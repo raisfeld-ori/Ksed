@@ -83,26 +83,6 @@
 
 }
 
-.frametest2 {
-    position: absolute;
-    display: block;
-    cursor:context-menu;
-    font-size: 1em;
-    color: white;
-    width: 873px;
-    max-width: 100%;
-    display: flex;
-    align-items: flex-start;
-    z-index: 1;
-    background-color: #333333df;
-    height: 50svh;    
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    user-select: none;
-
-
-}
-
 .buttoncontextmenu {
     display: flex;
     margin-left: 3svh;
