@@ -1,26 +1,20 @@
 .frametest {
     position: relative;
-    display: block;
     border-top: 1px #02020200;
     border-left: 2px #0202022f;
     border-right: 2px #0202022f;
     border-bottom: 1px #02020200;
     border-style: solid;
     z-index: 99;
-    padding-left: 373px;
     cursor: move;
     font-size: 0.5em;
-    color: white    ;
-    width: 873px;
+    color: white;
     max-width: 100%;
-    display: flex;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 3fr 0.1fr 0.1fr 0.1fr;
     height: 37px;
     background-color: #2f2f2f;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-
-    
+    transition: all 0.1 ease-in-out;
 }
 
 .frame{
@@ -36,10 +30,10 @@ border-radius: 20px;
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     background-color: #333333d3;
-    height: 50svh;    
 }
 
 .frametext2{
+    white-space: nowrap;
     color: white;
     margin-top: .3svh;
     font-weight: normal;
@@ -49,11 +43,6 @@ border-radius: 20px;
     align-items: center;
     justify-content: center;
     width: 100%;
-}
-
-.frame-buttons{
-    display: inline-flex;
-    
 }
 
 .minimize-btn, .close-btn, .fullscreen-btn {
@@ -75,22 +64,16 @@ border-radius: 20px;
     cursor:context-menu;
     font-size: 1em;
     color: white;
-    width: 873px;
     max-width: 100%;
     display: flex;
     align-items: flex-start;
     z-index: 1;
-    background-color: #333333df;
-    height: 50svh;    
+    background-color: #333333df; 
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     user-select: none;
 
 
-}
-
-.minimize-btn {
-    padding-left: 350px;
 }
 
 .test{

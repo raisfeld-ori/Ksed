@@ -1,0 +1,71 @@
+.frame{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: inherit;
+    height: inherit;
+}
+
+.input {
+    max-width: 250px;
+    height: 50px;
+    background-color: #05060f37;
+    border-radius: .5rem;
+    color: #ffffff;
+    padding: 0 1rem;
+    border: 2px solid transparent;
+    font-size: 1rem;
+    transition: border-color .3s cubic-bezier(.25,.01,.25,1) 0s, color .3s cubic-bezier(.25,.01,.25,1) 0s,background .2s cubic-bezier(.25,.01,.25,1) 0s;
+    user-select: none;
+
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: .60rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ffffffc9;
+    transition: color .3s cubic-bezier(.25,.01,.25,1) 0s;
+    margin-top: 20px;
+    user-select: none;
+
+  }
+  
+  .input:hover, .input:focus, .input-group:hover .input {
+    outline: none;
+    border-color: #ffffff94;
+  }
+  
+  .input-group:hover .label, .input:focus {
+    color: #ffffffc2;
+    user-select: none;
+
+  }
+
+  ::placeholder {
+   
+    font-size: 1em;
+    color: #e7e7e9;
+    user-select: none;
+
+  }
+
+.login:focus{
+    background-color: #000000ac;
+}
+
+
+#error{
+  color: #FF0000;
+  font-size: 2svh;
+  user-select: none;
+}
+
+
+#error[aria-current=true]{
+  color: #027d00;
+  font-size: 2svh;
+  user-select: none;
+
+}

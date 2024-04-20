@@ -12,6 +12,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import exit from './assets/exit.png';
 import { invoke } from '@tauri-apps/api';
 import Settings from './internal_apps/apps/settings/settings';
+import sudo from './internal_apps/apps/sudo/sudo';
 
 function BinIcon(props: {display: () => Promise<void>, name: string, img: string}){
     return   <div className='appsmenu'onClick={props.display}>
@@ -52,6 +53,8 @@ const Clock = () => {
 export default function MainPage() {
     const navigate = useNavigate();
     const fs_props = file_system();
+    const sudo_props = sudo('you have been logged out, please log in');
+    useEffect(()=>{sudo_props.set_display('none')}, []);
     const settings_props = Settings();
     const settings_app = desktop_app("settings", settings, settings_props);
     const explorer_app = desktop_app("Files", folder, fs_props);
@@ -59,8 +62,20 @@ export default function MainPage() {
     useEffect(() => {
         fs_props.update();
     }, [useLocation().state]);
+    useEffect(() => {
+        const interval = setInterval(async () => {
+            let name = await invoke('system_get', {key: 'name'});
+            let password = await invoke('system_get', {key: 'password'});
+            if (name == null || password == null) {sudo_props.set_display('inherit');sudo_props.fullscreen(true);return}
+            const authenticated = await invoke('authenticate_user', {name, password});
+            if (!authenticated) {sudo_props.set_display('inherit');sudo_props.fullscreen(true);return}
+            else {sudo_props.set_display('none');sudo_props.fullscreen(false);}
+        }, 1000);
+        return () => clearInterval(interval);
+      }, []);
     return (
         <div id='background' onContextMenu={e => {e.preventDefault();}} onClick={() => {if (menu) {set_menu(false)}}}>
+            {sudo_props.screen}
             <Grid  apps={[explorer_app, settings_app]} gridSize={50} margin={120} />
             <nav className='navbar' onContextMenu={e => e.preventDefault()}>
                 <img className='homeimg' onClick={() => set_menu(!menu)} src={menu_icon} alt="" />

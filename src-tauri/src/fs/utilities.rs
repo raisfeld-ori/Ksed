@@ -3,6 +3,7 @@ use std::path::PathBuf;
 use dirs::data_dir;
 pub use base64::{decode_config, encode_config, URL_SAFE};
 pub use tauri::Runtime;
+use crate::authenticate_user;
 use crate::data::auth::{init_dir, Encodable};
 use crate::data::json::init_user_data;
 use crate::fs::encryption::{aes_encrypt, aes_decrypt};
