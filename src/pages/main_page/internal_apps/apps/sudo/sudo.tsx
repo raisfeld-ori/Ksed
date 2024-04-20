@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import App, { AppInterface } from "../../App";
 import { invoke } from "@tauri-apps/api";
 import { useNavigate } from "react-router-dom";
