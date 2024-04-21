@@ -26,13 +26,14 @@ async function upload_file(update_fs: () => Promise<void>, set_files: React.Disp
     }
 }
 
-function File(props: {name: string, type: FileType, update_fs: () => Promise<void>, is_selected: Dispatch<string>}){
+function File(props: {name: string, type: FileType, update_fs: () => Promise<void>, 
+    is_selected: Dispatch<string>, open_file: (file: string) => Promise<void>}){
     async function cd(){
         await invoke('cd', {new: props.name});
         await props.update_fs();
     }
     if (props.name.length > 10){
-        return <div className='file' onDoubleClick={cd} 
+        return <div className='file' onDoubleClick={() => props.open_file(props.name)}
         onContextMenu={() => props.is_selected(props.name)}>
         <img src={props.type == FileType.File ? alpha: folder} className='file_img'/><br />
         <p className='file_name'>{props.name.slice(0, 7) + '...'}</p>
@@ -57,7 +58,7 @@ async function make_file(name: string, password: string, file: string, type: Fil
     }
 }
 
-function file_system() : AppInterface{
+function file_system(open_file: (file: string) => Promise<void>) : AppInterface{
     const [location, set_location] = useState("Home");
     const [selected, set_selected] = useState('');
     const [files, set_files] = useState<React.JSX.Element[]>([]);
@@ -69,14 +70,16 @@ function file_system() : AppInterface{
         let files_divs = [];
         for (let i = 0;i < files.length;i++){
             let file_type = (files[i][1] == 'File') ? FileType.File : FileType.Directory;
-            files_divs.push(<File name={files[i][0]} key={i} type={file_type} update_fs={update} is_selected={set_selected}/>);
+            files_divs.push(<File name={files[i][0]} key={i} type={file_type} 
+                update_fs={update} is_selected={set_selected}open_file={open_file}/>);
         }
         set_files(files_divs);
         set_location(pwd);
     }
     useEffect(() => {
-        document.addEventListener("click", () => {set_ctx_display('none');set_selected('')});
-        return () => document.removeEventListener("click", () => set_ctx_display('none'));
+        let click = () => {set_ctx_display('none');set_selected('');};
+        document.addEventListener("click", click);
+        return () => document.removeEventListener("click", click);
     }, [])
     const right_click = (ev: React.MouseEvent) => {
         ev.preventDefault();

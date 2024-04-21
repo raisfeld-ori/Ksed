@@ -13,6 +13,8 @@ import exit from './assets/exit.png';
 import { invoke } from '@tauri-apps/api';
 import Settings from './internal_apps/apps/settings/settings';
 import sudo from './internal_apps/apps/sudo/sudo';
+import text_editor from './internal_apps/apps/text_editor/text_editor';
+import text_icon from './assets/pencil-square-icon.svg';
 
 function BinIcon(props: {display: () => Promise<void>, name: string, img: string}){
     return   <div className='appsmenu'onClick={props.display}>
@@ -52,11 +54,17 @@ const Clock = () => {
 
 export default function MainPage() {
     const navigate = useNavigate();
-    const fs_props = file_system();
+    const [file_selected, set_file_selected] = useState<string | null>(null);
     const sudo_props = sudo('you have been logged out, please log in');
     useEffect(()=>{sudo_props.set_display('none')}, []);
+    const text_editor_props = text_editor(file_selected);
     const settings_props = Settings();
     const settings_app = desktop_app("settings", settings, settings_props);
+    const text_app = desktop_app("text editor", text_icon, text_editor_props);
+    let open_file = async (file: string) => {
+        set_file_selected(file);
+    }
+    const fs_props = file_system(open_file);
     const explorer_app = desktop_app("Files", folder, fs_props);
     const [menu, set_menu] = useState(false);
     useEffect(() => {
@@ -76,7 +84,7 @@ export default function MainPage() {
     return (
         <div id='background' onContextMenu={e => {e.preventDefault();}} onClick={() => {if (menu) {set_menu(false)}}}>
             {sudo_props.screen}
-            <Grid  apps={[explorer_app, settings_app]} gridSize={50} margin={120} />
+            <Grid  apps={[explorer_app, settings_app, text_app]} gridSize={50} margin={120} />
             <nav className='navbar' onContextMenu={e => e.preventDefault()}>
                 <img className='homeimg' onClick={() => set_menu(!menu)} src={menu_icon} alt="" />
                 <Clock></Clock>
