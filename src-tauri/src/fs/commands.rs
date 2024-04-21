@@ -203,6 +203,16 @@ impl File{
 
 }
 
+#[tauri::command]
+pub fn file_exists(file_name: String) -> bool {
+  for file in unsafe{FS.current_dir.files.iter()}{
+    if file.name() == &file_name{
+        return true;
+    }
+  }
+  return false;
+}
+
 #[test]
 fn test_fs() {
     unsafe{FS.init_fs();}

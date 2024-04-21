@@ -1,10 +1,10 @@
 import App, {AppInterface} from '../../App';
 import { invoke } from '@tauri-apps/api';
+import { dialog } from '@tauri-apps/api';
 import { useState, useEffect, Dispatch } from 'react';
-import img from '../../../assets/folder.png';
 import { open } from '@tauri-apps/api/dialog';
 import folder from '../../../assets/folder.png';
-import alpha from '../../../assets/image-solid.svg'
+import alpha from '../../../assets/image-solid.svg';
 import arrowleft from '../../../assets/arrowleft.png'
 import './file_system.css';
 
@@ -90,10 +90,16 @@ function file_system(open_file: (file: string) => Promise<void>) : AppInterface{
         const NewFile = () =>{
             const [editing, set_editing] = useState('inherit');
             const [text, set_text] = useState('');
+            let icon = file_type == FileType.Directory ? folder : alpha;
             const done_editing = async (e: any) => {
                 e.preventDefault();
                 set_editing('none');
                 if (text == ''){return;}
+                if (await invoke('file_exists', {fileName: text})){
+                    let sure = await dialog.confirm('a file with this name already exists, are you sure you want to delete it?');
+                    if (sure){await invoke('rm', {file: text});}
+                    else {return;}
+                }
                 let name: string = await invoke('system_get', {key: 'name'});
                 let password: string = await invoke('system_get', {key: 'password'});
                 await make_file(name, password, text, file_type);
@@ -101,7 +107,7 @@ function file_system(open_file: (file: string) => Promise<void>) : AppInterface{
             }
             
             return <div className='file' style={{display: editing}}>
-            <img src={img} className='file_img2'/><br />
+            <img src={icon} className='file_img2'/><br />
             <input className='editing' onChange={e => set_text(e.target.value)}
             onBlur={done_editing} onKeyDownCapture={e => {if (e.key == 'Enter'){set_editing('none');}}} autoFocus></input>
         </div>
@@ -117,7 +123,7 @@ function file_system(open_file: (file: string) => Promise<void>) : AppInterface{
     }}>
 
     <button className='buttoncontextmenu' onClick={() => make_files(FileType.Directory)}>Create Folder</button>
- 
+    <button className='buttoncontextmenu' onClick={() => make_files(FileType.File)}>create file</button>
     <button className='buttoncontextmenu' onClick={async () => await upload_file(update, set_files)}>Upload File</button>
     {selected != '' ?
         <div>

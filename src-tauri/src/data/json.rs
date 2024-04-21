@@ -49,6 +49,7 @@ pub fn system_get<'a>(key: String) -> &'a Value  {
     };
 }
 
+#[allow(non_snake_case)]
 #[tauri::command]
 pub fn create_value(valType: String, val: String) -> Value {
     let result = match valType.to_ascii_lowercase().as_str(){
