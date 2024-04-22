@@ -1,5 +1,5 @@
 .frametest {
-    position: relative;
+    position:absolute;
     border-top: 1px #02020200;
     border-left: 2px #0202022f;
     border-right: 2px #0202022f;
@@ -72,7 +72,7 @@ border-radius: 20px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     user-select: none;
-
+    margin-top: 37px;
 
 }
 

@@ -68,6 +68,7 @@ export default function MainPage() {
             case "Text": {
                 set_file_selected(file);
                 text_viewer_props.set_display('inherit');
+                await text_viewer_props.update();
                 return;
             }
             default: {return;}
