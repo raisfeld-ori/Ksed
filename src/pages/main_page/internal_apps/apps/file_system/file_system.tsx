@@ -5,7 +5,7 @@ import { useState, useEffect, Dispatch } from 'react';
 import { open } from '@tauri-apps/api/dialog';
 import folder from '../../../assets/folder.png';
 import alpha from '../../../assets/image-solid.svg';
-
+import text from '../../../assets/pencil-square-icon.svg';
 import arrowleft from '../../../assets/arrowleft.png'
 import './file_system.css';
 
@@ -79,7 +79,7 @@ export const FileExtension = (val: string) => {
     switch (val){
         case "Video": return ""
         case "Image": return alpha
-        case "Text": return ""
+        case "Text": return text
         case "HTML": return ""
         case "Unknown": return ""
         case "Audio": return ""

@@ -1,8 +1,9 @@
 use std::{fs, path::PathBuf};
 use base64::{encode_config, URL_SAFE};
 use serde::{Deserialize, Serialize};
-use serde_json::Error;
+use serde_json::{Error, Value};
 use std::fs::{read, write};
+use crate::{authenticate_user, bytes_to_string, create_user};
 use crate::fs::encryption::aes_decrypt;
 use crate::fs::utilities::get_user_dir;
 use crate::fs::encryption::aes_encrypt;
@@ -94,6 +95,7 @@ impl Home{
         self.current_dir = dir.clone();
         self.path.push(dir);
     }
+    #[allow(unused)]
     pub fn to_bytes(&self) -> Result<Vec<u8>, Error>{return serde_json::to_vec(self);}
 }
 
@@ -195,13 +197,45 @@ impl File{
         let _result = fs::remove_file(self.location.as_path());
         return Ok(())
     }
-    pub fn open(&self) -> Option<Vec<u8>> {
+    pub fn read(&self, name: &str, password: &str) -> Option<Vec<u8>> {
         let data = read(self.location.as_path());
         if data.is_err(){return None;}
-        // i'l keep on working on it later
-        Some(data.unwrap())
+        let data = aes_decrypt(name, password, &data.unwrap());
+        return Some(data);
     }
 
+}
+
+#[tauri::command]
+pub fn read_file(file: String, name: &str, password: &str) -> Result<Vec<u8>, Value> {
+    let file = unsafe{FS.current_dir.files.iter().find(|other| other.name() == &file)};
+    if file.is_none() {return Err(Value::Null);}
+    let file = file.unwrap().get_file();
+    if file.is_none() {return Err(Value::Null);}
+    let file  = file.unwrap().read(name, password);
+    if file.is_none() {return Err(Value::Null);}
+    else{return Ok(file.unwrap())}
+}
+
+
+#[test]
+fn test_file_reading(){
+    use crate::data::json::init_user_data;
+    use crate::init_dir;
+    let name = "names";
+    let password = "passwords";
+    let file = String::from("example_file.txt");
+    assert!(std::fs::write(&file, "foo, bar").is_ok());
+    init_user_data();
+    assert!(init_dir().is_ok());
+    unsafe{FS.init_fs()};
+    if !authenticate_user(name, password){
+        assert!(create_user(name, password).is_ok());
+    }
+    assert!(upload_file(name, password, file.clone()).is_ok());
+    let data = read_file(file, name, password);
+    assert!(data.is_ok());
+    assert_eq!("foo, bar", bytes_to_string(data.unwrap()).unwrap_or("".to_string()));
 }
 
 #[tauri::command]

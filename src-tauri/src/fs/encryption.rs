@@ -57,9 +57,7 @@ pub fn aes_decrypt(username: &str, password: &str, data: &[u8]) -> Vec<u8> {
             Err(e) => println!("{:?}", e),
         }
     }
-
     final_result.extend(write_buffer.take_read_buffer().take_remaining());
-
     return unpad(&final_result)
 }
 

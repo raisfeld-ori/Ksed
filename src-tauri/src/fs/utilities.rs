@@ -3,7 +3,6 @@ use std::path::PathBuf;
 use dirs::data_dir;
 pub use base64::{decode_config, encode_config, URL_SAFE};
 pub use tauri::Runtime;
-use crate::authenticate_user;
 use crate::data::auth::{init_dir, Encodable};
 use crate::data::json::init_user_data;
 use crate::fs::encryption::{aes_encrypt, aes_decrypt};
@@ -14,6 +13,7 @@ pub fn dir() -> PathBuf {data_dir().expect("failed to enter data directory").joi
 pub fn get_user_dir(name: &str, password: &str) -> PathBuf{
   dir().join(encode_config(&aes_encrypt(name, password, name.as_bytes()), URL_SAFE))
 }
+#[allow(unused)]
 pub fn open_file(name: &str, password: &str, target: String) -> Option<PathBuf>{
   let location = get_user_dir(name, password);
   if location.exists(){
@@ -28,6 +28,13 @@ pub fn open_file(name: &str, password: &str, target: String) -> Option<PathBuf>{
     }
   }
   return None;
+}
+
+#[tauri::command]
+pub fn bytes_to_string(bytes: Vec<u8>) -> Result<String, ()> {
+  let result = String::from_utf8(bytes);
+  if result.is_err() {return Err(());}
+  else {return Ok(result.unwrap());}
 }
 
 #[test]

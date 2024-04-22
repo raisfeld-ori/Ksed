@@ -55,25 +55,40 @@ const Clock = () => {
 export default function MainPage() {
     const navigate = useNavigate();
     const [file_selected, set_file_selected] = useState<string | null>(null);
+    const [file_extension, set_file_extension] = useState('Unknown');
     const sudo_props = sudo('you have been logged out, please log in');
     useEffect(()=>{sudo_props.set_display('none')}, []);
     const text_viewer_props = text_viewer(file_selected);
     const settings_props = Settings();
     const settings_app = desktop_app("settings", settings, settings_props);
     const text_app = desktop_app("text editor", text_icon, text_viewer_props);
+    useEffect(() => {
+        if (file_selected) {
+           let match_action = async () => {
+            switch (file_extension){
+                case "Text": {
+                    text_viewer_props.set_display('inherit');
+                    await text_viewer_props.update();
+                    return;
+                }
+                default: {return;}
+            }
+           }
+           match_action();
+        }
+    }, [file_selected]);
+    // because of the way react renders file_selected, the code needs to be moved into a useEffect()
     let open_file = async (file: string) => {
-        console.log('test');
+        console.log(file);
         let file_extension: string = await invoke('gather_type', {file});
+        set_file_extension(file_extension);
         switch (file_extension){
             case "Text": {
                 set_file_selected(file);
-                text_viewer_props.set_display('inherit');
-                await text_viewer_props.update();
                 return;
             }
             default: {return;}
         }
-        set_file_selected(file);
     }
     const fs_props = file_system(open_file);
     const explorer_app = desktop_app("Files", folder, fs_props);
