@@ -5,17 +5,19 @@ import { useState, useEffect, Dispatch } from 'react';
 import { open } from '@tauri-apps/api/dialog';
 import folder from '../../../assets/folder.png';
 import alpha from '../../../assets/image-solid.svg';
+
 import arrowleft from '../../../assets/arrowleft.png'
 import './file_system.css';
 
-async function upload_file(update_fs: () => Promise<void>, set_files: React.Dispatch<React.SetStateAction<React.JSX.Element[]>>){
+async function upload_file(update_fs: () => Promise<void>, set_files: React.Dispatch<React.SetStateAction<React.JSX.Element[]>>
+, open_file: (file: string) => Promise<void>){
     let name: string = await invoke('system_get', {key: 'name'});
     let password: string = await invoke('system_get', {key: 'password'});
     let file_selected = await open({});
     if (Array.isArray(file_selected)){
         for (let i = 0; i < file_selected.length;i++){
             //@ts-expect-error
-            set_files(files => [...files, <File name={file_selected[i]} key={files.length + 1}/>])
+            set_files(files => [...files, <File name={file_selected[i]} key={files.length + 1} open_file={open_file}/>])
         }
         await update_fs();
     }
@@ -28,21 +30,36 @@ async function upload_file(update_fs: () => Promise<void>, set_files: React.Disp
 
 function File(props: {name: string, type: FileType, update_fs: () => Promise<void>, 
     is_selected: Dispatch<string>, open_file: (file: string) => Promise<void>}){
-    async function cd(){
-        await invoke('cd', {new: props.name});
-        await props.update_fs();
+    async function open(){
+        if (props.type == FileType.Directory){
+            await invoke('cd', {new: props.name});
+            await props.update_fs();
+        }
+        else{
+            props.open_file(props.name);
+        }
     }
+    const [file_extension, setFileExtension] = useState('');
+
+    useEffect(() => {
+        const fetchFileExtension = async () => {
+            const extension: string = await invoke('gather_type', {file: props.name});
+            setFileExtension(FileExtension(extension));
+        };
+
+        fetchFileExtension();
+    }, [props.name]);
     if (props.name.length > 10){
-        return <div className='file' onDoubleClick={() => props.open_file(props.name)}
+        return <div className='file' onDoubleClick={open}
         onContextMenu={() => props.is_selected(props.name)}>
-        <img src={props.type == FileType.File ? alpha: folder} className='file_img'/><br />
+        <img src={props.type == FileType.File ? file_extension: folder} className='file_img'/><br />
         <p className='file_name'>{props.name.slice(0, 7) + '...'}</p>
         </div>;
     }
     else{
-    return <div className='file' onDoubleClick={cd} 
+    return <div className='file' onDoubleClick={open} 
     onContextMenu={() => props.is_selected(props.name)}>
-    <img src={props.type == FileType.File ? alpha: folder} className='file_img'/><br />
+    <img src={props.type == FileType.File ? file_extension: folder} className='file_img'/><br />
     <p className='file_name'>{props.name}</p>
     </div>;
     }
@@ -55,6 +72,18 @@ async function make_file(name: string, password: string, file: string, type: Fil
     switch (type){
         case FileType.Directory: {await invoke('mkdir', {name: file});break;}
         case FileType.File: {await invoke('mk', {name, password, fileName: file});break;}
+    }
+}
+
+export const FileExtension = (val: string) => {
+    switch (val){
+        case "Video": return ""
+        case "Image": return alpha
+        case "Text": return ""
+        case "HTML": return ""
+        case "Unknown": return ""
+        case "Audio": return ""
+        default: return ""
     }
 }
 
@@ -90,7 +119,7 @@ function file_system(open_file: (file: string) => Promise<void>) : AppInterface{
         const NewFile = () =>{
             const [editing, set_editing] = useState('inherit');
             const [text, set_text] = useState('');
-            let icon = file_type == FileType.Directory ? folder : alpha;
+            let [icon, set_icon] = useState(file_type == FileType.Directory ? folder : alpha);
             const done_editing = async (e: any) => {
                 e.preventDefault();
                 set_editing('none');
@@ -105,11 +134,16 @@ function file_system(open_file: (file: string) => Promise<void>) : AppInterface{
                 await make_file(name, password, text, file_type);
                 await update();
             }
-            
+            const set_new_icon = async (text: string) => {
+                if (file_type == FileType.Directory) {return;}
+                let new_icon: string = await invoke('gather_type', {file: text});
+                set_icon(FileExtension(new_icon));
+            }
             return <div className='file' style={{display: editing}}>
             <img src={icon} className='file_img2'/><br />
-            <input className='editing' onChange={e => set_text(e.target.value)}
-            onBlur={done_editing} onKeyDownCapture={e => {if (e.key == 'Enter'){set_editing('none');}}} autoFocus></input>
+            <input className='editing' onBlur={done_editing} 
+            onChange={async e => {set_text(e.target.value);set_new_icon(e.target.value);}}
+            onKeyDownCapture={e => {if (e.key == 'Enter'){set_editing('none');}}} autoFocus></input>
         </div>
         }
         set_files([...files, <NewFile key={files.length + 1}/>]);
@@ -124,7 +158,7 @@ function file_system(open_file: (file: string) => Promise<void>) : AppInterface{
 
     <button className='buttoncontextmenu' onClick={() => make_files(FileType.Directory)}>Create Folder</button>
     <button className='buttoncontextmenu' onClick={() => make_files(FileType.File)}>create file</button>
-    <button className='buttoncontextmenu' onClick={async () => await upload_file(update, set_files)}>Upload File</button>
+    <button className='buttoncontextmenu' onClick={async () => await upload_file(update, set_files, open_file)}>Upload File</button>
     {selected != '' ?
         <div>
         {/*<button className='buttoncontextmenu' >Rename</button>*/}

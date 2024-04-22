@@ -99,6 +99,7 @@ impl Home{
 
 #[tauri::command]
 pub fn mkdir(name: String) {unsafe{FS.current_dir.files.push(DirectoryItems::Directory(Directory::new(name)))};}
+#[allow(non_snake_case)]
 #[tauri::command]
 pub fn mk(name: &str, password: &str, fileName: String) -> Result<(), String> {
     let new_file = File::new(name, password, fileName);
@@ -191,7 +192,7 @@ impl File{
         return Ok(());
     }
     pub fn delete(&self) -> Result<(), std::io::Error>{
-        let result = fs::remove_file(self.location.as_path());
+        let _result = fs::remove_file(self.location.as_path());
         return Ok(())
     }
     pub fn open(&self) -> Option<Vec<u8>> {

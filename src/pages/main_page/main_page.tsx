@@ -4,7 +4,7 @@ import Grid from './Grid';
 import folder from './assets/folder.png';
 import settings from './assets/setting-icon.svg';
 import menu_icon from './assets/computer-laptop-color-icon.webp';
-import file_system from './internal_apps/apps/file_system/file_system';
+import file_system, {FileExtension} from './internal_apps/apps/file_system/file_system';
 import ibetonhakari from './assets/TOCA2.mp4';
 import { desktop_app } from './Grid';
 import leaveicon from './assets/leave.png';
@@ -13,7 +13,7 @@ import exit from './assets/exit.png';
 import { invoke } from '@tauri-apps/api';
 import Settings from './internal_apps/apps/settings/settings';
 import sudo from './internal_apps/apps/sudo/sudo';
-import text_editor from './internal_apps/apps/text_editor/text_editor';
+import text_viewer from './internal_apps/apps/text_viewer/text_viewer';
 import text_icon from './assets/pencil-square-icon.svg';
 
 function BinIcon(props: {display: () => Promise<void>, name: string, img: string}){
@@ -57,11 +57,21 @@ export default function MainPage() {
     const [file_selected, set_file_selected] = useState<string | null>(null);
     const sudo_props = sudo('you have been logged out, please log in');
     useEffect(()=>{sudo_props.set_display('none')}, []);
-    const text_editor_props = text_editor(file_selected);
+    const text_viewer_props = text_viewer(file_selected);
     const settings_props = Settings();
     const settings_app = desktop_app("settings", settings, settings_props);
-    const text_app = desktop_app("text editor", text_icon, text_editor_props);
+    const text_app = desktop_app("text editor", text_icon, text_viewer_props);
     let open_file = async (file: string) => {
+        console.log('test');
+        let file_extension: string = await invoke('gather_type', {file});
+        switch (file_extension){
+            case "Text": {
+                set_file_selected(file);
+                text_viewer_props.set_display('inherit');
+                return;
+            }
+            default: {return;}
+        }
         set_file_selected(file);
     }
     const fs_props = file_system(open_file);
