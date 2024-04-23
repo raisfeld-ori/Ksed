@@ -1,0 +1,9 @@
+.outer{
+    height: inherit;
+    width: inherit;
+}
+
+.inner{
+    height: inherit;
+    width: inherit;
+}

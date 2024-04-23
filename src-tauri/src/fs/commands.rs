@@ -3,8 +3,7 @@ use base64::{encode_config, URL_SAFE};
 use serde::{Deserialize, Serialize};
 use serde_json::{Error, Value};
 use std::fs::{read, write};
-use crate::{authenticate_user, bytes_to_string, create_user};
-use crate::fs::encryption::{aes_decrypt, aes_try_decrypt};
+use crate::fs::encryption::aes_decrypt;
 use crate::fs::utilities::get_user_dir;
 use crate::fs::encryption::aes_encrypt;
 
@@ -219,6 +218,7 @@ pub fn read_file(file: String, name: &str, password: &str) -> Result<Vec<u8>, Va
 
 #[test]
 fn test_file_reading(){
+    use crate::{authenticate_user, bytes_to_string, create_user};
     use crate::data::json::init_user_data;
     use crate::init_dir;
     let name = "names";

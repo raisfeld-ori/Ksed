@@ -4,7 +4,7 @@ import Grid from './Grid';
 import folder from './assets/folder.png';
 import settings from './assets/setting-icon.svg';
 import menu_icon from './assets/computer-laptop-color-icon.webp';
-import file_system, {FileExtension} from './internal_apps/apps/file_system/file_system';
+import file_system from './internal_apps/apps/file_system/file_system';
 import ibetonhakari from './assets/TOCA2.mp4';
 import { desktop_app } from './Grid';
 import leaveicon from './assets/leave.png';
@@ -15,6 +15,8 @@ import Settings from './internal_apps/apps/settings/settings';
 import sudo from './internal_apps/apps/sudo/sudo';
 import text_viewer from './internal_apps/apps/text_viewer/text_viewer';
 import text_icon from './assets/pencil-square-icon.svg';
+import image_viewer from './internal_apps/apps/image_viewer/image_viewer';
+import image_icon from './assets/image-icon.svg';
 
 function BinIcon(props: {display: () => Promise<void>, name: string, img: string}){
     return   <div className='appsmenu'onClick={props.display}>
@@ -59,9 +61,11 @@ export default function MainPage() {
     const sudo_props = sudo('you have been logged out, please log in');
     useEffect(()=>{sudo_props.set_display('none')}, []);
     const text_viewer_props = text_viewer(file_selected);
+    const text_app = desktop_app("text viewer", text_icon, text_viewer_props);
+    const image_viewer_props = image_viewer(file_selected);
+    const image_app = desktop_app('image viewer', image_icon, image_viewer_props);
     const settings_props = Settings();
     const settings_app = desktop_app("settings", settings, settings_props);
-    const text_app = desktop_app("text editor", text_icon, text_viewer_props);
     useEffect(() => {
         if (file_selected) {
            let match_action = async () => {
@@ -69,6 +73,11 @@ export default function MainPage() {
                 case "Text": {
                     text_viewer_props.set_display('inherit');
                     await text_viewer_props.update();
+                    return;
+                }
+                case "Image": {
+                    image_viewer_props.set_display('inherit');
+                    await image_viewer_props.update();
                     return;
                 }
                 default: {return;}
@@ -79,16 +88,9 @@ export default function MainPage() {
     }, [file_selected]);
     // because of the way react renders file_selected, the code needs to be moved into a useEffect()
     let open_file = async (file: string) => {
-        console.log(file);
         let file_extension: string = await invoke('gather_type', {file});
         set_file_extension(file_extension);
-        switch (file_extension){
-            case "Text": {
-                set_file_selected(file);
-                return;
-            }
-            default: {return;}
-        }
+        set_file_selected(file);
     }
     const fs_props = file_system(open_file);
     const explorer_app = desktop_app("Files", folder, fs_props);
@@ -110,7 +112,7 @@ export default function MainPage() {
     return (
         <div id='background' onContextMenu={e => {e.preventDefault();}} onClick={() => {if (menu) {set_menu(false)}}}>
             {sudo_props.screen}
-            <Grid  apps={[explorer_app, settings_app, text_app]} gridSize={50} margin={120} />
+            <Grid  apps={[explorer_app, settings_app, text_app, image_app]} gridSize={50} margin={120} />
             <nav className='navbar' onContextMenu={e => e.preventDefault()}>
                 <img className='homeimg' onClick={() => set_menu(!menu)} src={menu_icon} alt="" />
                 <Clock></Clock>
