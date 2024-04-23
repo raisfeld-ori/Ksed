@@ -9,21 +9,20 @@ import text from '../../../assets/pencil-square-icon.svg';
 import arrowleft from '../../../assets/arrowleft.png'
 import './file_system.css';
 
-async function upload_file(update_fs: () => Promise<void>, set_files: React.Dispatch<React.SetStateAction<React.JSX.Element[]>>
-, open_file: (file: string) => Promise<void>, is_selected: React.Dispatch<string>){
+async function upload_file(update_fs: () => Promise<void>){
     let name: string = await invoke('system_get', {key: 'name'});
     let password: string = await invoke('system_get', {key: 'password'});
     let file_selected = await open({});
     if (Array.isArray(file_selected)){
         for (let i = 0; i < file_selected.length;i++){
-            set_files(files => [...files, <File type={FileType.File} name={file_selected[i]} key={files.length + 1} 
-                open_file={open_file} update_fs={update_fs} is_selected={is_selected}/>])
+            await invoke('upload_file', {name, password, file_path: file_selected});
         }
         await update_fs();
     }
     else if (file_selected == null){return;}
     else{
-        make_file(name, password, file_selected, FileType.File);
+        // i should make a window for when upload_file fails, but it's not top priority for now
+        await invoke('upload_file', {name, password, filePath: file_selected});
         await update_fs();
     }
 }
@@ -159,7 +158,7 @@ function file_system(open_file: (file: string) => Promise<void>) : AppInterface{
     <button className='buttoncontextmenu' onClick={() => make_files(FileType.Directory)}>Create Folder</button>
     <button className='buttoncontextmenu' onClick={() => make_files(FileType.File)}>create file</button>
     <button className='buttoncontextmenu' 
-    onClick={async () => await upload_file(update, set_files, open_file, set_selected)}>Upload File</button>
+    onClick={async () => await upload_file(update)}>Upload File</button>
     {selected != '' ?
         <div>
         {/*<button className='buttoncontextmenu' >Rename</button>*/}

@@ -10,9 +10,10 @@ export default function text_viewer(file_selected: string | null) : AppInterface
         if (file_selected == null) {return;}
         let name: string = await invoke('system_get', {key: 'name'});
         let password: string = await invoke('system_get', {key: 'password'});
-        let data: string = await invoke('read_file', {file: file_selected, name, password});
+        let bytes = await invoke('read_file', {name, password,file: file_selected});
         // i'l work on it later, idk what to do here for now
-        console.log(data);
+        if (bytes == null) {return;}
+        let data: string = await invoke('bytes_to_string', {bytes});
         if (data == null) {return;}
         set_text(data);
     }

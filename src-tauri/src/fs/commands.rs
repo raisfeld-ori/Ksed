@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::{Error, Value};
 use std::fs::{read, write};
 use crate::{authenticate_user, bytes_to_string, create_user};
-use crate::fs::encryption::aes_decrypt;
+use crate::fs::encryption::{aes_decrypt, aes_try_decrypt};
 use crate::fs::utilities::get_user_dir;
 use crate::fs::encryption::aes_encrypt;
 
@@ -176,8 +176,6 @@ impl File{
             URL_SAFE);
         let location = location.join(location_name);
         let new_self = File {name: file_name, location};
-        // i have more important things to work on
-        // so just pretend this works with no issue
         let _ = new_self.save(name, password, b"");
         return new_self;
     }
@@ -200,7 +198,8 @@ impl File{
     pub fn read(&self, name: &str, password: &str) -> Option<Vec<u8>> {
         let data = read(self.location.as_path());
         if data.is_err(){return None;}
-        let data = aes_decrypt(name, password, &data.unwrap());
+        let data = data.unwrap();
+        let data = aes_decrypt(name, password, &data);
         return Some(data);
     }
 
