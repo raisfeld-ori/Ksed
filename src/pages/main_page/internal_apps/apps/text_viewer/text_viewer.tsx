@@ -24,6 +24,6 @@ export default function text_viewer(file_selected: string | null) : AppInterface
         <textarea className="inner" readOnly={true} value={text}>
         </textarea>
     </div>
-    let [screen, set_display, fullscreen] = App(html, 'text editor');
+    let [screen, set_display, fullscreen] = App(html, 'text viewer');
     return {screen, set_display, fullscreen, context_menu, update};
 }

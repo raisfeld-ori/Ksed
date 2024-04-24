@@ -2,6 +2,7 @@ use std::fs::read_dir;
 use std::path::PathBuf;
 use dirs::data_dir;
 pub use base64::{decode_config, encode_config, URL_SAFE};
+use serde_json::Value;
 pub use tauri::Runtime;
 use crate::data::auth::{init_dir, Encodable};
 use crate::data::json::init_user_data;
@@ -37,6 +38,19 @@ pub fn bytes_to_string(bytes: Vec<u8>) -> Result<String, ()> {
   else {return Ok(result.unwrap());}
 }
 
+#[tauri::command]
+pub fn image_to_string(bytes: Vec<u8>) -> Result<(String, String), Value> {
+    let reader = image::io::Reader::new(std::io::Cursor::new(bytes));
+    let reader = reader.with_guessed_format();
+    if reader.is_err(){return Err(Value::Null)}
+    let reader = reader.unwrap();
+    let format = reader.format();
+    let result = reader.decode();
+    if result.is_err() || format.is_none() {return Err(Value::Null)}
+    let result = base64::encode(result.unwrap().as_bytes());
+    return Ok((result, format.unwrap().to_mime_type().to_string()));
+}
+
 #[test]
 fn test_general(){
   let name = "test";
@@ -53,7 +67,6 @@ pub fn first_init<R: Runtime>(app: tauri::AppHandle<R>, window: tauri::Window<R>
     unsafe{FS.init_fs()};
     Ok(())
 }
-
 #[tauri::command]
 pub fn console(value: String) {println!("{}", value)}
 #[tauri::command]
