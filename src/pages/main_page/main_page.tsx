@@ -86,7 +86,7 @@ export default function MainPage() {
            match_action();
         }
     }, [file_selected]);
-    // because of the way react renders file_selected, the code needs to be moved into a useEffect()
+    
     let open_file = async (file: string) => {
         let file_extension: string = await invoke('gather_type', {file});
         set_file_extension(file_extension);

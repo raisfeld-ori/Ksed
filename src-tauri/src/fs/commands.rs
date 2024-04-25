@@ -184,10 +184,11 @@ impl File{
         if save.is_err() {return Err(save.unwrap_err());}
         return Ok(());
     }
-    pub fn export(&self, name: &str, password: &str) -> Result<(), std::io::Error>{
+    pub fn export(&self, name: &str, password: &str, location: String) -> Result<(), std::io::Error>{
         let encrypted_content = read(self.location.as_path());
         if encrypted_content.is_err(){return Err(encrypted_content.unwrap_err());}
-        let _decrypted_content = aes_decrypt(name, password, &encrypted_content.unwrap());
+        let decrypted_content = aes_decrypt(name, password, &encrypted_content.unwrap());
+        
         return Ok(());
     }
     pub fn delete(&self) -> Result<(), std::io::Error>{
