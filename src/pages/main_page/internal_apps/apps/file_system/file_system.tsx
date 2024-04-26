@@ -27,6 +27,10 @@ async function upload_file(update_fs: () => Promise<void>){
     }
 }
 
+async function export_file(file: string){
+    
+}
+
 function File(props: {name: string, type: FileType, update_fs: () => Promise<void>, 
     is_selected: Dispatch<string>, open_file: (file: string) => Promise<void>}){
     async function open(){
@@ -165,6 +169,9 @@ function file_system(open_file: (file: string) => Promise<void>) : AppInterface{
         <p className='linecontextmenu'></p>
         <button className='buttoncontextmenu' onClick={async () => {await invoke('rm', {file: selected});await update();}}>
             Delete
+        </button>
+        <button className='buttoncontextmenu' onClick={async () => {await export_file(selected)}}>
+
         </button>
         </div>
         : <div></div>}

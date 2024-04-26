@@ -94,6 +94,9 @@ impl Home{
         self.current_dir = dir.clone();
         self.path.push(dir);
     }
+    pub fn get(&self, name: &str) -> Option<&DirectoryItems>{
+        self.current_dir.files.iter().find(|file| file.name() == name)
+    }
     #[allow(unused)]
     pub fn to_bytes(&self) -> Result<Vec<u8>, Error>{return serde_json::to_vec(self);}
 }
@@ -184,12 +187,13 @@ impl File{
         if save.is_err() {return Err(save.unwrap_err());}
         return Ok(());
     }
-    pub fn export(&self, name: &str, password: &str, location: String) -> Result<(), std::io::Error>{
+    pub fn export(&self, name: &str, password: &str, location: String) -> bool{
         let encrypted_content = read(self.location.as_path());
-        if encrypted_content.is_err(){return Err(encrypted_content.unwrap_err());}
+        if encrypted_content.is_err(){return false;}
         let decrypted_content = aes_decrypt(name, password, &encrypted_content.unwrap());
-        
-        return Ok(());
+        let result = write(location, decrypted_content);
+        if result.is_err(){return true;}
+        return true;
     }
     pub fn delete(&self) -> Result<(), std::io::Error>{
         let _result = fs::remove_file(self.location.as_path());
@@ -206,14 +210,23 @@ impl File{
 }
 
 #[tauri::command]
-pub fn read_file(file: String, name: &str, password: &str) -> Result<Vec<u8>, Value> {
-    let file = unsafe{FS.current_dir.files.iter().find(|other| other.name() == &file)};
+pub fn read_file(file_name: &str, name: &str, password: &str) -> Result<Vec<u8>, Value> {
+    let file = unsafe{FS.get(file_name)};
     if file.is_none() {return Err(Value::Null);}
     let file = file.unwrap().get_file();
     if file.is_none() {return Err(Value::Null);}
     let file  = file.unwrap().read(name, password);
     if file.is_none() {return Err(Value::Null);}
     else{return Ok(file.unwrap())}
+}
+
+#[tauri::command]
+fn export(name: &str, password: &str,file: &str, location: String) -> bool {
+    let item = unsafe{FS.get(file)};
+    if item.is_none() {return false}
+    let item = item.unwrap().get_file();
+    if item.is_none() {return false}
+    item.unwrap().export(name, password, location)
 }
 
 
