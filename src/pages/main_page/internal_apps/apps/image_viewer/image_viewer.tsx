@@ -14,8 +14,22 @@ export default function image_viewer(file_selected: string | null) : AppInterfac
         if (bytes == null) {return;}
         let data: [string, string] = await invoke('image_to_string', {bytes: bytes});
         let data_blob = new Blob([data[0]], {type: data[1]});
-        let url = URL.createObjectURL(data_blob);
-        set_image(url);
+        const reader = new FileReader();
+        reader.onload = (e: ProgressEvent<FileReader>) => {
+            //for some reason, e.target? always returns, even if e.target != null
+            console.log(e.target == null);
+            console.log("before")
+            if (e.target == null) {console.log("aaaaaahhhhh");return;}
+            console.log("after");
+            let result = e.target.result;
+            console.log(result);
+            if (typeof result === "string") {set_image(result);}
+            console.log(image)
+        };
+        reader.onerror = (e) => {
+            console.log("failed to read: ", e);
+        }
+        reader.readAsDataURL(data_blob);
     }
     let context_menu = <div>
 

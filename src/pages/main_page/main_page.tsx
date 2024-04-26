@@ -57,7 +57,6 @@ const Clock = () => {
 export default function MainPage() {
     const navigate = useNavigate();
     const [file_selected, set_file_selected] = useState<string | null>(null);
-    const [file_extension, set_file_extension] = useState('Unknown');
     const sudo_props = sudo('you have been logged out, please log in');
     useEffect(()=>{sudo_props.set_display('none')}, []);
     const text_viewer_props = text_viewer(file_selected);
@@ -67,30 +66,37 @@ export default function MainPage() {
     const settings_props = Settings();
     const settings_app = desktop_app("settings", settings, settings_props);
     useEffect(() => {
-        if (file_selected) {
-           let match_action = async () => {
+        let update = async () => {
+            if (file_selected == null) {return;}
+            let file_extension: string = await invoke('gather_type', {file: file_selected});
             switch (file_extension){
                 case "Text": {
-                    text_viewer_props.set_display('inherit');
                     await text_viewer_props.update();
                     return;
                 }
                 case "Image": {
-                    image_viewer_props.set_display('inherit');
                     await image_viewer_props.update();
                     return;
                 }
                 default: {return;}
             }
-           }
-           match_action();
         }
-    }, [file_selected]);
-    
+        update()
+    }, [file_selected])
     let open_file = async (file: string) => {
-        let file_extension: string = await invoke('gather_type', {file});
-        set_file_extension(file_extension);
         set_file_selected(file);
+        let file_extension: string = await invoke('gather_type', {file});
+        switch (file_extension){
+            case "Text": {
+                text_viewer_props.set_display('inherit');
+                return;
+            }
+            case "Image": {
+                image_viewer_props.set_display('inherit');
+                return;
+            }
+            default: {return;}
+        }
     }
     const fs_props = file_system(open_file);
     const explorer_app = desktop_app("Files", folder, fs_props);

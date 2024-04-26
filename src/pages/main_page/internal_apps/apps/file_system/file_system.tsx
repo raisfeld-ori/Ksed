@@ -2,7 +2,7 @@ import App, {AppInterface} from '../../App';
 import { invoke } from '@tauri-apps/api';
 import { dialog } from '@tauri-apps/api';
 import { useState, useEffect, Dispatch } from 'react';
-import { open } from '@tauri-apps/api/dialog';
+import { open, save } from '@tauri-apps/api/dialog';
 import folder from '../../../assets/folder.png';
 import alpha from '../../../assets/image-solid.svg';
 import text from '../../../assets/pencil-square-icon.svg';
@@ -27,8 +27,18 @@ async function upload_file(update_fs: () => Promise<void>){
     }
 }
 
-async function export_file(file: string){
-    
+async function export_file(file: string, update_fs: () => Promise<void>){
+    let name: string = await invoke('system_get', {key: 'name'});
+    let password: string = await invoke('system_get', {key: 'password'});
+    let location = await save();
+    if (location == null){return;}
+    else{
+        console.log(location);
+        // same as in the function upload_file, i need to make a failsafe window, but it's not top priority
+        await invoke('export_file', {name, password, file, location});
+        await update_fs();
+    }
+
 }
 
 function File(props: {name: string, type: FileType, update_fs: () => Promise<void>, 
@@ -170,8 +180,8 @@ function file_system(open_file: (file: string) => Promise<void>) : AppInterface{
         <button className='buttoncontextmenu' onClick={async () => {await invoke('rm', {file: selected});await update();}}>
             Delete
         </button>
-        <button className='buttoncontextmenu' onClick={async () => {await export_file(selected)}}>
-
+        <button className='buttoncontextmenu' onClick={async () => {await export_file(selected, update)}}>
+            Export
         </button>
         </div>
         : <div></div>}

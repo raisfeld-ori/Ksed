@@ -210,8 +210,8 @@ impl File{
 }
 
 #[tauri::command]
-pub fn read_file(file_name: &str, name: &str, password: &str) -> Result<Vec<u8>, Value> {
-    let file = unsafe{FS.get(file_name)};
+pub fn read_file(file: &str, name: &str, password: &str) -> Result<Vec<u8>, Value> {
+    let file = unsafe{FS.get(file)};
     if file.is_none() {return Err(Value::Null);}
     let file = file.unwrap().get_file();
     if file.is_none() {return Err(Value::Null);}
@@ -221,7 +221,7 @@ pub fn read_file(file_name: &str, name: &str, password: &str) -> Result<Vec<u8>,
 }
 
 #[tauri::command]
-fn export(name: &str, password: &str,file: &str, location: String) -> bool {
+pub fn export_file(name: &str, password: &str,file: &str, location: String) -> bool {
     let item = unsafe{FS.get(file)};
     if item.is_none() {return false}
     let item = item.unwrap().get_file();
@@ -237,7 +237,7 @@ fn test_file_reading(){
     use crate::init_dir;
     let name = "names";
     let password = "passwords";
-    let file = String::from("example_file.txt");
+    let file = "example_file.txt";
     assert!(std::fs::write(&file, "foo, bar").is_ok());
     init_user_data();
     assert!(init_dir().is_ok());
@@ -245,7 +245,7 @@ fn test_file_reading(){
     if !authenticate_user(name, password){
         assert!(create_user(name, password).is_ok());
     }
-    assert!(upload_file(name, password, file.clone()).is_ok());
+    assert!(upload_file(name, password, file.to_string()).is_ok());
     let data = read_file(file, name, password);
     assert!(data.is_ok());
     assert_eq!("foo, bar", bytes_to_string(data.unwrap()).unwrap_or("".to_string()));
