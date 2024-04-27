@@ -1,7 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
-use crate::fs::utilities::*;
-use crate::fs::commands::*;
+use crate::fs::io::*;
+use crate::fs::fs::*;
 use crate::data::json::*;
 use crate::data::auth::*;
 mod fs;

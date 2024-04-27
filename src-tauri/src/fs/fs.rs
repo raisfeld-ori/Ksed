@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::{Error, Value};
 use std::fs::{read, write};
 use crate::fs::encryption::aes_decrypt;
-use crate::fs::utilities::get_user_dir;
+use crate::fs::io::get_user_dir;
 use crate::fs::encryption::aes_encrypt;
 
 pub static mut FS: Home = Home::new();
