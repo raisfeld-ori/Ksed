@@ -76,6 +76,7 @@ pub fn gather_type(file: &str) -> &str {
     match file_extension.unwrap(){
         "png" => {return "Image"}
         "jpg" => {return "Image"}
+        "svg" => {return "Image"}
         "txt" => {return "Text"}
         "html" => {return "HTML"}
         "mp4" => {return "Video"}
