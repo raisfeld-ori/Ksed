@@ -94,7 +94,7 @@ impl Home{
         self.current_dir = dir.clone();
         self.path.push(dir);
     }
-    pub fn get(&self, name: &str) -> Option<&DirectoryItems>{
+    pub fn get_item(&self, name: &str) -> Option<&DirectoryItems>{
         self.current_dir.files.iter().find(|file| file.name() == name)
     }
     #[allow(unused)]
@@ -109,6 +109,15 @@ pub fn mk(name: &str, password: &str, fileName: String) -> Result<(), String> {
     let new_file = File::new(name, password, fileName);
     unsafe{FS.current_dir.files.push(DirectoryItems::File(new_file))};
     Ok(())
+}
+#[tauri::command]
+pub fn rename(file_name: &str, new: String) {
+    for file in unsafe{FS.current_dir.files.iter_mut()}{
+        if file.name() == file_name{
+            file.rename(new);
+            return;
+        }
+    }
 }
 #[tauri::command]
 pub fn rm(file: String) -> Result<(), String>{
@@ -137,6 +146,7 @@ impl Directory{
         });
         return result;
     }
+    pub fn rename(&mut self, new: String){self.name = new;}
     pub fn delete(&self) -> Result<(), std::io::Error>{
         for itm in self.files.iter(){
             itm.remove()?;
@@ -153,6 +163,12 @@ impl DirectoryItems{
         match self{
             Self::Directory(dir) => &dir.name,
             Self::File(file) => &file.name,
+        }
+    }
+    pub fn rename(&mut self, new: String){
+        match self{
+            Self::Directory(dir) => dir.rename(new),
+            Self::File(file) => file.rename(new),
         }
     }
     pub fn remove(&self) -> Result<(), std::io::Error>{
@@ -199,6 +215,7 @@ impl File{
         let _result = fs::remove_file(self.location.as_path());
         return Ok(())
     }
+    pub fn rename(&mut self, new: String){self.name = new;}
     pub fn read(&self, name: &str, password: &str) -> Option<Vec<u8>> {
         let data = read(self.location.as_path());
         if data.is_err(){return None;}
@@ -211,7 +228,7 @@ impl File{
 
 #[tauri::command]
 pub fn read_file(file: &str, name: &str, password: &str) -> Result<Vec<u8>, Value> {
-    let file = unsafe{FS.get(file)};
+    let file = unsafe{FS.get_item(file)};
     if file.is_none() {return Err(Value::Null);}
     let file = file.unwrap().get_file();
     if file.is_none() {return Err(Value::Null);}
@@ -222,7 +239,7 @@ pub fn read_file(file: &str, name: &str, password: &str) -> Result<Vec<u8>, Valu
 
 #[tauri::command]
 pub fn export_file(name: &str, password: &str,file: &str, location: String) -> bool {
-    let item = unsafe{FS.get(file)};
+    let item = unsafe{FS.get_item(file)};
     if item.is_none() {return false}
     let item = item.unwrap().get_file();
     if item.is_none() {return false}

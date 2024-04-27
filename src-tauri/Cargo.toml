@@ -1,5 +1,5 @@
 [package]
-name = "Ksed"
+name = "ksed"
 version = "0.0.0"
 description = "your hidden desktop in windows"
 authors = ["ori raisfeld", "ariel elaski", "aviv segal"]

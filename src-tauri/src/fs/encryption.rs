@@ -96,6 +96,7 @@ fn unpad(data: &[u8]) -> Vec<u8> {
   else{data[..data.len() - *padding_size.unwrap() as usize].to_vec()}
 }
 
+#[allow(dead_code)]
 pub fn xor_encrypt(data: Vec<u8>, key: &[u8]) -> Vec<u8>{
   let mut encrypted = Vec::new();
 

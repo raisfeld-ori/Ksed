@@ -33,7 +33,6 @@ async function export_file(file: string, update_fs: () => Promise<void>){
     let location = await save();
     if (location == null){return;}
     else{
-        console.log(location);
         // same as in the function upload_file, i need to make a failsafe window, but it's not top priority
         await invoke('export_file', {name, password, file, location});
         await update_fs();
@@ -41,8 +40,8 @@ async function export_file(file: string, update_fs: () => Promise<void>){
 
 }
 
-function File(props: {name: string, type: FileType, update_fs: () => Promise<void>, 
-    is_selected: Dispatch<string>, open_file: (file: string) => Promise<void>}){
+function File(props: {name: string, type: FileType, update_fs: () => Promise<void>,  i: number
+    is_selected: Dispatch<string>, index_selected: Dispatch<string>, open_file: (file: string) => Promise<void>}){
     async function open(){
         if (props.type == FileType.Directory){
             await invoke('cd', {new: props.name});
@@ -64,14 +63,14 @@ function File(props: {name: string, type: FileType, update_fs: () => Promise<voi
     }, [props.name]);
     if (props.name.length > 10){
         return <div className='file' onDoubleClick={open}
-        onContextMenu={() => props.is_selected(props.name)}>
+        onContextMenu={() => {props.is_selected(props.name);props.index_selected(props.i.toString())}}>
         <img src={props.type == FileType.File ? file_extension: folder} className='file_img'/><br />
         <p className='file_name'>{props.name.slice(0, 7) + '...'}</p>
         </div>;
     }
     else{
     return <div className='file' onDoubleClick={open} 
-    onContextMenu={() => props.is_selected(props.name)}>
+    onContextMenu={() => {props.is_selected(props.name);props.index_selected(props.i.toString())}}>
     <img src={props.type == FileType.File ? file_extension: folder} className='file_img'/><br />
     <p className='file_name'>{props.name}</p>
     </div>;
@@ -103,6 +102,8 @@ export const FileExtension = (val: string) => {
 function file_system(open_file: (file: string) => Promise<void>) : AppInterface{
     const [location, set_location] = useState("Home");
     const [selected, set_selected] = useState('');
+    const [selected_index, set_selected_index] = useState('');
+    const [file, set_file] = useState<JSX.Element>(<div></div>);
     const [files, set_files] = useState<React.JSX.Element[]>([]);
     const [{dx, dy}, set_positions] = useState({dx: 0, dy: 0});
     const [ctx_display, set_ctx_display] = useState('none');
@@ -112,8 +113,8 @@ function file_system(open_file: (file: string) => Promise<void>) : AppInterface{
         let files_divs = [];
         for (let i = 0;i < files.length;i++){
             let file_type = (files[i][1] == 'File') ? FileType.File : FileType.Directory;
-            files_divs.push(<File name={files[i][0]} key={i} type={file_type} 
-                update_fs={update} is_selected={set_selected}open_file={open_file}/>);
+            files_divs.push(<File name={files[i][0]} key={i} type={file_type} index_selected={set_selected_index}
+                update_fs={update} is_selected={set_selected}open_file={open_file} i={i}/>);
         }
         set_files(files_divs);
         set_location(pwd);
@@ -161,6 +162,42 @@ function file_system(open_file: (file: string) => Promise<void>) : AppInterface{
         }
         set_files([...files, <NewFile key={files.length + 1}/>]);
     }
+    const rename = async () => {
+        let new_files = files.filter((file) => {
+            if (file.key == selected_index){set_file(file);}
+            return file.key != selected_index
+        });
+        set_files(new_files);
+        const NewFile = () =>{
+            const [editing, set_editing] = useState('inherit');
+            const [text, set_text] = useState('');
+            let [icon, set_icon] = useState(file.props.type == FileType.Directory ? folder : alpha);
+            const done_editing = async (e: any) => {
+                e.preventDefault();
+                set_editing('none');
+                if (text == ''){await update();return;}
+                if (await invoke('file_exists', {fileName: text})){
+                    let sure = await dialog.confirm('a file with this name already exists, are you sure you want to delete it?');
+                    if (sure){await invoke('rm', {file: text});}
+                    else {await update();return;}
+                }
+                await invoke('rename', {fileName: selected, new: text});
+                await update();
+            }
+            const set_new_icon = async (text: string) => {
+                if (file.props.type == FileType.Directory) {return;}
+                let new_icon: string = await invoke('gather_type', {file: text});
+                set_icon(FileExtension(new_icon));
+            }
+            return <div className='file' style={{display: editing}}>
+            <img src={icon} className='file_img2'/><br />
+            <input className='editing' onBlur={done_editing} 
+            onChange={async e => {set_text(e.target.value);set_new_icon(e.target.value);}}
+            onKeyDownCapture={e => {if (e.key == 'Enter'){set_editing('none');}}} autoFocus></input>
+        </div>
+        }
+        set_files([...new_files, <NewFile key={files.length + 1}/>]);
+    }
     let context_menu = 
     <div className='ContextMenu'
     style={{
@@ -175,10 +212,12 @@ function file_system(open_file: (file: string) => Promise<void>) : AppInterface{
     onClick={async () => await upload_file(update)}>Upload File</button>
     {selected != '' ?
         <div>
-        {/*<button className='buttoncontextmenu' >Rename</button>*/}
         <p className='linecontextmenu'></p>
         <button className='buttoncontextmenu' onClick={async () => {await invoke('rm', {file: selected});await update();}}>
             Delete
+        </button>
+        <button className='buttoncontextmenu' onClick={rename}>
+            Rename
         </button>
         <button className='buttoncontextmenu' onClick={async () => {await export_file(selected, update)}}>
             Export

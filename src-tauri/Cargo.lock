@@ -3,23 +3,6 @@
 version = 3
 
 [[package]]
-name = "Ksed"
-version = "0.0.0"
-dependencies = [
- "base64 0.13.1",
- "dirs",
- "embed-resource",
- "image",
- "once_cell",
- "rust-crypto",
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
- "tauri-winres",
-]
-
-[[package]]
 name = "addr2line"
 version = "0.21.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1492,6 +1475,23 @@ dependencies = [
  "serde_json",
  "thiserror",
  "treediff",
+]
+
+[[package]]
+name = "ksed"
+version = "0.0.0"
+dependencies = [
+ "base64 0.13.1",
+ "dirs",
+ "embed-resource",
+ "image",
+ "once_cell",
+ "rust-crypto",
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+ "tauri-winres",
 ]
 
 [[package]]
