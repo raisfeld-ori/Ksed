@@ -8,6 +8,8 @@ import alpha from '../../../assets/image-solid.svg';
 import text from '../../../assets/pencil-square-icon.svg';
 import arrowleft from '../../../assets/arrowleft.png';
 import html from '../../../assets/web-page-source-code-icon.svg';
+import video from '../../../assets/camera-roll-icon.svg';
+import idk from '../../../assets/query-what-how-why-icon.svg';
 import './file_system.css';
 
 async function upload_file(update_fs: () => Promise<void>){
@@ -22,9 +24,8 @@ async function upload_file(update_fs: () => Promise<void>){
     }
     else if (file_selected == null){return;}
     else{
-        // i should make a window for when upload_file fails, but it's not top priority for now
-        await invoke('upload_file', {name, password, filePath: file_selected});
-        await update_fs();
+        invoke('upload_file', {name, password, filePath: file_selected})
+        .finally(async () => {await update_fs();});
     }
 }
 
@@ -90,13 +91,13 @@ async function make_file(name: string, password: string, file: string, type: Fil
 
 export const FileExtension = (val: string) => {
     switch (val){
-        case "Video": return ""
+        case "Video": return video
         case "Image": return alpha
         case "Text": return text
         case "HTML": return html
-        case "Unknown": return ""
-        case "Audio": return ""
-        default: return ""
+        case "Unknown": return idk
+        case "Audio": return video
+        default: return idk
     }
 }
 

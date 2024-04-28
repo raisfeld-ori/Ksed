@@ -19,6 +19,8 @@ import image_viewer from './internal_apps/apps/image_viewer/image_viewer';
 import image_icon from './assets/image-icon.svg';
 import html_viewer from './internal_apps/apps/html_viewer/html_viewer';
 import html_icon from './assets/web-page-source-code-icon.svg';
+import video_viewer from './internal_apps/apps/video_viewer/vide_viewer';
+import video_icon from './assets/camera-roll-icon.svg';
 
 function BinIcon(props: {display: () => Promise<void>, name: string, img: string}){
     return   <div className='appsmenu'onClick={props.display}>
@@ -62,11 +64,9 @@ export default function MainPage() {
     const sudo_props = sudo('you have been logged out, please log in');
     useEffect(()=>{sudo_props.set_display('none')}, []);
     const text_viewer_props = text_viewer(file_selected);
-    const text_app = desktop_app("text viewer", text_icon, text_viewer_props);
     const image_viewer_props = image_viewer(file_selected);
-    const image_app = desktop_app('image viewer', image_icon, image_viewer_props);
     const html_viewer_props = html_viewer(file_selected);
-    const html_app = desktop_app("html viewer", html_icon, html_viewer_props);
+    const video_viewer_props = video_viewer(file_selected);
     const settings_props = Settings();
     const settings_app = desktop_app("settings", settings, settings_props);
     useEffect(() => {
@@ -107,6 +107,10 @@ export default function MainPage() {
                 html_viewer_props.set_display('inherit');
                 return;
             }
+            case "Video": {
+                video_viewer_props.set_display('inherit');
+                return;
+            }
             default: {return;}
         }
     }
@@ -130,8 +134,7 @@ export default function MainPage() {
     return (
         <div id='background' onContextMenu={e => {e.preventDefault();}} onClick={() => {if (menu) {set_menu(false)}}}>
             {sudo_props.screen}
-            <Grid  apps={[explorer_app, settings_app, html_app,
-                text_app, image_app]} gridSize={50} margin={120} />
+            <Grid  apps={[explorer_app, settings_app]} gridSize={50} margin={120} />
             <nav className='navbar' onContextMenu={e => e.preventDefault()}>
                 <img className='homeimg' onClick={() => set_menu(!menu)} src={menu_icon} alt="" />
                 <Clock></Clock>
@@ -151,8 +154,15 @@ export default function MainPage() {
                 <p className='hiddenclose'>Exit 😭​</p>
                 
                 <BinIcon display={async () => {fs_props.update();fs_props.set_display('inherit');}} 
-                name='Files' img={folder}></BinIcon>
-
+                name='Files' img={folder} />
+                <BinIcon display={async () => {text_viewer_props.set_display('inherit')}}
+                name='text viewer' img={text_icon}/>
+                <BinIcon display={async () => {html_viewer_props.set_display('inherit')}}
+                name='html viewer' img={html_icon}/>
+                <BinIcon display={async () => {video_viewer_props.set_display('inherit')}}
+                name='video viewer' img={video_icon}/>
+                <BinIcon display={async () => {image_viewer_props.set_display('inherit')}}
+                name='image viewer' img={image_icon}/>
             </div>
             <video className='hakari' src={ibetonhakari} width="100%" height="100%" autoPlay muted loop>
     Your browser does not support the video tag
