@@ -6,7 +6,8 @@ import { open, save } from '@tauri-apps/api/dialog';
 import folder from '../../../assets/folder.png';
 import alpha from '../../../assets/image-solid.svg';
 import text from '../../../assets/pencil-square-icon.svg';
-import arrowleft from '../../../assets/arrowleft.png'
+import arrowleft from '../../../assets/arrowleft.png';
+import html from '../../../assets/web-page-source-code-icon.svg';
 import './file_system.css';
 
 async function upload_file(update_fs: () => Promise<void>){
@@ -92,7 +93,7 @@ export const FileExtension = (val: string) => {
         case "Video": return ""
         case "Image": return alpha
         case "Text": return text
-        case "HTML": return ""
+        case "HTML": return html
         case "Unknown": return ""
         case "Audio": return ""
         default: return ""
