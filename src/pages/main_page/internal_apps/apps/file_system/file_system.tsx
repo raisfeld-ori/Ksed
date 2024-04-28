@@ -10,22 +10,27 @@ import arrowleft from '../../../assets/arrowleft.png';
 import html from '../../../assets/web-page-source-code-icon.svg';
 import video from '../../../assets/camera-roll-icon.svg';
 import idk from '../../../assets/query-what-how-why-icon.svg';
+import { NotificationData, NotificationType } from '../../notification';
 import './file_system.css';
 
-async function upload_file(update_fs: () => Promise<void>){
+async function upload_file(update_fs: () => Promise<void>, notify: (data: NotificationData) => void){
     let name: string = await invoke('system_get', {key: 'name'});
     let password: string = await invoke('system_get', {key: 'password'});
     let file_selected = await open({});
     if (Array.isArray(file_selected)){
         for (let i = 0; i < file_selected.length;i++){
-            await invoke('upload_file', {name, password, file_path: file_selected});
+            notify({type: NotificationType.Loading, name: 'files', text: `starting to upload file ${file_selected[i]}`});
+            await invoke('upload_file', {name, password, file_path: file_selected[i]});
+            notify({type: NotificationType.Success, name: 'files', text: `finished uploading file ${file_selected[i]}`});
         }
         await update_fs();
     }
     else if (file_selected == null){return;}
     else{
+        notify({type: NotificationType.Loading, name: 'files', text: `starting to upload file ${file_selected}`});
         invoke('upload_file', {name, password, filePath: file_selected})
         .finally(async () => {await update_fs();});
+        notify({type: NotificationType.Success, name: 'files', text: `finished uploading file ${file_selected}`});
     }
 }
 
@@ -101,7 +106,7 @@ export const FileExtension = (val: string) => {
     }
 }
 
-function file_system(open_file: (file: string) => Promise<void>) : AppInterface{
+function file_system(open_file: (file: string) => Promise<void>, notify: (data: NotificationData) => void) : AppInterface{
     const [location, set_location] = useState("Home");
     const [selected, set_selected] = useState('');
     const [selected_index, set_selected_index] = useState('');
@@ -211,7 +216,7 @@ function file_system(open_file: (file: string) => Promise<void>) : AppInterface{
     <button className='buttoncontextmenu' onClick={() => make_files(FileType.Directory)}>Create Folder</button>
     <button className='buttoncontextmenu' onClick={() => make_files(FileType.File)}>create file</button>
     <button className='buttoncontextmenu' 
-    onClick={async () => await upload_file(update)}>Upload File</button>
+    onClick={async () => await upload_file(update, notify)}>Upload File</button>
     {selected != '' ?
         <div>
         <p className='linecontextmenu'></p>

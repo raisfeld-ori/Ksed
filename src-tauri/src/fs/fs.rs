@@ -39,7 +39,7 @@ pub fn ls() -> Vec<(String, String)> {
         DirectoryItems::File(file) => (file.name.clone(), String::from("File"))
     }).collect::<Vec<(String, String)>>()}
 }
-#[tauri::command]
+#[tauri::command(async)]
 pub fn upload_file(name: &str, password: &str, file_path: String) -> Result<(), String> {
     let data = read(file_path.clone());
     if data.is_err() {return Err(String::from("failed to read the uploaded file"));}
@@ -119,7 +119,7 @@ pub fn rename(file_name: &str, new: String) {
         }
     }
 }
-#[tauri::command]
+#[tauri::command(async)]
 pub fn rm(file: String) -> Result<(), String>{
     let result = unsafe{FS.current_dir.delete_item(file)};
     if result.is_err() {Err(result.unwrap_err().to_string())}
@@ -226,7 +226,7 @@ impl File{
 
 }
 
-#[tauri::command]
+#[tauri::command(async)]
 pub fn read_file(file: &str, name: &str, password: &str) -> Result<Vec<u8>, Value> {
     let file = unsafe{FS.get_item(file)};
     if file.is_none() {return Err(Value::Null);}
@@ -237,7 +237,7 @@ pub fn read_file(file: &str, name: &str, password: &str) -> Result<Vec<u8>, Valu
     else{return Ok(file.unwrap())}
 }
 
-#[tauri::command]
+#[tauri::command(async)]
 pub fn export_file(name: &str, password: &str,file: &str, location: String) -> bool {
     let item = unsafe{FS.get_item(file)};
     if item.is_none() {return false}

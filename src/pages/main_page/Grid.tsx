@@ -18,12 +18,13 @@ function Grid(props: {apps: ((dx: number, dy: number, draggableRef: (nodeEle: an
 }
 export default Grid;
 
-export function desktop_app(name: string, image: string, app: AppInterface){
+export function desktop_app(name: string, image: string, app: AppInterface, visible: boolean){
     useEffect(() => {app.set_display('none');}, [])
   return function MakeApp(dx: number, dy: number, ref: ((nodeEle: any) => void)){
   return <div   key={name}>
     {app.context_menu}
     {app.screen}
+    {visible ?
     <div className="draggable"
   ref={ref}
   style={{
@@ -32,7 +33,8 @@ export function desktop_app(name: string, image: string, app: AppInterface){
     onDoubleClick={() => {app.update();app.set_display('inherit');}}>
       <img src={image} alt={name} className="icon" />
       <p className="name">{name}</p>
-  </div>
+  </div> : <div></div>
+  }
     </div>}
 }
 

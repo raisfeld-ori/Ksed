@@ -16,6 +16,7 @@ export interface AppInterface{
     fullscreen: (active: boolean) => void,
 }
 
+
 function App(element: JSX.Element, name: string): [JSX.Element, React.Dispatch<React.SetStateAction<string>>, (active: boolean) => void] {
     const [display, set_display] = useState('inherit');
     let [ref, dx, dy] = useDraggable({ gridSize: 10 });

@@ -1,0 +1,22 @@
+.handler{
+    position: absolute;
+    display: flex;
+    height: 90svh;
+    width: 30svw;
+    right: 0;
+    top: 3svh;
+    flex-direction: column-reverse;
+}
+
+
+.notification{
+    width: inherit;
+    height: 30svh;
+    background-color: #2f2f2f;
+    border-radius: 50px;
+}
+
+.image{
+    margin-top: 10px;
+    height: 2em;
+}

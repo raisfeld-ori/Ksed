@@ -21,6 +21,7 @@ import html_viewer from './internal_apps/apps/html_viewer/html_viewer';
 import html_icon from './assets/web-page-source-code-icon.svg';
 import video_viewer from './internal_apps/apps/video_viewer/vide_viewer';
 import video_icon from './assets/camera-roll-icon.svg';
+import NotificationSystem from './internal_apps/notification';
 
 function BinIcon(props: {display: () => Promise<void>, name: string, img: string}){
     return   <div className='appsmenu'onClick={props.display}>
@@ -60,15 +61,20 @@ const Clock = () => {
 
 export default function MainPage() {
     const navigate = useNavigate();
+    const notifications = NotificationSystem();
     const [file_selected, set_file_selected] = useState<string | null>(null);
     const sudo_props = sudo('you have been logged out, please log in');
-    useEffect(()=>{sudo_props.set_display('none')}, []);
+    const sudo_app = desktop_app('sudo', '', sudo_props, false);
     const text_viewer_props = text_viewer(file_selected);
+    const text_viewer_app = desktop_app('text viewer', '', text_viewer_props, false);
     const image_viewer_props = image_viewer(file_selected);
+    const image_viewer_app = desktop_app('image viewer', '', image_viewer_props, false);
     const html_viewer_props = html_viewer(file_selected);
+    const html_viewer_app = desktop_app('html viewer', '', html_viewer_props, false);
     const video_viewer_props = video_viewer(file_selected);
+    const video_viewer_app = desktop_app('video viewer', '', video_viewer_props, false);
     const settings_props = Settings();
-    const settings_app = desktop_app("settings", settings, settings_props);
+    const settings_app = desktop_app("settings", settings, settings_props, true);
     useEffect(() => {
         let update = async () => {
             if (file_selected == null) {return;}
@@ -114,8 +120,8 @@ export default function MainPage() {
             default: {return;}
         }
     }
-    const fs_props = file_system(open_file);
-    const explorer_app = desktop_app("Files", folder, fs_props);
+    const fs_props = file_system(open_file, notifications.new_notification);
+    const explorer_app = desktop_app("Files", folder, fs_props, true);
     const [menu, set_menu] = useState(false);
     useEffect(() => {
         fs_props.update();
@@ -133,8 +139,10 @@ export default function MainPage() {
       }, []);
     return (
         <div id='background' onContextMenu={e => {e.preventDefault();}} onClick={() => {if (menu) {set_menu(false)}}}>
-            {sudo_props.screen}
-            <Grid  apps={[explorer_app, settings_app]} gridSize={50} margin={120} />
+            {notifications.html}
+            <Grid  apps={[explorer_app, settings_app, sudo_app, text_viewer_app, image_viewer_app,
+    html_viewer_app, video_viewer_app,
+            ]} gridSize={50} margin={120} />
             <nav className='navbar' onContextMenu={e => e.preventDefault()}>
                 <img className='homeimg' onClick={() => set_menu(!menu)} src={menu_icon} alt="" />
                 <Clock></Clock>

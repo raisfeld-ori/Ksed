@@ -20,7 +20,6 @@ export default function text_viewer(file_selected: string | null) : AppInterface
 
     </div>
     let html = <div className="outer">
-        {/*for now, this is readonly, cause it would take a while to remake this as a text editor*/}
         <textarea className="inner" readOnly={true} value={text}>
         </textarea>
     </div>
