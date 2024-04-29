@@ -29,7 +29,10 @@ export default function NotificationSystem(){
             <h1 className='head'>{data.name}</h1>
             <p className='description'>{data.text}</p>
         </div>
-        set_notifications([<div></div>]);
+        const done = setTimeout(() => {
+            set_notifications(notifications.filter((other) => {return other != notification}));
+            clearTimeout(done);
+        }, 5000);
         set_notifications([...notifications, notification]);
     }
     let html = <div className="handler">

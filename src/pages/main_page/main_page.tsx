@@ -79,6 +79,7 @@ export default function MainPage() {
         let update = async () => {
             if (file_selected == null) {return;}
             let file_extension: string = await invoke('gather_type', {file: file_selected});
+            console.log(file_extension);
             switch (file_extension){
                 case "Text": {
                     await text_viewer_props.update();

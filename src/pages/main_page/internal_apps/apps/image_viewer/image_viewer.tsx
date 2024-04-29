@@ -12,8 +12,8 @@ export default function image_viewer(file_selected: string | null) : AppInterfac
         let password: string = await invoke('system_get', {key: 'password'});
         let bytes = await invoke('read_file', {name, password,file: file_selected});
         if (bytes == null) {return;}
-        // let data: [string, string] = await invoke('image_to_string', {bytes: bytes});
-        set_image(`${bytes}`);
+        let data: [string, string] = await invoke('image_to_string', {bytes: bytes});
+        set_image(`data:${data[1]};base64, ${data[0]}`);
     }
     useEffect(() => {console.log(image)}, [image]);
     let context_menu = <div>
