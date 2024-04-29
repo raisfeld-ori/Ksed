@@ -147,7 +147,9 @@ function file_system(open_file: (file: string) => Promise<void>, notify: (data: 
                 if (text == ''){return;}
                 if (await invoke('file_exists', {fileName: text})){
                     let sure = await dialog.confirm('a file with this name already exists, are you sure you want to delete it?');
-                    if (sure){await invoke('rm', {file: text});}
+                    if (sure){await invoke('rm', {file: text});
+                    notify({type: NotificationType.Success, name: 'files', 
+                    text: `successfully deleted the file ${text}!`})}
                     else {return;}
                 }
                 let name: string = await invoke('system_get', {key: 'name'});
@@ -185,7 +187,8 @@ function file_system(open_file: (file: string) => Promise<void>, notify: (data: 
                 if (text == ''){await update();return;}
                 if (await invoke('file_exists', {fileName: text})){
                     let sure = await dialog.confirm('a file with this name already exists, are you sure you want to delete it?');
-                    if (sure){await invoke('rm', {file: text});}
+                    if (sure){await invoke('rm', {file: text});notify({type: NotificationType.Success, name: 'files', 
+                    text: `successfully deleted the file ${text}!`})}
                     else {await update();return;}
                 }
                 await invoke('rename', {fileName: selected, new: text});
@@ -220,7 +223,9 @@ function file_system(open_file: (file: string) => Promise<void>, notify: (data: 
     {selected != '' ?
         <div>
         <p className='linecontextmenu'></p>
-        <button className='buttoncontextmenu' onClick={async () => {await invoke('rm', {file: selected});await update();}}>
+        <button className='buttoncontextmenu' onClick={async () => {await invoke('rm', {file: selected});
+        await update();notify({type: NotificationType.Success, name: 'files', 
+        text: `successfully deleted the file ${selected}!`})}}>
             Delete
         </button>
         <button className='buttoncontextmenu' onClick={rename}>

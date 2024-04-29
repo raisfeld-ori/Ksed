@@ -23,14 +23,16 @@ export interface NotificationData{
 
 export default function NotificationSystem(){
     const [notifications, set_notifications] = useState<JSX.Element[]>([]);
+    const [key, set_key] = useState(0);
     const new_notification = (data: NotificationData) => {
-        let notification = <div className='notification' key={data.text}>
+        let notification = <div className='notification' key={key}>
             <img className='image' src={notification_icon(data.type)}/>
             <h1 className='head'>{data.name}</h1>
             <p className='description'>{data.text}</p>
         </div>
+        set_key(key + 1);
         const done = setTimeout(() => {
-            set_notifications(notifications.filter((other) => {return other != notification}));
+            set_notifications(notifications.filter((other) => {return other.key != notification.key}));
             clearTimeout(done);
         }, 5000);
         set_notifications([...notifications, notification]);
