@@ -46,11 +46,14 @@ pub fn upload_file(name: &str, password: &str, file_path: String) -> Result<(), 
     let path = PathBuf::from(file_path);
     let file_name = path.file_name().unwrap().to_str().unwrap().to_string();
     let new_file = File::new(name, password,file_name);
+    if unsafe{FS.current_dir.files.iter().any(|other_file| {other_file.name() == &new_file.name})} {
+        return Err(String::from("a file with this name already exists"));
+    }
     let result = new_file.save(name, password, &data.unwrap());
     if result.is_err(){return Err(result.unwrap_err().to_string())}
     unsafe{FS.current_dir.files.push(DirectoryItems::File(new_file))};
 
-  return Ok(());
+    return Ok(());
 }
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]

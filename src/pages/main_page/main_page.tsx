@@ -135,7 +135,7 @@ export default function MainPage() {
             const authenticated = await invoke('authenticate_user', {name, password});
             if (!authenticated) {sudo_props.set_display('inherit');sudo_props.fullscreen(true);return}
             else {sudo_props.set_display('none');sudo_props.fullscreen(false);}
-        }, 1000);
+        }, 0);
         return () => clearInterval(interval);
       }, []);
     return (
