@@ -1,0 +1,44 @@
+.outer{
+    display: flex;
+}
+
+.category-inner{
+    display: block;
+    width: 90%;
+    overflow-y:scroll;
+}
+
+.categories{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: inherit;
+    overflow-x: hidden;
+}
+
+.category-head{
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.category{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.category:hover{
+    background-color: rgba(0, 0, 0, 0.638);
+}
+
+.category > * {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.end {
+    float: right;
+}
+
+.icon{
+    height: 2svw;
+}
