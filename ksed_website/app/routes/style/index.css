@@ -342,6 +342,8 @@ user-select: none;
     font-size: 4em;
     margin-bottom: 5svh;
     color: #134676;
+    text-shadow: 0px 5px 5px rgba(0, 0, 0, 0.603);
+
 }
 
 .whatis:hover {
@@ -384,5 +386,10 @@ user-select: none;
   .explanation{
     text-align: center;
     font-size: 0.9em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
     
   }
