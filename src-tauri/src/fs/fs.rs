@@ -45,6 +45,18 @@ pub fn upload_file(name: &str, password: &str, file_path: String) -> Result<(), 
     if data.is_err() {return Err(String::from("failed to read the uploaded file"));}
     let path = PathBuf::from(file_path);
     let file_name = path.file_name().unwrap().to_str().unwrap().to_string();
+    let existing_file_names: Vec<&String> = unsafe{FS.current_dir.files.iter()}
+    .map(|file|{return file.name();}).collect();
+    fn unique_file_name(name: String, all_names: Vec<&String>, num: i32) -> String{
+        if (all_names.contains(&&name)){
+            let num = num + 1;
+            let name = name + num.to_string().as_str();
+            return unique_file_name(name, all_names, num);
+        }
+        else {return name;}
+    }
+    let num = 1;
+    let file_name = unique_file_name(file_name, existing_file_names, num);
     let new_file = File::new(name, password,file_name);
     if unsafe{FS.current_dir.files.iter().any(|other_file| {other_file.name() == &new_file.name})} {
         return Err(String::from("a file with this name already exists"));
