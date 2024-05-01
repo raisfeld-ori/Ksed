@@ -3,6 +3,7 @@ import welcome from './assets/house-icon.svg';
 import volume from './assets/megaphone-icon.svg';
 import messages from './assets/bell-silent-line-icon.svg';
 import about from './assets/info-circle-icon.svg';
+import background from './assets/image-icon.svg';
 import './settings.css';
 import { useState } from "react";
 import CategoryPage from "./actions";
@@ -32,6 +33,7 @@ export default function Settings() : AppInterface{
             <Category name="Welcome" icon={welcome} set_page={set_page}></Category>
             <Category name="About" icon={about} set_page={set_page}></Category>
             <CategoryHead title="workspace"></CategoryHead>
+            <Category name="Background" icon={background} set_page={set_page}></Category>
             <Category name="Volume" icon={volume} set_page={set_page}></Category>
             <Category name="messages" icon={messages} set_page={set_page}></Category>
         </div>

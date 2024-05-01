@@ -10,7 +10,7 @@ import { desktop_app } from './Grid';
 import leaveicon from './assets/leave.png';
 import { useLocation, useNavigate } from 'react-router-dom';
 import exit from './assets/exit.png';
-import { invoke } from '@tauri-apps/api';
+import { invoke, notification } from '@tauri-apps/api';
 import Settings from './internal_apps/apps/settings/settings';
 import sudo from './internal_apps/apps/sudo/sudo';
 import text_viewer from './internal_apps/apps/text_viewer/text_viewer';
@@ -123,6 +123,7 @@ export default function MainPage() {
     }
     const fs_props = file_system(open_file, notifications.new_notification);
     const explorer_app = desktop_app("Files", folder, fs_props, true);
+
     const [menu, set_menu] = useState(false);
     useEffect(() => {
         fs_props.update();
