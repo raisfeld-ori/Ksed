@@ -24,8 +24,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <input type="radio" name="slider" id="close-btn" />
         <ul className="nav-links">
           <label htmlFor="close-btn" className="btn close-btn"><i className="fas fa-times"></i></label>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
           <li>
             <a href="#" className="desktop-item">Purchases</a>
             <input type="checkbox" id="showDrop" />

@@ -1,7 +1,7 @@
 use crate::dir;
 use crate::fs::encryption::{aes_encrypt, aes_decrypt, aes_try_decrypt};
 use crate::data::json;
-use crate::fs::commands::{FS};
+use crate::fs::fs::{FS};
 use std::fs::{create_dir, read_dir, read, File};
 use std::io::{Read, Write};
 #[cfg(target_os = "windows")]

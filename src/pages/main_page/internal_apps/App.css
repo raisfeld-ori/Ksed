@@ -1,26 +1,20 @@
 .frametest {
-    position: relative;
-    display: block;
+    position:absolute;
     border-top: 1px #02020200;
     border-left: 2px #0202022f;
     border-right: 2px #0202022f;
     border-bottom: 1px #02020200;
     border-style: solid;
     z-index: 99;
-    padding-left: 373px;
     cursor: move;
     font-size: 0.5em;
-    color: white    ;
-    width: 873px;
+    color: white;
     max-width: 100%;
-    display: flex;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 3fr 0.1fr 0.1fr 0.1fr;
     height: 37px;
     background-color: #2f2f2f;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-
-    
+    transition: all 0.1 ease-in-out;
 }
 
 .frame{
@@ -36,10 +30,10 @@ border-radius: 20px;
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     background-color: #333333d3;
-    height: 50svh;    
 }
 
 .frametext2{
+    white-space: nowrap;
     color: white;
     margin-top: .3svh;
     font-weight: normal;
@@ -51,11 +45,11 @@ border-radius: 20px;
     width: 100%;
 }
 
-.minimize-btn, .close-btn {
+.minimize-btn, .close-btn, .fullscreen-btn {
     background-color: #00000000;
     color: white;
     border-radius: 10px;
-    padding: 0.1px 10px;
+    padding: 0.1px 9px;
     margin-top: 0px;
     text-align: center;
     text-decoration: none;
@@ -64,8 +58,22 @@ border-radius: 20px;
     cursor: pointer;
 }
 
-.minimize-btn {
-    padding-left: 350px;
+.background {
+    position: absolute;
+    display: block;
+    cursor:context-menu;
+    font-size: 1em;
+    color: white;
+    max-width: 100%;
+    display: flex;
+    align-items: flex-start;
+    z-index: 1;
+    background-color: #333333df; 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    user-select: none;
+    margin-top: 37px;
+
 }
 
 .test{

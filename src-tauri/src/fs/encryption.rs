@@ -57,9 +57,7 @@ pub fn aes_decrypt(username: &str, password: &str, data: &[u8]) -> Vec<u8> {
             Err(e) => println!("{:?}", e),
         }
     }
-
     final_result.extend(write_buffer.take_read_buffer().take_remaining());
-
     return unpad(&final_result)
 }
 
@@ -98,6 +96,7 @@ fn unpad(data: &[u8]) -> Vec<u8> {
   else{data[..data.len() - *padding_size.unwrap() as usize].to_vec()}
 }
 
+#[allow(dead_code)]
 pub fn xor_encrypt(data: Vec<u8>, key: &[u8]) -> Vec<u8>{
   let mut encrypted = Vec::new();
 

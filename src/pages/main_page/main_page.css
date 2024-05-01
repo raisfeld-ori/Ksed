@@ -10,7 +10,7 @@
   color: white;
 }
 .navbar {
-  background-color: #3333338b;
+  background-color: #333333a9;
   overflow: hidden;
   display: flex;
   flex-flow: row wrap;
@@ -21,6 +21,7 @@
   backdrop-filter: blur(50px);
   -webkit-backdrop-filter: blur(50px);
   width: 100%;
+  height: 7svh;
  }
 
 .navbar *{
@@ -173,7 +174,7 @@ color: white;
 }
 
 .show{
-  
+  bottom: 7svh;
 }
 
 .leave {
