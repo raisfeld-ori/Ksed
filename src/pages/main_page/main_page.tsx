@@ -10,7 +10,7 @@ import { desktop_app } from './Grid';
 import leaveicon from './assets/leave.png';
 import { useLocation, useNavigate } from 'react-router-dom';
 import exit from './assets/exit.png';
-import { invoke, notification } from '@tauri-apps/api';
+import { invoke } from '@tauri-apps/api';
 import Settings from './internal_apps/apps/settings/settings';
 import sudo from './internal_apps/apps/sudo/sudo';
 import text_viewer from './internal_apps/apps/text_viewer/text_viewer';
