@@ -99,11 +99,11 @@ export default function Index() {
         </div>
       </div>
       <div className="column" style={{justifyContent: "unset"}}>
+      <div className="exception"><h1 id="whatis" className="pop">What is Ksed?</h1></div>
        <div id="text0"className="ilegaltext left">Secure</div>
         <div id="text1"className="ilegaltext right">Beautiful</div>
         <div id="text2"className="ilegaltext left">Easy to use</div>
         <div id="text3"className="ilegaltext right">Safe</div>
-        <div className="exception"><h1 id="whatis" className="pop">that, is what ksed is about</h1></div>
       </div>
       <div className="square">
       <div className="squareinsquare">
