@@ -48,12 +48,13 @@ pub fn upload_file(name: &str, password: &str, file_path: String) -> Result<(), 
     let existing_file_names: Vec<&String> = unsafe{FS.current_dir.files.iter()}
     .map(|file|{return file.name();}).collect();
     fn unique_file_name(name: String, all_names: Vec<&String>, num: i32) -> String{
-        let num_str = num.to_string().as_str();
-        if all_names.contains(&&name + &num_str){
+        let num_str = num.to_string();
+        let num_str = num_str.as_str();
+        if all_names.contains(&&(name.clone() + num_str)){
             let num = num + 1;
             return unique_file_name(name, all_names, num);
         }
-        else if num == 0 {return name;}
+        else if num == 1 {return name;}
         else {return name + num_str;}
     }
     let num = 1;
