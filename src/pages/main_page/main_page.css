@@ -21,7 +21,8 @@
   backdrop-filter: blur(50px);
   -webkit-backdrop-filter: blur(50px);
   width: 100%;
-  height: 7svh;
+  height: 100%;
+  height: 5svh;
  }
 
 .navbar *{
@@ -114,6 +115,8 @@
   user-select: none;
   height: 5.0svh;
   width: 5.0svh;
+  margin-right: 1svw;
+  margin-left: 1svw;
 
 }
 .homeimg {
@@ -275,6 +278,7 @@ color: white;
   flex-direction: row; 
   margin-left: 1svh;
   cursor: pointer;
+
 
  }
  
