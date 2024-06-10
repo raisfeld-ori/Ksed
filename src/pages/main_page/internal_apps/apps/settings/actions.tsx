@@ -2,7 +2,7 @@
 
 export default function CategoryPage(props: {category: string}){
     switch (props.category){
-        case "Welcome": return <div>
+        case "Welcome": return <div className="main-welcome">
             <h1>Welcome!</h1>
             <p>
                 this is the welcome page of ksed <br />
