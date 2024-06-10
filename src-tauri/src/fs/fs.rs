@@ -302,7 +302,6 @@ fn test_fs() {
     let password = "thing";
     let mut dir = Directory::new(String::from("Home"));
     let file = File::new(name, password, String::from("file"));
-    dir.files.push(DirectoryItems::Directory(Directory::new(String::from("bin"))));
     dir.files.push(DirectoryItems::File(file));
     assert!(dir.delete_item(String::from("bin")).is_ok());
     assert!(unsafe{FS.current_dir.delete_item(String::from("bin"))}.is_ok());
