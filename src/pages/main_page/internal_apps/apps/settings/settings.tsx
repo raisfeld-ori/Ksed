@@ -38,7 +38,7 @@ export default function Settings() : AppInterface{
             <CategoryHead title="Workspace"></CategoryHead>
             <Category unique="background2" name="Background" icon={background} set_page={set_page}></Category>
             <Category unique="volume" name="Volume" icon={volume} set_page={set_page}></Category>
-            <Category unique="ecrypt" name="Ecryptions" icon={encryptions} set_page={set_page}></Category>
+            <Category unique="encrypt" name="Encryptions" icon={encryptions} set_page={set_page}></Category>
             <Category unique="uploaded" name="Uploaded" icon={uploaded} set_page={set_page}></Category>
             <Category unique="messages" name="Notifications" icon={messages} set_page={set_page}></Category>
 
