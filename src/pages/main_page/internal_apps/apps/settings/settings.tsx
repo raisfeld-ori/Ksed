@@ -4,6 +4,9 @@ import volume from './assets/megaphone-icon.svg';
 import messages from './assets/bell-silent-line-icon.svg';
 import about from './assets/info-circle-icon.svg';
 import background from './assets/image-icon.svg';
+import encryptions from './assets/lock.png';
+import uploaded from './assets/Folder-1.png';
+
 import './settings.css';
 import { useState } from "react";
 import CategoryPage from "./actions";
@@ -14,11 +17,11 @@ function CategoryHead(props: {title: string}){
     </div>
 }
 
-function Category(props: {name: string, icon: string, set_page: React.Dispatch<React.SetStateAction<JSX.Element>>}){
+function Category(props: {name: string, icon: string, set_page: React.Dispatch<React.SetStateAction<JSX.Element>>, unique: string | undefined}){
     let clicked = () => {
         props.set_page(<CategoryPage category={props.name}/>);
     }
-    return <div className="category" onClick={clicked}>
+    return <div className={"category " + props.unique} onClick={clicked}>
         <img className="icon" src={props.icon}/>
         <h1 className="name">{props.name}</h1>
         <h1 className="end">{'>'}</h1>
@@ -29,13 +32,16 @@ export default function Settings() : AppInterface{
     const [page, set_page] = useState(<CategoryPage category={'Welcome'}/>);
     let app_html = <div className="outer">
         <div className="categories">
-            <CategoryHead title="General"></CategoryHead>
-            <Category name="Welcome" icon={welcome} set_page={set_page}></Category>
-            <Category name="About" icon={about} set_page={set_page}></Category>
-            <CategoryHead title="workspace"></CategoryHead>
-            <Category name="Background" icon={background} set_page={set_page}></Category>
-            <Category name="Volume" icon={volume} set_page={set_page}></Category>
-            <Category name="messages" icon={messages} set_page={set_page}></Category>
+            <CategoryHead  title="General"></CategoryHead>
+            <Category unique="welcome" name="Welcome" icon={welcome} set_page={set_page}></Category>
+            <Category unique="bout" name="About" icon={about} set_page={set_page}></Category>
+            <CategoryHead title="Workspace"></CategoryHead>
+            <Category unique="background2" name="Background" icon={background} set_page={set_page}></Category>
+            <Category unique="volume" name="Volume" icon={volume} set_page={set_page}></Category>
+            <Category unique="ecrypt" name="Ecryptions" icon={encryptions} set_page={set_page}></Category>
+            <Category unique="uploaded" name="Uploaded" icon={uploaded} set_page={set_page}></Category>
+            <Category unique="messages" name="Notifications" icon={messages} set_page={set_page}></Category>
+
         </div>
         <div className="category-inner">
             {page}

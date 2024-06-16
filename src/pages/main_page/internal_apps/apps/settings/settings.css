@@ -1,44 +1,60 @@
-.outer{
+.outer {
     display: flex;
+    flex-wrap: wrap;
+    height: 100%;
 }
 
-.category-inner{
-    display: block;
-    width: 90%;
-    overflow-y:scroll;
-}
-
-.categories{
-    width: 50%;
+.category {
     display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
-    height: inherit;
-    overflow-x: hidden;
+    flex-direction: row;
+    align-items: center;
+    padding: 1.02em;
+    height: 10%;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: rgba(66, 66, 66, 0.525);
+    transition: background-color 0.3s ease;
 }
-
 .category-head{
-    background-color: rgba(0, 0, 0, 0.3);
-}
+    padding-top: 0.5svh;
+    padding-bottom: 0.5svh;
 
-.category{
-    margin-top: 10px;
-    margin-bottom: 10px;
 }
-
-.category:hover{
-    background-color: rgba(0, 0, 0, 0.638);
+.category:hover {
+    background-color: rgba(60, 60, 60, 0.972);
 }
 
 .category > * {
-    display: inline-block;
-    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 0.5em;
+}
+
+.icon {
+    margin-right: 2em;
+    margin-left: 1em;
+    height: 1.7em;
 }
 
 .end {
-    float: right;
+    margin-left: auto;
 }
 
-.icon{
-    height: 2svw;
+.background {
+    background-color: rgba(60, 60, 60, 0.976);
+}
+.real{
+    border-top-right-radius: 20px;
+}
+.messages{
+    border-bottom-right-radius: 20px;
+}
+
+.background2{
+    border-top-right-radius: 20px;
+
+}
+
+.bout{
+        border-bottom-right-radius: 20px;
 }
