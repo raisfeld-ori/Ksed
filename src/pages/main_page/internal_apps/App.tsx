@@ -57,7 +57,7 @@ function App(element: JSX.Element, name: string, use_fullscreen?: boolean): [JSX
                     {use_fullscreen == undefined || use_fullscreen ? <button className="fullscreen-btn" onClick={() => fullscreen(!is_fullscreen)}>↔</button> : null}
                     <button className="close-btn" onClick={()=>{set_display('none');}}>x</button>
             </div>
-            <div className="background" style={{width: screensize.width, height: screensize.height}}>
+            <div className="background" style={{width: screensize.width, height: screensize.height }}>
             {element}
             </div>
         </div>
