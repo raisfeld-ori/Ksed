@@ -17,7 +17,7 @@ export interface AppInterface{
 }
 
 
-function App(element: JSX.Element, name: string): [JSX.Element, React.Dispatch<React.SetStateAction<string>>, (active: boolean) => void] {
+function App(element: JSX.Element, name: string, use_fullscreen?: boolean): [JSX.Element, React.Dispatch<React.SetStateAction<string>>, (active: boolean) => void] {
     const [display, set_display] = useState('inherit');
     let [ref, dx, dy] = useDraggable({ gridSize: 10 });
     const [is_fullscreen, set_fullscreen] = useState(false);
@@ -54,7 +54,7 @@ function App(element: JSX.Element, name: string): [JSX.Element, React.Dispatch<R
             <div className="frametest" style={{width: screensize.width}}>
                 <h1 className="frametext2">{name}</h1>
                     <button className="minimize-btn" onClick={() => set_display('none')}>-</button>
-                    <button className="fullscreen-btn" onClick={() => fullscreen(!is_fullscreen)}>↔</button>
+                    {use_fullscreen == undefined || use_fullscreen ? <button className="fullscreen-btn" onClick={() => fullscreen(!is_fullscreen)}>↔</button> : null}
                     <button className="close-btn" onClick={()=>{set_display('none');}}>x</button>
             </div>
             <div className="background" style={{width: screensize.width, height: screensize.height}}>
