@@ -3,7 +3,7 @@ import welcome from './assets/house-icon.svg';
 import volume from './assets/megaphone-icon.svg';
 import messages from './assets/bell-silent-line-icon.svg';
 import about from './assets/info-circle-icon.svg';
-import background from './assets/image-icon.svg';
+import background from './assets/settingbackground.svg';
 import encryptions from './assets/lock.png';
 import uploaded from './assets/Folder-1.png';
 
@@ -13,7 +13,7 @@ import CategoryPage from "./actions";
 
 function CategoryHead(props: {title: string}){
     return <div className="category-head">
-        <h1 className="title">{props.title}</h1>
+        <p className="title">{props.title}</p>
     </div>
 }
 
@@ -23,8 +23,8 @@ function Category(props: {name: string, icon: string, set_page: React.Dispatch<R
     }
     return <div className={"category " + props.unique} onClick={clicked}>
         <img className="icon" src={props.icon}/>
-        <h1 className="name">{props.name}</h1>
-        <h1 className="end">{'>'}</h1>
+        <p className="name">{props.name}</p>
+        <p className="end">{'>'}</p>
     </div>
 }
 

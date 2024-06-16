@@ -1,33 +1,36 @@
 .outer {
     display: flex;
     flex-wrap: wrap;
+    background-color: rgba(66, 66, 66, 0);
     height: 100%;
 }
 
 .categories{
     overflow-y: scroll;
     height: 100%;
-    width: 45%;
 }
 
 .category {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 1.02em;
-    height: 10vh;
-    font-size: 1em;
+    padding: 1.5em;
+    height: 4.5vh;
+    font-size: 1.1em;
     cursor: pointer;
-    background-color: rgba(66, 66, 66, 0.525);
+    background-color: rgb(66, 66, 66);
     transition: background-color 0.3s ease;
 }
 .category-head{
-    padding-top: 0.5svh;
-    padding-bottom: 0.5svh;
+    padding-top: 0.85svh;
+    background-color: rgb(54, 54, 54);
+    padding-bottom: 0.85svh;
+
 
 }
 .category:hover {
     background-color: rgba(60, 60, 60, 0.972);
+    border-radius: 5px;
 }
 
 .category > * {
@@ -44,26 +47,15 @@
 
 .end {
     margin-left: auto;
+    font-size: 2em;
 }
+
 
 .background {
-    background-color: rgba(60, 60, 60, 0.976);
-}
-.real{
-    border-top-right-radius: 20px;
-}
-.messages{
-    border-bottom-right-radius: 20px;
-}
-
-.background2{
-    border-top-right-radius: 20px;
+    background-color: rgb(66, 66, 66);
 
 }
 
-.bout{
-        border-bottom-right-radius: 20px;
-}
 
 .category-inner{
     width: 55%;
