@@ -4,12 +4,17 @@
     height: 100%;
 }
 
+.categories{
+    overflow-y: scroll;
+    height: 100%;
+}
+
 .category {
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 1.02em;
-    height: 10%;
+    height: 10vh;
     font-size: 1em;
     cursor: pointer;
     background-color: rgba(66, 66, 66, 0.525);

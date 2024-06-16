@@ -63,7 +63,7 @@ export default function MainPage() {
     const navigate = useNavigate();
     const notifications = NotificationSystem();
     const [file_selected, set_file_selected] = useState<string | null>(null);
-    const sudo_props = sudo('you have been logged out, please log in');
+    const sudo_props = sudo('You have been logged out, Please log in');
     const sudo_app = desktop_app('sudo', '', sudo_props, false);
     const text_viewer_props = text_viewer(file_selected);
     const text_viewer_app = desktop_app('text viewer', '', text_viewer_props, false);
