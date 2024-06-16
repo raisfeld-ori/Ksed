@@ -3,6 +3,7 @@
     flex-wrap: wrap;
     background-color: rgba(66, 66, 66, 0);
     height: 100%;
+    flex-direction: column;
 }
 
 .categories{
@@ -54,11 +55,6 @@
 .background {
     background-color: rgb(66, 66, 66);
 
-}
-
-
-.category-inner{
-    width: 55%;
 }
 
 .settings-page{
