@@ -40,7 +40,7 @@
 .dot {
     height: 170px;
     width: 170px;
-    border: 2px solid #ffffff;
+    border: 2px solid #00000013;
     border-radius: 50%;
     display: inline-block;
     overflow: hidden; 
@@ -175,8 +175,16 @@
     margin-top: 2svh;
     color: #ffffff;
     font-size: 2svh;
+    font-weight: bold;
     user-select: none;
 
+}
+.nameload{
+  margin-top: 2svh;
+  color: #2f6df3;
+  font-size: 2svh;
+  font-weight: bold;
+  user-select: none;
 }
 
 /* --------------------- SIGNUP ---------------------*/
@@ -330,17 +338,17 @@
   width:150px;
   height:150px;
   background:transparent;
-  border:3px solid #323232;
+  border:3px solid #0000000f;
   border-radius:50%;
   text-align:center;
   line-height:150px;
   font-family:sans-serif;
   font-size:20px;
-  color:#00aaff;
+  color:#0084ff;
   letter-spacing:4px;
   text-transform:uppercase;
   text-shadow:0 0 10px #006aff55;
-  box-shadow:0 0 20px rgba(50, 50, 50, 0.5);
+  box-shadow:0 0 20px rgba(50, 50, 50, 0.242);
 }
 .load .error{
   color:#ff0000;
