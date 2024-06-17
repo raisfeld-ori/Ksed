@@ -21,6 +21,8 @@
   backdrop-filter: blur(50px);
   -webkit-backdrop-filter: blur(50px);
   width: 100%;
+  height: 100%;
+  height: 5.5svh;
  }
 
 .navbar *{
@@ -121,8 +123,6 @@
 }
 .homeimg {
   margin-right: auto; 
-  margin-top: auto;
-  margin-bottom: auto;
  }
 
 .time{
@@ -147,13 +147,13 @@ color: white;
  
 
 .menu{
-  position: absolute;
-  bottom: -50svh;
+  
+  position: relative;
   width: 25svw;
-  height: 50svh;
+  height: 40.5svh;
   z-index: 4;
   background-color: #3333338b;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.3s ease-in-out;
   backdrop-filter: blur(50px);
   -webkit-backdrop-filter: blur(50px);
   border-right: 2px #0202022f;
@@ -179,14 +179,13 @@ color: white;
 }
 
 .show{
-  bottom: 7svh;
+
 }
 
 .leave {
   float: right;
   z-index: 1;
-  margin-right: .5svh;
-  top: 38svh;
+  margin-right: 2svh;
   transition: transform 250ms;
 
 }
@@ -225,7 +224,6 @@ color: white;
 .exit {
   float: right;
   z-index: 1;
-  top: 38svh;
   margin-right: 2svh;
   transition: transform 250ms;
 
@@ -321,4 +319,6 @@ color: white;
   transition: transform 0.7s ease-in-out; /* Add transition for smooth rotation */
  }
  
- 
+.menubutton{
+
+}
