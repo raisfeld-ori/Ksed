@@ -2,6 +2,7 @@ import './login.css';
 import { invoke } from '@tauri-apps/api';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import noenemies from '../main_page/assets/nature.jpg';
 import pfp from './assets/Default_pfp.svg.png';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,20 +22,19 @@ function loading(){
             await invoke('system_make', {key: 'name',val: name_val});
             let password_val = await invoke('create_value', {valType: 'string', val: location.state.password});
             await invoke('system_make', {key: 'password',val: password_val});
-            navigate('/main_page');
         });
     }, []);
 
     return <div id='background' onContextMenu={e => e.preventDefault()}>
+        <img className='IhaveNoEnemys' src={noenemies} alt="backgroundimg" />
+        <div className='iseewhoyouare' ></div>
 
-<div className='triangle down'></div>
-        <div className='triangle left'></div>
 
         <div className="dot">
             <img src={pfp} alt="Descriptive text" />
                 </div>
 
-                <p id='melody'>Welcome {location.state.name}!</p>
+                <p id='melody'>Welcome <span className='nameload'>{location.state.name}</span>!</p>
 
                 <div className="load">{state}
                 <p className='error'>{error}</p>
