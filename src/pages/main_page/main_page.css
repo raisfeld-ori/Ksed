@@ -148,9 +148,8 @@ color: white;
 
 .menu{
   
-  position: relative;
+  position:absolute;
   width: 25svw;
-  height: 40.5svh;
   z-index: 4;
   background-color: #3333338b;
   transition: all 0.3s ease-in-out;
@@ -164,7 +163,7 @@ color: white;
   border-top-right-radius: 20px;
   border-top-left-radius: 20px;
   text-align: left;
-
+  overflow-y:hidden;
 }
 
 .menutext {
@@ -179,7 +178,14 @@ color: white;
 }
 
 .show{
+  bottom: 5.5svh;
+}
 
+.hide{
+  bottom: -100vh;
+}
+
+.menubuttons{
 }
 
 .leave {

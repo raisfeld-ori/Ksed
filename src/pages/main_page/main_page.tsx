@@ -153,7 +153,7 @@ export default function MainPage() {
             <div className="menu-header">
             <h1 className='menutext'>Applications</h1>
 
-
+                <div className='menubuttons'>
                 <BinIcon display={async () => {fs_props.update();fs_props.set_display('inherit');}} 
                 name='Files' img={folder} />
                 <BinIcon display={async () => {text_viewer_props.set_display('inherit')}}
@@ -164,6 +164,7 @@ export default function MainPage() {
                 name='video viewer' img={video_icon}/>
                 <BinIcon display={async () => {image_viewer_props.set_display('inherit')}}
                 name='image viewer' img={image_icon}/>
+                </div>
 
                 <div className='menubutton'>
                          <p className='hiddenclose'>Exit 😭​</p>
