@@ -153,16 +153,7 @@ export default function MainPage() {
             <div className="menu-header">
             <h1 className='menutext'>Applications</h1>
 
-            </div>
-                <button className='leave'onClick={async () => {await save_user();navigate("/", {state: {name: '', password: '', refresh: false}});}} >
-                    <img src={leaveicon} alt="leaveicon" />
-                </button>
-                <p className='hiddentxt'>Logout</p>
-                <button className='exit' onClick={async () => {await save_user();await invoke('close_app', {});}}>
-                    <img src={exit} alt="exiticon" />
-                </button>
-                <p className='hiddenclose'>Exit 😭​</p>
-                
+
                 <BinIcon display={async () => {fs_props.update();fs_props.set_display('inherit');}} 
                 name='Files' img={folder} />
                 <BinIcon display={async () => {text_viewer_props.set_display('inherit')}}
@@ -173,7 +164,23 @@ export default function MainPage() {
                 name='video viewer' img={video_icon}/>
                 <BinIcon display={async () => {image_viewer_props.set_display('inherit')}}
                 name='image viewer' img={image_icon}/>
-            </div>
+
+                <div className='menubutton'>
+                         <p className='hiddenclose'>Exit 😭​</p>
+                <button className='exit' onClick={async () => {await save_user();await invoke('close_app', {});}}>
+                    <img src={exit} alt="exiticon" />
+                </button>
+
+                <p className='hiddentxt'>Logout</p>
+                <button className='leave'onClick={async () => {await save_user();navigate("/", {state: {name: '', password: '', refresh: false}});}} >
+                    <img src={leaveicon} alt="leaveicon" />
+                </button>
+                </div>
+       
+                </div>
+                </div>
+
+
             <video className='hakari' src={ibetonhakari} width="100%" height="100%" autoPlay muted loop>
     Your browser does not support the video tag
 </video>
