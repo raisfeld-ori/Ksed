@@ -13,5 +13,5 @@ fn main() {
     first_init, console, user_get, authenticate_user, save_user, user_exists, load_user, ls, pwd, cd, create_user, read_file,
     create_value, mkdir, system_get, system_make, user_make, close_app, mk, upload_file, cd_back, rm, file_exists, gather_type,
     bytes_to_string, image_to_string, export_file, rename
-]).run(tauri::generate_context!()).expect("failed to run the code");
+]).run(tauri::generate_context!()).expect("Failed to run the code");
    }

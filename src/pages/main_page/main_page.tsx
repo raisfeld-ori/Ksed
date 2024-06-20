@@ -167,12 +167,10 @@ export default function MainPage() {
                 </div>
 
                 <div className='menubutton'>
-                         <p className='hiddenclose'>Exit 😭​</p>
                 <button className='exit' onClick={async () => {await save_user();await invoke('close_app', {});}}>
                     <img src={exit} alt="exiticon" />
                 </button>
 
-                <p className='hiddentxt'>Logout</p>
                 <button className='leave'onClick={async () => {await save_user();navigate("/", {state: {name: '', password: '', refresh: false}});}} >
                     <img src={leaveicon} alt="leaveicon" />
                 </button>

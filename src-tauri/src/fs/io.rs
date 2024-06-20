@@ -10,7 +10,7 @@ use crate::fs::encryption::{aes_encrypt, aes_decrypt};
 use crate::fs::fs::FS;
 
 
-pub fn dir() -> PathBuf {data_dir().expect("failed to enter data directory").join("d_vault_data")}
+pub fn dir() -> PathBuf {data_dir().expect("Failed to enter data directory").join("d_vault_data")}
 pub fn get_user_dir(name: &str, password: &str) -> PathBuf{
   dir().join(encode_config(&aes_encrypt(name, password, name.as_bytes()), URL_SAFE))
 }
