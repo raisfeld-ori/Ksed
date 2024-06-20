@@ -42,7 +42,7 @@ pub fn ls() -> Vec<(String, String)> {
 #[tauri::command(async)]
 pub fn upload_file(name: &str, password: &str, file_path: String) -> Result<(), String> {
     let data = read(file_path.clone());
-    if data.is_err() {return Err(String::from("failed to read the uploaded file"));}
+    if data.is_err() {return Err(String::from("Failed to read the uploaded file"));}
     let path = PathBuf::from(file_path);
     let file_name = path.file_name().unwrap().to_str().unwrap().to_string();
     let existing_file_names: Vec<&String> = unsafe{FS.current_dir.files.iter()}
@@ -61,7 +61,7 @@ pub fn upload_file(name: &str, password: &str, file_path: String) -> Result<(), 
     let file_name = unique_file_name(file_name, existing_file_names, num);
     let new_file = File::new(name, password,file_name);
     if unsafe{FS.current_dir.files.iter().any(|other_file| {other_file.name() == &new_file.name})} {
-        return Err(String::from("a file with this name already exists"));
+        return Err(String::from("A file with this name already exists"));
     }
     let result = new_file.save(name, password, &data.unwrap());
     if result.is_err(){return Err(result.unwrap_err().to_string())}

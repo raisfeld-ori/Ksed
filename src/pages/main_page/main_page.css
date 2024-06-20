@@ -147,7 +147,7 @@ color: white;
  
 
 .menu{
-  
+
   position:absolute;
   width: 25svw;
   z-index: 4;
@@ -190,8 +190,9 @@ color: white;
 
 .leave {
   float: right;
+  margin-bottom: 1svh;
   z-index: 1;
-  margin-right: 2svh;
+  margin-right: 1.5svh;
   transition: transform 250ms;
 
 }
@@ -200,20 +201,9 @@ color: white;
   display: inline-block;
   pointer-events: none;
   user-select: none;
-  height: 3.3svh;
-  width: 3.3svh;
+  height: 3svh;
+  width: 3svh;
 }
-
-.hiddentxt {
-  position: absolute; 
-  right: 0;
-  top: 41svh;
-  color: white;
-  font-weight: 500;
-  display: none;
-  z-index: 5;
-
- }
 
  .leave:hover + .hiddentxt {
   display: block;
@@ -229,8 +219,9 @@ color: white;
 
 .exit {
   float: right;
+  margin-bottom: 1svh;
   z-index: 1;
-  margin-right: 2svh;
+  margin-right: 1svh;
   transition: transform 250ms;
 
 }
@@ -239,19 +230,11 @@ color: white;
   display: inline-block;
   pointer-events: none;
   user-select: none;
-  height: 3.5svh;
-  width: 3.5svh;
+  height: 3.2svh;
+  width: 3.2svh;
 }
 
-.hiddenclose {
-  position: absolute; 
-  right: 0; 
-  top: 41svh;
-  z-index: 4;
-  display: none;
-  margin-right: 5svh;
 
- }
 
 .exit:hover + .hiddenclose {
   display: block;
