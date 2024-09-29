@@ -23,10 +23,10 @@ pub fn set_data(user: Map<String, Value>, system: Map<String, Value>){
     }
 }
 
-pub fn user<'a>() -> &'a Map<String, Value>{unsafe {USER_DATA.get("user").expect("USER_DATA WAS NOT INITIALIZED")}.as_object().expect("user was not an object")}
-pub fn system<'a>() -> &'a Map<String, Value>{unsafe {USER_DATA.get("system").expect("USER_DATA WAS NOT INITIALIZED")}.as_object().expect("user was not an object")}
-pub fn user_mut<'a>() -> &'a mut Map<String, Value> {unsafe {USER_DATA.get_mut("user").expect("USER_DATA WAS NOT INITIALIZED")}.as_object_mut().expect("user was not an object")}
-pub fn system_mut<'a>() -> &'a mut Map<String, Value>{unsafe {USER_DATA.get_mut("system").expect("USER_DATA WAS NOT INITIALIZED")}.as_object_mut().expect("user was not an object")}
+pub fn user<'a>() -> &'a Map<String, Value>{unsafe {USER_DATA.get("user").expect("USER_DATA WAS NOT INITIALIZED")}.as_object().expect("User was not an object")}
+pub fn system<'a>() -> &'a Map<String, Value>{unsafe {USER_DATA.get("system").expect("USER_DATA WAS NOT INITIALIZED")}.as_object().expect("User was not an object")}
+pub fn user_mut<'a>() -> &'a mut Map<String, Value> {unsafe {USER_DATA.get_mut("user").expect("USER_DATA WAS NOT INITIALIZED")}.as_object_mut().expect("User was not an object")}
+pub fn system_mut<'a>() -> &'a mut Map<String, Value>{unsafe {USER_DATA.get_mut("system").expect("USER_DATA WAS NOT INITIALIZED")}.as_object_mut().expect("User was not an object")}
 
 
 #[tauri::command]
@@ -94,8 +94,8 @@ struct SerializeUserData{
 
 pub fn data_bytes() -> (Vec<u8>, Vec<u8>){
     (
-        serde_json::to_vec(user()).expect("failed to turn user into bytes"), 
-        serde_json::to_vec(system()).expect("failed to turn user into bytes")
+        serde_json::to_vec(user()).expect("Failed to turn user into bytes"), 
+        serde_json::to_vec(system()).expect("Failed to turn user into bytes")
     )
 }
 

@@ -19,18 +19,18 @@ async function upload_file(update_fs: () => Promise<void>, notify: (data: Notifi
     let file_selected = await open({});
     if (Array.isArray(file_selected)){
         for (let i = 0; i < file_selected.length;i++){
-            notify({type: NotificationType.Loading, name: 'files', text: `starting to upload file ${file_selected[i]}`});
+            notify({type: NotificationType.Loading, name: 'Files', text: `Starting to upload file ${file_selected[i]}`});
             await invoke('upload_file', {name, password, file_path: file_selected[i]});
-            notify({type: NotificationType.Success, name: 'files', text: `finished uploading file ${file_selected[i]}`});
+            notify({type: NotificationType.Success, name: 'Files', text: `Finished uploading file ${file_selected[i]}`});
         }
         await update_fs();
     }
     else if (file_selected == null){return;}
     else{
-        notify({type: NotificationType.Loading, name: 'files', text: `starting to upload file ${file_selected}`});
+        notify({type: NotificationType.Loading, name: 'Files', text: `Starting to upload file ${file_selected}`});
         invoke('upload_file', {name, password, filePath: file_selected})
         .finally(async () => {await update_fs();});
-        notify({type: NotificationType.Success, name: 'files', text: `finished uploading file ${file_selected}`});
+        notify({type: NotificationType.Success, name: 'Files', text: `Finished uploading file ${file_selected}`});
     }
 }
 
@@ -146,10 +146,10 @@ function file_system(open_file: (file: string) => Promise<void>, notify: (data: 
                 set_editing('none');
                 if (text == ''){return;}
                 if (await invoke('file_exists', {fileName: text})){
-                    let sure = await dialog.confirm('a file with this name already exists, are you sure you want to delete it?');
+                    let sure = await dialog.confirm('A file with this name already exists, are you sure you want to delete it?');
                     if (sure){await invoke('rm', {file: text});
-                    notify({type: NotificationType.Success, name: 'files', 
-                    text: `successfully deleted the file ${text}!`})}
+                    notify({type: NotificationType.Success, name: 'Files', 
+                    text: `Successfully deleted the file ${text}!`})}
                     else {return;}
                 }
                 let name: string = await invoke('system_get', {key: 'name'});
@@ -186,8 +186,8 @@ function file_system(open_file: (file: string) => Promise<void>, notify: (data: 
                 set_editing('none');
                 if (text == ''){await update();return;}
                 if (await invoke('file_exists', {fileName: text})){
-                    let sure = await dialog.confirm('a file with this name already exists, are you sure you want to delete it?');
-                    if (sure){await invoke('rm', {file: text});notify({type: NotificationType.Success, name: 'files', 
+                    let sure = await dialog.confirm('A file with this name already exists, are you sure you want to delete it?');
+                    if (sure){await invoke('rm', {file: text});notify({type: NotificationType.Success, name: 'Files', 
                     text: `successfully deleted the file ${text}!`})}
                     else {await update();return;}
                 }
@@ -224,7 +224,7 @@ function file_system(open_file: (file: string) => Promise<void>, notify: (data: 
         <div>
         <p className='linecontextmenu'></p>
         <button className='buttoncontextmenu' onClick={async () => {await invoke('rm', {file: selected});
-        await update();notify({type: NotificationType.Success, name: 'files', 
+        await update();notify({type: NotificationType.Success, name: 'Files', 
         text: `successfully deleted the file ${selected}!`})}}>
             Delete
         </button>

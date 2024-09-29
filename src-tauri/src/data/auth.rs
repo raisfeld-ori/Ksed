@@ -71,10 +71,10 @@ pub fn authenticate_user(name: &str, password: &str) -> bool{
 pub fn load_user(name: &str, password: &str) -> Result<(), String>{
     let location = get_user_dir(name, password);
     if !location.exists() {
-        return Err(String::from("user directory was not initialized"));
+        return Err(String::from("User directory was not initialized"));
     }
-    for entry in read_dir(location).expect("failed to read directory"){
-        let entry = entry.expect("failed to read file");
+    for entry in read_dir(location).expect("Failed to read directory"){
+        let entry = entry.expect("Failed to read file");
         let path = entry.path();
         let entry = decode_config(entry.file_name().to_bytes(), URL_SAFE).unwrap();
         let entry = aes_decrypt(name, password, &entry);
@@ -112,9 +112,9 @@ fn save_data(username: &str, password: &str, data_name: String, data: Vec<u8>) -
     let location = encode_config(aes_encrypt(username, password, &data_name.into_bytes()), URL_SAFE);
     let location = get_user_dir(username, password).join(location);
     let file = File::create(location.as_path());
-    if file.is_err() {return Err(String::from("failed to create the file"));}
+    if file.is_err() {return Err(String::from("Failed to create the file"));}
     let file = file.unwrap().write_all(&data);
-    if file.is_err() {return Err(String::from("failed to write into the file"))}
+    if file.is_err() {return Err(String::from("Failed to write into the file"))}
     return Ok(());
 }
 
@@ -135,7 +135,7 @@ pub fn save_user(username: &str, password: &str) -> Result<(), String> {
 #[tauri::command]
 pub fn create_user(name: &str, password: &str) -> Result<(), String> {
   let location = get_user_dir(name, password);
-    if location.exists(){return Err(String::from("user already exists"));}
+    if location.exists(){return Err(String::from("User already exists"));}
     else {
         let err = create_dir(location.as_path());
         if err.is_err() {return Err(err.unwrap_err().to_string());}
@@ -147,7 +147,7 @@ pub fn create_user(name: &str, password: &str) -> Result<(), String> {
 fn test_authentication(){
     use crate::data::json::init_user_data;
     init_user_data();
-    init_dir().expect("failed to create the main directory");
+    init_dir().expect("Failed to create the main directory");
     let name = "test";
     let password = "test";
     if user_exists(name, password) {}
