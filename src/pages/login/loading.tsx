@@ -22,6 +22,7 @@ function loading(){
             await invoke('system_make', {key: 'name',val: name_val});
             let password_val = await invoke('create_value', {valType: 'string', val: location.state.password});
             await invoke('system_make', {key: 'password',val: password_val});
+            navigate("/main_page", {state: {name_val, password_val}});
         });
     }, []);
 
